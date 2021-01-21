@@ -39,59 +39,8 @@
            class="popup-cart__content content-cart-block">
         <div class="content-cart-block__title">Товары в корзине</div>
         <div class="content-cart-block__list">
-          <article v-for="product in products"
-                   class="content-cart-block__item item-cart-block">
-            <div class="item-cart-block__image">
-              <img :src="product.photo"
-                   :alt="product.name">
-            </div>
-            <div class="item-cart-block__content">
-              <h3 class="item-cart-block__title">{{ product.name }}</h3>
-              <div class="item-cart-block__price">{{ product.price | price }}</div>
-              <div class="item-cart-block__rating rating-block">
-                <svg class="rating-block__icon"
-                     width="14"
-                     height="14"
-                     fill="none"
-                     xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M7 .125c.238 0 .455.135.56.348l1.786 3.619 3.994.583a.625.625 0 01.346 1.066l-2.89 2.815.683 3.976a.625.625 0 01-.907.659L7 11.312l-3.572 1.879a.625.625 0 01-.906-.66l.681-3.975L.313 5.74A.625.625 0 01.66 4.675l3.994-.583L6.44.473A.625.625 0 017 .125zm0 2.037L5.63 4.939a.625.625 0 01-.47.342l-3.067.448L4.31 7.89c.148.144.215.351.18.554l-.523 3.052 2.741-1.442a.625.625 0 01.582 0l2.741 1.442-.523-3.052a.625.625 0 01.18-.553l2.218-2.16-3.066-.45a.625.625 0 01-.47-.34L7 2.161z"
-                        fill="#F2C94C" />
-                  <path d="M3.5 8L1 5h12l-2.5 3v3.5l-.5 1L7 11l-1 .5-2.5 1V8z"
-                        fill="#F2C94C" />
-                </svg>
-                <span class="rating-block__count">{{ product.rating }}</span>
-              </div>
-            </div>
-            <button class="item-cart-block__delete"
-                    @click="removeProductCart(product.id)"
-                    type="button"
-                    :aria-label="`Удалить ${product.name} из корзины`">
-              <svg width="20"
-                   height="22"
-                   viewBox="0 0 20 22"
-                   fill="none"
-                   xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M0 5C0 4.44772 0.447715 4 1 4H19C19.5523 4 20 4.44772 20 5C20 5.55228 19.5523 6 19 6H1C0.447715 6 0 5.55228 0 5Z"
-                      fill="#959DAD" />
-                <path fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M8 2C7.73478 2 7.48043 2.10536 7.29289 2.29289C7.10536 2.48043 7 2.73478 7 3V4H13V3C13 2.73478 12.8946 2.48043 12.7071 2.29289C12.5196 2.10536 12.2652 2 12 2H8ZM15 4V3C15 2.20435 14.6839 1.44129 14.1213 0.87868C13.5587 0.31607 12.7956 0 12 0H8C7.20435 0 6.44129 0.31607 5.87868 0.87868C5.31607 1.44129 5 2.20435 5 3V4H3C2.44772 4 2 4.44772 2 5V19C2 19.7957 2.31607 20.5587 2.87868 21.1213C3.44129 21.6839 4.20435 22 5 22H15C15.7957 22 16.5587 21.6839 17.1213 21.1213C17.6839 20.5587 18 19.7957 18 19V5C18 4.44772 17.5523 4 17 4H15ZM4 6V19C4 19.2652 4.10536 19.5196 4.29289 19.7071C4.48043 19.8946 4.73478 20 5 20H15C15.2652 20 15.5196 19.8946 15.7071 19.7071C15.8946 19.5196 16 19.2652 16 19V6H4Z"
-                      fill="#959DAD" />
-                <path fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M8 9C8.55229 9 9 9.44771 9 10V16C9 16.5523 8.55229 17 8 17C7.44772 17 7 16.5523 7 16V10C7 9.44771 7.44772 9 8 9Z"
-                      fill="#959DAD" />
-                <path fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M12 9C12.5523 9 13 9.44771 13 10V16C13 16.5523 12.5523 17 12 17C11.4477 17 11 16.5523 11 16V10C11 9.44771 11.4477 9 12 9Z"
-                      fill="#959DAD" />
-              </svg>
-            </button>
-          </article>
+          <app-cart-item  v-for="(product, index) in products" :key="index"  :product="product"></app-cart-item>
+
         </div>
 
         <app-form @orderIsCompleted="clearCart"></app-form>
@@ -110,10 +59,11 @@
 
 <script>
 import AppForm from '~/components/Cart/AppForm';
+import AppCartItem from '~/components/Cart/AppCartItem';
 
 export default {
   name: 'AppCart',
-  components: { AppForm },
+  components: { AppCartItem, AppForm },
   props: {
     isCartShown: {
       type: Boolean,
@@ -131,9 +81,6 @@ export default {
       this.$nuxt.$emit('hide-cart');
       this.isCompleted = false;
     },
-    removeProductCart(id) {
-      this.$store.dispatch('cart/removeProductCart', id);
-    },
     clearCart() {
       this.$store.dispatch('cart/clearCart');
       this.isCompleted = true;
@@ -150,14 +97,7 @@ export default {
   },
 
   filters: {
-    price(value) {
-      const formatter = new Intl.NumberFormat('ru-RU', {
-        style: 'currency',
-        currency: 'RUB',
-        maximumSignificantDigits: 2,
-      });
-      return formatter.format(value);
-    },
+
   },
 };
 </script>
@@ -175,7 +115,7 @@ export default {
   height         : 100vh;
   padding        : 52px 48px;
   border-radius  : 8px 0 0 8px;
-  background     : #fff;
+  background     : #ffffff;
   box-shadow     : -4px 0px 16px rgba(0, 0, 0, 0.05);
   flex-direction : column;
   z-index        : 100;
@@ -297,66 +237,14 @@ export default {
   }
 }
 
-.item-cart-block {
-  display          : flex;
-  align-items      : center;
-  justify-content  : space-between;
-  padding          : 15px 25px 15px 25px;
-  border-radius    : 8px;
-  background-color : #fff;
-  box-shadow       : 0px 4px 16px rgba(0, 0, 0, 0.05);
 
-  // .item-cart-block__image
-  &__image {
-    max-width    : 70px;
-    max-height   : 90px;
-    margin-right : 35px;
-  }
-
-  // .item-cart-block__content
-  &__content {
-  }
-
-  // .item-cart-block__title
-  &__title {
-    font-size       : 14px;
-    line-height     : 18px;
-    text-decoration : none;
-    color           : #59606d;
-    font-weight     : 400;
-  }
-
-  // .item-cart-block__price
-  &__price {
-    font-size   : 14px;
-    font-weight : bold;
-    line-height : 18px;
-    margin-top  : 6px;
-    color       : #1f1f1f;
-  }
-
-  // .item-cart-block__rating
-  &__rating {
-    margin-top : 16px;
-  }
-
-  // .item-cart-block__delete
-  &__delete {
-    margin-left : 16px;
-    border      : none;
-    background  : none;
-  }
-}
 
 .form-cart {
-
-
   // .form-cart__title
   &__title {
     font-size   : 18px;
     line-height : 23px;
-    color       : #59606d;
-
+    color       :$grey-color ;
   }
 
   // .form-cart__form
@@ -379,13 +267,13 @@ export default {
     width            : 100%;
     padding          : 14px 14px 15px;
     border-radius    : 8px;
-    background-color : #f8f8f8;
+    background-color : $grey-extra-light-color;
 
   }
 
   // .form__btn
   &__btn {
-
+    margin-top : 16px;
   }
 }
 

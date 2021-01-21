@@ -4,14 +4,18 @@
       <div class="sort-block__title">Сортировать по:
       </div>
       <div class="sort-block__value"
-           @click="toggleSortItems">{{ sort.title }}
-        <svg class="sort-block__icon"
-             width="5"
-             height="3"
-             viewBox="0 0 5 3"
-             fill="none">
-          <path d="M5 0H0L2.5 2.5L5 0Z"
-                fill="#59606D" />
+           @click="toggleSortItems">{{ sortData.title }}
+
+
+        <svg
+          class="sort-block__icon"
+          fill="none"
+          width="5"
+          height="3"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <use xlink:href="#sort-icon" />
         </svg>
       </div>
     </div>
@@ -34,8 +38,18 @@ export default {
     return {
       isShow: false,
       sortItems: [
-        { title: 'цене', name: 'По цене', value: 'price' },
-        { title: 'популярности', name: 'По популярности', value: 'popular' },
+        {
+          title: 'цене',
+          name: 'По цене',
+          value: 'price',
+          sortingFunction: (a, b) => a.price - b.price,
+        },
+        {
+          title: 'популярности',
+          name: 'По популярности',
+          value: 'popular',
+          sortingFunction: (a, b) => b.rating - a.rating,
+        },
       ],
     };
   },
@@ -43,14 +57,14 @@ export default {
     toggleSortItems() {
       this.isShow = !this.isShow;
     },
-    setSorting(sortItem) {
-      this.$store.dispatch('catalog/setSort', sortItem);
+    setSorting(sortData) {
+      this.$store.dispatch('catalog/setSortData', sortData);
       this.isShow = false;
     },
   },
   computed: {
-    sort() {
-      return this.$store.getters['catalog/sort'];
+    sortData() {
+      return this.$store.getters['catalog/sortData'];
     },
   },
 };

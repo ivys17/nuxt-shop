@@ -21,7 +21,5 @@ export default {
   display    : block;
   opacity    : 0.8;
   background : #fff;
-
-
 }
 </style>

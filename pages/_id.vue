@@ -3,7 +3,7 @@
     <section class="main__catalog catalog">
       <div class="catalog__inner">
         <app-item-product
-          v-for="product in productsByCategories"
+          v-for="product in products"
           :product="product"
           :key="product.id"
         ></app-item-product>
@@ -37,6 +37,24 @@ export default {
       const categoryId = this.$route.params.id;
       return this.$store.getters['catalog/productsByCategories'](categoryId);
     },
+    sortData() {
+      return this.$store.getters['catalog/sortData'];
+    },
+    products: {
+      set(value) {
+
+      },
+      get(value) {
+        const sortingFunction = this.sortData.sortingFunction;
+        const products = [...this.productsByCategories];
+        if (typeof sortingFunction === 'function') {
+          products.sort(sortingFunction);
+        }
+        return products;
+      },
+
+    },
+
   },
 };
 </script>

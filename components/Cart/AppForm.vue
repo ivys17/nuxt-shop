@@ -51,7 +51,7 @@ export default {
   methods: {
     onSubmitHandler() {
       console.log('Form sent!!!');
-      this.$emit('orderIsCompleted')
+      this.$emit('orderIsCompleted');
     },
   },
   directives: {
@@ -103,7 +103,7 @@ export default {
     width            : 100%;
     padding          : 14px 14px 15px;
     border-radius    : 8px;
-    background-color : #f8f8f8;
+    background-color : $grey-extra-light-color;
   }
 
   // .form__btn

@@ -19,6 +19,7 @@
     </div>
     <app-overlay v-if="isOverlayShown"></app-overlay>
     <app-cart :is-cart-shown="isCartShown"></app-cart>
+    <app-sprites></app-sprites>
   </div>
 </template>
 <script>
@@ -27,9 +28,11 @@ import AppSidebar from '~/components/AppSidebar';
 import AppHeader from '~/components/AppHeader';
 import AppOverlay from '~/components/AppOverlay';
 import AppSort from '~/components/AppSort';
+import AppSprites from '~/components/AppSprites';
 
 export default {
   components: {
+    AppSprites,
     AppSort,
     AppOverlay,
     AppHeader,
@@ -63,61 +66,22 @@ export default {
   },
   mounted() {
     this.$store.dispatch('cart/initCart');
-  }
+  },
 };
 </script>
 <style lang="scss">
-
 
 .page {
   // .page__header
   &__header {
     position : sticky;
-    top : 0;
-    z-index : 10;
+    top      : 0;
+    z-index  : 10;
   }
 
   // .page__main
   &__main {
     flex-grow : 1;
-  }
-}
-
-
-.container {
-}
-
-.cart-block {
-  position   : relative;
-  background : none;
-
-  // .cart-block__icon
-  &__icon {
-
-  }
-
-  // .cart-block__count
-  &__count {
-    font-size        : 8px;
-    font-weight      : bold;
-    line-height      : 1;
-    position         : absolute;
-    top              : -4px;
-    right            : -4px;
-    display          : flex;
-    align-items      : center;
-    justify-content  : center;
-    width            : 12px;
-    height           : 12px;
-    color            : #fff;
-    border-radius    : 50%;
-    background-color : #959dad;
-  }
-}
-
-.pade {
-  // .pade__content
-  &__content {
   }
 }
 
@@ -145,7 +109,7 @@ export default {
     flex-grow    : 0;
     flex-shrink  : 0;
     margin-right : 30px;
-    min-width : 160px;
+    min-width    : 160px;
   }
 
   // .content__title
@@ -153,9 +117,7 @@ export default {
     font-size   : 32px;
     font-weight : bold;
     line-height : 41px;
-
-    /* black */
-    color       : #1f1f1f;
+    color       : $black-color;
   }
 
   // .content__sort
@@ -164,15 +126,7 @@ export default {
 }
 
 
-.sidebar {
-  // .sidebar__nav
-  &__nav {
-  }
 
-  // .sidebar__catalog-menu
-  &__catalog-menu {
-  }
-}
 
 .catalog-menu {
   font-size   : 16px;
@@ -188,8 +142,7 @@ export default {
   // .catalog-menu__link
   &__link {
     text-decoration : none;
-    /* grey-light */
-    color           : #959dad;
+    color           : $grey-light-color;
 
     &:hover {
       /* grey */
@@ -205,7 +158,6 @@ export default {
 
   }
 }
-
 
 
 .main {
@@ -232,26 +184,6 @@ export default {
 }
 
 
-
-.rating-block {
-  display     : flex;
-  align-items : center;
-  // .rating-block__icon
-  &__icon {
-    margin-right : 3px;
-  }
-
-  // .rating-block__count
-  &__count {
-    font-size   : 10px;
-    font-weight : bold;
-    line-height : 13px;
-    /* Yellow */
-    color       : #f2c94c;
-  }
-}
-
-
 .btn {
   font-size        : 16px;
   line-height      : 21px;
@@ -259,19 +191,18 @@ export default {
   align-items      : flex-end;
   justify-content  : center;
   width            : 100%;
-  /* white */
   margin-top       : 24px;
   padding          : 15px;
   transition       : all 0.32s;
   text-align       : center;
   color            : #fff;
   border-radius    : 8px;
-  background-color : #1f1f1f;
+  background-color : $black-color;
 
   &:active,
   &:focus,
   &:hover {
-    background-color : #59606d;
+    background-color : $grey-color;
   }
 }
 

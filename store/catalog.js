@@ -3,11 +3,11 @@ const host = 'https://frontend-test.idaproject.com';
 const state = () => ({
   productsByCategories: [],
   categories: [],
-  sort: {
+  sortData: {
     title: 'цене',
     name: 'По цене',
     value: 'price',
-    f: (a, b) => a.price - b.price,
+    sortingFunction: (a, b) => a.price - b.price,
   },
 });
 
@@ -21,8 +21,8 @@ const mutations = {
     state.categories = categories;
   },
 
-  setSort(state, sortItem) {
-    state.sort = sortItem;
+  setSortData(state, sortData) {
+    state.sortData = sortData;
   },
 };
 
@@ -40,14 +40,14 @@ const actions = {
     commit('setCategories', categories);
   },
 
-  setSort({ commit }, sortItem) {
-    commit('setSort', sortItem);
+  setSortData({ commit }, sortData) {
+    commit('setSortData', sortData);
   },
 };
 const getters = {
-  productsByCategories: (state) => (id) => state.productsByCategories[id],
+  productsByCategories: (state, getters) => (id) => state.productsByCategories[id],
   categories: (state) => state.categories,
-  sort: (state) => state.sort,
+  sortData: (state) => state.sortData,
 };
 
 export default {

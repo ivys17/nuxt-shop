@@ -6,7 +6,6 @@
             v-for="category in categories">
           <nuxt-link
             :to="`/${category.id}`"
-            exact
             tag="a"
             class="catalog-menu__link"
             active-class="catalog-menu__link--active">
@@ -30,6 +29,15 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped
+       lang="scss">
+.sidebar {
+  // .sidebar__nav
+  &__nav {
+  }
 
+  // .sidebar__catalog-menu
+  &__catalog-menu {
+  }
+}
 </style>
