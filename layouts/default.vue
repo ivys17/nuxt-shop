@@ -17,9 +17,9 @@
 
       </div>
     </div>
-    <app-overlay v-if="isOverlayShown"></app-overlay>
+    <app-overlay v-if="isOverlayShown" ></app-overlay>
     <app-cart :is-cart-shown="isCartShown"></app-cart>
-    <app-sprites></app-sprites>
+    <app-sprites ></app-sprites>
   </div>
 </template>
 <script>
@@ -44,6 +44,7 @@ export default {
     return {
       isOverlayShown: false,
       isCartShown: false,
+      isPageNoScroll: false
     };
   },
 
@@ -57,19 +58,34 @@ export default {
     this.$nuxt.$on('hide-cart', () => {
       this.isOverlayShown = false;
       this.isCartShown = false;
+      this.isPageNoScroll = false;
     });
 
     this.$nuxt.$on('show-cart', () => {
       this.isOverlayShown = true;
       this.isCartShown = true;
+      this.isPageNoScroll = true;
     });
   },
   mounted() {
     this.$store.dispatch('cart/initCart');
   },
+  watch: {
+    isPageNoScroll(value) {
+      if(value) {
+        document.body.classList.add('page-no-scroll');
+      } else {
+        document.body.classList.remove('page-no-scroll');
+      }
+    }
+  }
 };
 </script>
 <style lang="scss">
+
+.page-no-scroll {
+  overflow : hidden;
+}
 
 .page {
   // .page__header
@@ -124,8 +140,6 @@ export default {
   &__sort {
   }
 }
-
-
 
 
 .catalog-menu {

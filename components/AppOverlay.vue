@@ -1,5 +1,5 @@
 <template>
-  <div class="overlay"></div>
+  <div class="overlay" @click="$nuxt.$emit('hide-cart');"></div>
 </template>
 
 <script>
