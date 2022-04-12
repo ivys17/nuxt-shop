@@ -1,54 +1,168 @@
 <template>
-  <header class="page__header header">
-    <div class="container header__container">
-      <a href=""
-         class="header__logo">TestList</a>
-
-      <app-cart-icon></app-cart-icon>
 
 
+  <header :class="{'active': $store.state.isHamburgerMenuOpen}">
+    <div class="header wrapper">
+      <AppHamburgerMenuBtn />
+
+      <div class="header-logo">
+        <nuxt-link to="/">
+          <img alt="logo"
+               src="@/assets/images/icons/logo.png">
+        </nuxt-link>
+      </div>
+      <div class="header-box">
+        <div class="header-contacts">
+          <div class="header-contacts-item">
+            <div class="header-tel">
+              <a href="tel:+79999999999">8 (999) 99-99-99</a>
+            </div>
+            <p>с 10:00 до 24:00</p>
+          </div>
+          <div class="header-login">
+            <client-only>
+              <a v-if="!isAuth"
+                 href
+                 @click.prevent="$store.commit('setModalAuth', true );">Войти
+                <img alt="login"
+                     src="@/assets/images/icons/login.svg"></a>
+
+              <a v-else
+                 href="#"
+                 @click.prevent="modalLogout=true">{{ $store.getters['user/balance'] }}
+                <img alt="ruble"
+                     src="@/assets/images/icons/rub.svg"></a>
+
+            </client-only>
+
+
+          </div>
+        </div>
+        <div class="header-menu">
+          <ul>
+            <li>
+              <a href
+                 @click.prevent.self="closeMenu('/menu')">Меню
+              </a>
+            </li>
+            <li>
+              <a href
+                 @click.prevent.self="closeMenu('/about')">О нас
+              </a>
+            </li>
+            <li>
+              <a href
+                 @click.prevent.self="closeMenu('/delivery')">Доставка
+              </a>
+            </li>
+            <li>
+              <a href
+                 @click.prevent.self="closeMenu('/reviews')">Отзывы
+              </a>
+            </li>
+            <li>
+              <a href
+                 @click.prevent.self="closeMenu('/vacancy')">Вакансии
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="menu-app">
+          <div class="menu-app-logo">
+            <a href="/">
+              <img alt="logo"
+                   src="@/assets/images/icons/logo.png">
+            </a>
+          </div>
+          <div class="menu-app-social social">
+            <ul>
+              <li>
+                <a href="#"
+                   target="_blank">
+                  <img alt="vk"
+                       src="@/assets/images/icons/vk.svg">
+                </a>
+              </li>
+              <li><a href="#"
+                     target="_blank">
+                <img alt="instagram"
+                     src="@/assets/images/icons/insta.svg">
+              </a>
+              </li>
+              <li>
+                <a href="#"
+                   target="_blank">
+                  <img alt="facebook"
+                       src="@/assets/images/icons/facebook.svg">
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="menu-app-company">
+            <p>{{ currentYear }} г.</p>
+          </div>
+          <div class="menu-app-link">
+            <p>
+              <NuxtLink target="_blank"
+                        to="/rule">Политика конфиденциальности
+              </NuxtLink>
+            </p>
+          </div>
+          <div class="app-mob">
+            <p>Устанавливай:</p>
+            <div class="app-mob-box">
+              <a href="#">
+                <img alt="app store"
+                     src="@/assets/images/icons/appstore.png">
+              </a>
+              <a href="#">
+                <img alt="foofle play"
+                     src="@/assets/images/icons/gplay.png">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <CartHeaderButton />
     </div>
+
+    <CatalogMenu />
+    <ModalLogout v-if="modalLogout"
+                 @close="modalLogout=false" />
 
   </header>
 </template>
-
 <script>
-import AppCartIcon from '~/components/AppCartIcon';
+import ModalLogout from '@/components/modal/ModalLogout.vue';
+import AppHamburgerMenuBtn from '~/components/AppHamburgerMenuBtn.vue';
+import CartHeaderButton from '~/components/cart/CartHeaderButton.vue';
+import CatalogMenu from '~/components/CatalogMenu.vue';
 
 export default {
   name: 'AppHeader',
-  components: { AppCartIcon },
+  components: { ModalLogout, AppHamburgerMenuBtn, CartHeaderButton, CatalogMenu },
   data() {
-    return {};
+    return {
+      modalLogout: false,
+    };
   },
+  computed: {
+    isAuth() {
+      return this.$store.getters['user/isAuth'];
+    },
+
+    currentYear() {
+      return new Date().getFullYear();
+    },
+  },
+  methods: {
+    async closeMenu(path) {
+      await this.$router.push(path);
+      if (this.$store.state.isHamburgerMenuOpen) {
+        this.$store.commit('setVisibleHamburgerMenu', false);
+      }
+    },
+  },
+
 };
 </script>
-
-<style lang="scss">
-.header {
-  padding          : 20px 0;
-  background-color : $white-color;
-  border-radius    : 0 0 8px 8px;
-  box-shadow       : 0 4px 16px rgba(0, 0, 0, 0.05);
-
-  // .header__container
-  &__container {
-    display         : flex;
-    align-items     : center;
-    justify-content : space-between;
-  }
-
-  // .header__logo
-  &__logo {
-    font-size       : 22px;
-    font-weight     : bold;
-    line-height     : 28px;
-    text-decoration : none;
-    color           : $grey-color;
-  }
-
-  // .header__cart
-  &__cart {
-  }
-}
-</style>

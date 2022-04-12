@@ -1,58 +1,135 @@
-const host = 'https://frontend-test.idaproject.com';
+import {
+  SECTION_ID_ADD_TO_ORDER,
+  STORE_VERSION,
+  TIME_CAN_SELL_BUSINESS_LUNCH,
+} from '@/config/common.js';
+import { checkWorkTime } from '@/lib/common.js';
 
-const state = () => ({
-  productsByCategories: [],
-  categories: [],
-  sortData: {
-    title: 'цене',
-    name: 'По цене',
-    value: 'price',
-    sortingFunction: (a, b) => a.price - b.price,
-  },
+export const state = () => ({
+  catalog: [],
+  products: [],
+  recommendedProducts: [],
+  stopList: [],
+  likingProduct: [],
+
+  version: STORE_VERSION,
+
 });
 
-const mutations = {
-
-  setProductsByCategories(state, { products, id }) {
-    state.productsByCategories[id] = products.map(el => ({ ...el, photo: `${host}${el.photo}` }));
+export const mutations = {
+  setCatalog(state, payload) {
+    state.catalog = payload;
   },
 
-  setCategories(state, categories) {
-    state.categories = categories;
+  setProducts(state, payload) {
+    state.products = payload;
   },
 
-  setSortData(state, sortData) {
-    state.sortData = sortData;
+  setRecommendedProducts(state, payload) {
+    state.recommendedProducts = payload;
   },
+
+  setStopList(state, payload) {
+    state.stopList = payload;
+  },
+
+  setLikes(state, { id, likes }) {
+
+    const idx = state.products.findIndex(p => p.id === id);
+    if (idx === -1) {
+      return;
+    }
+    const products = [...state.products];
+    const product = products[idx];
+    if (state.likingProduct.includes(product.id)) {
+      return;
+    }
+
+    products[idx].likes = likes;
+    state.products = products;
+    state.likingProduct.push(product.id);
+  },
+
 };
 
-const actions = {
-  async fetchProductsByCategories({ commit }, id) {
-    const response = await fetch(`${host}/api/product?category=${id}`);
-    const products = await response.json();
+export const actions = {
+  async initCatalog({ commit }) {
+    const canBuyBusinessLunch = checkWorkTime(TIME_CAN_SELL_BUSINESS_LUNCH) === true;
 
-    commit('setProductsByCategories', { products, id });
+    try {
+      const { data: { groups, products, stopList } } = await this.$axios.get('/api/catalog');
+
+      const groupWithItems = groups.map(g => {
+        return {
+          ...g,
+          items: products.filter(p => p.parentGroup === g.id),
+        };
+      });
+      const catalog = groupWithItems
+        .filter(g => g.isIncludedInMenu)
+        .filter(g => {
+          //if not business lunch
+          if (g.id !== 'c3142dda-d79f-4769-8a56-6d03f0524ba6') {
+            return true;
+          }
+          return canBuyBusinessLunch;
+        })
+        .map(g => {
+          return {
+            ...g,
+            groups: groupWithItems.filter(el => el.parentGroup === g.id),
+          };
+        });
+
+      const recommendedProducts = catalog.find(el => el.id === SECTION_ID_ADD_TO_ORDER);
+
+      commit('setCatalog', catalog);
+      commit('setProducts', products);
+      commit('setRecommendedProducts', recommendedProducts.items);
+      commit('setStopList', stopList);
+    } catch (e) {
+      console.log(e);
+    }
   },
 
-  async fetchCategories({ commit }) {
-    const response = await fetch(`${host}/api/product-category`);
-    const categories = await response.json();
-    commit('setCategories', categories);
-  },
-
-  setSortData({ commit }, sortData) {
-    commit('setSortData', sortData);
-  },
 };
-const getters = {
-  productsByCategories: (state, getters) => (id) => state.productsByCategories[id],
-  categories: (state) => state.categories,
-  sortData: (state) => state.sortData,
-};
+export const getters = {
+  catalog: ({ catalog }) => catalog,
 
-export default {
-  state,
-  mutations,
-  actions,
-  getters,
+  products: ({ products }) => products,
+
+  catalogIsIncludedInMenu: ({ catalog }) => catalog.filter(group => {
+    const { additionalInfo } = group;
+
+    if (additionalInfo?.deliveryMobile?.isSticker) {
+      return false;
+    }
+
+    if (additionalInfo?.deliveryMobile?.isHide) {
+      return false;
+    }
+
+    return group.isIncludedInMenu;
+  }),
+
+  currentSectionData: ({ catalog }) => slug => catalog.find(s => s.slug === slug),
+
+  currentProductData: ({ products }) => slug => products.find(s => s.slug === slug),
+
+  productByCode: ({ products }) => code => products.find(p => p.code === code),
+
+  productById: ({ products }) => id => products.find(p => p.id === id),
+
+  zoneStopList: ({ stopList }) => (zoneId) => stopList
+    .filter(s => s.deliveryTerminalId === zoneId),
+
+  recommendedProducts: ({ recommendedProducts }, { products }, rootState, rootGetters) => {
+    const lostGift = rootGetters['cart/lostGift'];
+    if (lostGift?.length) {
+      const gifts = products.filter(p => lostGift.includes(p.code));
+      gifts.forEach(product => product.isGift = true);
+      return [...recommendedProducts, ...gifts];
+    }
+    return recommendedProducts;
+  },
 };

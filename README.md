@@ -10,7 +10,7 @@ $ npm install
 $ npm run build
 
 if app is running 
-$ pm2 restart emsam-prod
+$ pm2 restart app-prod
 
 else
 $ pm2 start ./ecosystem.config.cjs
