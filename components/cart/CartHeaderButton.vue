@@ -47,3 +47,72 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.header-cart {
+  font-family : Gilroy-SemiBold, sans-serif;
+  font-size   : 14px;
+  line-height : 17px;
+
+  @media screen and (max-width : 1199px) {
+    position : absolute;
+    top      : 16px;
+    right    : 20px;
+  }
+}
+
+.header-cart a {
+  align-items     : center;
+  justify-content : space-between;
+  width           : 145px;
+  height          : 48px;
+  padding         : 8px 15px 8px 17px;
+  cursor          : pointer;
+  color           : #fff;
+  border-radius   : 12px;
+  background      : #e41d2d;
+}
+
+
+.header-cart .cart-qnt {
+  font-family     : Gilroy-Bold, sans-serif;
+  font-size       : 10px;
+  line-height     : 12px;
+  position        : absolute;
+  top             : -2px;
+  right           : 2px;
+  display         : none;
+  align-items     : center;
+  flex-direction  : column;
+  justify-content : center;
+  width           : 16px;
+  height          : 16px;
+  color           : #091b5b;
+  border-radius   : 50%;
+  background      : #fff;
+}
+
+.header-cart.active .cart-qnt {
+  display : none;
+}
+
+.header-cart.active .cart-bg {
+  background : url(~/assets/images/icons/basket-close.svg) right no-repeat;
+}
+
+
+.header-cart a {
+  display   : flex;
+  flex-wrap : wrap;
+
+  @media screen and (max-width : 1199px) {
+    align-items     : center;
+    flex-direction  : column;
+    justify-content : center;
+    width           : 62px;
+    height          : 56px;
+    padding         : 2px 7px 0 7px;
+  }
+}
+
+
+</style>

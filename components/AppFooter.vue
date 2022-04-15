@@ -15,8 +15,7 @@
       <div class="footer-box footer-center">
         <div class="footer-logo">
           <a href="/">
-            <img alt="logo"
-                 src="@/assets/images/icons/logo.png">
+            ALEONOV
           </a>
         </div>
         <div class="footer-social social">

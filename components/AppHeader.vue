@@ -7,8 +7,7 @@
 
       <div class="header-logo">
         <nuxt-link to="/">
-          <img alt="logo"
-               src="@/assets/images/icons/logo.png">
+          ALEONOV
         </nuxt-link>
       </div>
       <div class="header-box">
@@ -70,8 +69,7 @@
         <div class="menu-app">
           <div class="menu-app-logo">
             <a href="/">
-              <img alt="logo"
-                   src="@/assets/images/icons/logo.png">
+              ALEONOV
             </a>
           </div>
           <div class="menu-app-social social">

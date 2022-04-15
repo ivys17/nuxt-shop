@@ -73,6 +73,8 @@
     "@babel/plugin-proposal-private-methods": "^7.14.5",
     "@types/sequelize": "^4.28.10",
     "nodemon": "^2.0.15",
+    "sass": "^1.50.0",
+    "sass-loader": "^10.2.1",
     "sequelize-auto": "^0.8.4"
   }
 }
