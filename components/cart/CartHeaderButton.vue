@@ -49,7 +49,7 @@ export default {
 </script>
 <style lang="scss">
 .header-cart {
-  font-family : Gilroy-SemiBold, sans-serif;
+
   font-size   : 14px;
   line-height : 17px;
 
@@ -74,7 +74,7 @@ export default {
 
 
 .header-cart .cart-qnt {
-  font-family     : Gilroy-Bold, sans-serif;
+
   font-size       : 10px;
   line-height     : 12px;
   position        : absolute;

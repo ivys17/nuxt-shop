@@ -37,35 +37,7 @@
 
           </div>
         </div>
-        <div class="header-menu">
-          <ul>
-            <li>
-              <a href
-                 @click.prevent.self="closeMenu('/menu')">Меню
-              </a>
-            </li>
-            <li>
-              <a href
-                 @click.prevent.self="closeMenu('/about')">О нас
-              </a>
-            </li>
-            <li>
-              <a href
-                 @click.prevent.self="closeMenu('/delivery')">Доставка
-              </a>
-            </li>
-            <li>
-              <a href
-                 @click.prevent.self="closeMenu('/reviews')">Отзывы
-              </a>
-            </li>
-            <li>
-              <a href
-                 @click.prevent.self="closeMenu('/vacancy')">Вакансии
-              </a>
-            </li>
-          </ul>
-        </div>
+        <AppHeaderMenu />
         <div class="menu-app">
           <div class="menu-app-logo">
             <a href="/">
@@ -135,10 +107,11 @@ import ModalLogout from '@/components/modal/ModalLogout.vue';
 import AppHamburgerMenuBtn from '~/components/AppHamburgerMenuBtn.vue';
 import CartHeaderButton from '~/components/cart/CartHeaderButton.vue';
 import CatalogMenu from '~/components/CatalogMenu.vue';
+import AppHeaderMenu from '~/components/AppHeaderMenu.vue';
 
 export default {
   name: 'AppHeader',
-  components: { ModalLogout, AppHamburgerMenuBtn, CartHeaderButton, CatalogMenu },
+  components: { ModalLogout, AppHamburgerMenuBtn, CartHeaderButton, CatalogMenu, AppHeaderMenu },
   data() {
     return {
       modalLogout: false,
@@ -154,12 +127,7 @@ export default {
     },
   },
   methods: {
-    async closeMenu(path) {
-      await this.$router.push(path);
-      if (this.$store.state.isHamburgerMenuOpen) {
-        this.$store.commit('setVisibleHamburgerMenu', false);
-      }
-    },
+
   },
 
 };

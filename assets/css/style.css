@@ -1,28 +1,3 @@
-@font-face {
-  font-family : Gilroy-Regular;
-  src         : url('~/assets/fonts/Gilroy-Regular.woff');
-}
-
-@font-face {
-  font-family : Gilroy-Medium;
-  src         : url('~/assets/fonts/Gilroy-Medium.woff');
-}
-
-@font-face {
-  font-family : Gilroy-Bold;
-  src         : url('~/assets/fonts/Gilroy-Bold.woff');
-}
-
-@font-face {
-  font-family : Gilroy-ExtraBold;
-  src         : url('~/assets/fonts/Gilroy-ExtraBold.woff');
-}
-
-@font-face {
-  font-family : Gilroy-SemiBold;
-  src         : url('~/assets/fonts/Gilroy-SemiBold.woff');
-}
-
 * {
   box-sizing : border-box;
 }
@@ -30,7 +5,7 @@
 body {
   margin      : 0;
   padding     : 0;
-  font-family : Gilroy-Regular, sans-serif;
+  font-family : 'Roboto', sans-serif;
   font-size   : 16px;
   color       : #2b2d37;
   line-height : 140%;
@@ -122,15 +97,12 @@ header {
   width           : 84%;
 }
 
-.header a {
-  color : #2b2d37;
-}
 
 .header-tel a {
   display     : block;
   font-size   : 22px;
   line-height : 27px;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight : 700;
   margin      : 0 2px;
 }
 
@@ -158,24 +130,6 @@ header {
   z-index    : -1;
 }
 
-.header-menu {
-  font-size   : 16px;
-  font-family : Gilroy-SemiBold, sans-serif;
-  position    : relative;
-}
-
-.header-menu ul{
-  display   : flex;
-  flex-wrap : wrap;
-}
-
-.header-menu ul {
-  justify-content : center;
-}
-
-.header-menu ul li {
-  margin-right : 35px;
-}
 
 .header-login img,
 .login-btn img {
@@ -191,23 +145,12 @@ li.menu-more.open {
   display : none;
 }
 
-.header-menu-hidden {
-  display : none;
-}
-
-.header-menu-hidden.active {
-  display : block;
-}
-
-.header-menu ul li:last-child {
-  margin : 0;
-}
 
 .header-social ul li:first-child {
   margin-right : 28px;
 }
 
-.header-menu ul li.menu-more,
+
 .nav-more {
   color    : #c6ced1;
   position : relative;
@@ -234,7 +177,7 @@ li.menu-more.open {
   text-align  : center;
   font-size   : 14px;
   line-height : 16px;
-  font-family : Gilroy-Medium, sans-serif;
+  font-weight : 500;
   display     : flex;
   align-items : center;
 }
@@ -247,7 +190,7 @@ li.menu-more.open {
   font-size   : 16px;
   line-height : 19px;
   color       : #2b2d37;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight : 700;
 }
 
 .header-login {
@@ -263,7 +206,7 @@ li.menu-more.open {
   color           : #2b2d37;
   padding         : 9px;
   text-align      : center;
-  font-family     : Gilroy-SemiBold, sans-serif;
+  font-weight     : 700;
   display         : flex;
   justify-content : center;
   align-items     : center;
@@ -276,7 +219,6 @@ li.menu-more.open {
 .header-login.active img {
   margin-left : 3px;
 }
-
 
 
 .cart-bg {
@@ -316,7 +258,7 @@ nav {
   position    : relative;
   font-size   : 14px;
   line-height : 16px;
-  font-family : Gilroy-Medium, sans-serif;
+  font-weight : 500;
   margin      : 0 10px;
 }
 
@@ -349,7 +291,7 @@ nav {
 }
 
 .nav-item a.active {
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   color       : #ed7658;
 }
 
@@ -451,7 +393,7 @@ nav {
   font-size      : 20px;
   line-height    : 24px;
   color          : #2b2d37;
-  font-family    : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   margin-top     : 20px;
   text-transform : uppercase;
   display        : block;
@@ -483,7 +425,7 @@ nav {
   font-weight : 500;
   font-size   : 25px;
   line-height : 30px;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   color       : #2b2d37;
 }
 
@@ -491,7 +433,7 @@ nav {
   color           : #d40004;
   font-size       : 14px;
   line-height     : 16px;
-  font-family     : Gilroy-Medium, sans-serif;
+  font-weight: 500;
   text-decoration : line-through;
 }
 
@@ -505,7 +447,7 @@ nav {
   color         : #fff;
   width         : 100%;
   height        : 36px;
-  font-family   : Gilroy-Bold, sans-serif;
+  font-weight   : 700;
   cursor        : pointer;
   padding       : 9px 0;
 }
@@ -536,7 +478,7 @@ nav {
   font-size   : 18px;
   line-height : 21px;
   color       : #2b2d37;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   background  : none;
   border      : 0;
   outline     : 0;
@@ -565,7 +507,7 @@ nav {
 
 .title {
   text-align  : center;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .catalog .title {
@@ -617,7 +559,7 @@ h1,
   text-align     : center;
   background     : #ed1c24;
   color          : #fff;
-  font-family    : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .product {
@@ -654,7 +596,7 @@ h1,
   color       : #2b2a29;
   font-size   : 16px;
   line-height : 19px;
-  font-family : Gilroy-SemiBold, sans-serif;
+  font-weight: 700;
 }
 
 .product-box.wrapper {
@@ -714,7 +656,7 @@ h1,
 .product-title h1 {
   font-size   : 25px;
   line-height : 30px;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   color       : #2b2d37;
 }
 
@@ -758,7 +700,7 @@ footer {
 .price {
   font-size   : 25px;
   line-height : 30px;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   color       : #2b2d37;
 }
 
@@ -769,7 +711,7 @@ footer {
   height          : 50px;
   border-radius   : 12px;
   padding         : 0 0 0 18px;
-  font-family     : Gilroy-SemiBold, sans-serif;
+  font-weight     : 700;
   display         : flex;
   flex-wrap       : wrap;
   align-items     : center;
@@ -895,7 +837,7 @@ select {
   position    : relative;
   font-size   : 13px;
   line-height : 15px;
-  font-family : Gilroy-Medium, sans-serif;
+  font-weight : 500;
   color       : #404353;
 }
 
@@ -922,7 +864,7 @@ select {
   justify-content : center;
   align-items     : center;
   text-align      : center;
-  font-family     : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   padding         : 30px 10px;
 }
 
@@ -973,19 +915,19 @@ select {
   cursor         : pointer;
   width          : 181px;
   text-transform : uppercase;
-  font-family    : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .modal-info {
   font-size      : 18px;
   line-height    : 22px;
   text-align     : center;
-  font-family    : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   text-transform : uppercase;
 }
 
 #bonusPizzaModal .modal-info {
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .modal-close {
@@ -1007,7 +949,7 @@ select {
 .modal-phone-arrea input::placeholder {
   font-size   : 18px;
   line-height : 21px;
-  font-family : Gilroy-Regular, sans-serif;
+
   color       : #404353;
 }
 
@@ -1022,7 +964,7 @@ select {
 .modal-phone-arrea button {
   font-size      : 14px;
   line-height    : 17px;
-  font-family    : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   color          : #fff;
   text-transform : uppercase;
   background     : #e41d2d;
@@ -1091,7 +1033,7 @@ select {
 
 .components-title {
   font-size   : 16px;
-  font-family : Gilroy-SemiBold, sans-serif;
+  font-weight: 700;
 }
 
 .components-list {
@@ -1111,7 +1053,7 @@ select {
 
 .components-item p {
   width       : 68%;
-  font-family : Gilroy-SemiBold, sans-serif;
+  font-weight: 700;
 }
 
 .components-item label {
@@ -1124,7 +1066,7 @@ select {
   color           : #333;
   font-size       : 13px;
   line-height     : 15px;
-  font-family     : Gilroy-Regular, sans-serif;
+
   width           : 100%;
 }
 
@@ -1168,7 +1110,7 @@ select {
 }
 
 .components-item label input:checked ~ span.radiomark {
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   border      : 1px solid #e41d2d;
 }
 
@@ -1206,7 +1148,7 @@ select {
   background    : #e41d2d;
   border        : 0;
   color         : #fff;
-  font-family   : Gilroy-Bold, sans-serif;
+  font-weight   : 700;
   position      : relative;
   padding       : 9px 15px 9px 15px;
   text-align    : left;
@@ -1244,7 +1186,7 @@ select {
 .modal-options-title {
   font-size      : 20px;
   line-height    : 24px;
-  font-family    : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   text-transform : uppercase;
 }
 
@@ -1255,7 +1197,7 @@ select {
 
 .modal-components .components-price {
   color       : #404353;
-  font-family : Gilroy-Regular, sans-serif;
+
   min-width   : 35px;
   text-align  : right;
 }
@@ -1264,7 +1206,7 @@ select {
   display     : block;
   font-size   : 25px;
   line-height : 30px;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .components-result {
@@ -1346,7 +1288,7 @@ select {
   font-size      : 20px;
   line-height    : 24px;
   text-transform : uppercase;
-  font-family    : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 #modal-diametr .addcart {
@@ -1369,7 +1311,7 @@ select {
   padding         : 20px 105px;
   position        : relative;
   color           : #2b2d37;
-  font-family     : Gilroy-Regular, sans-serif;
+
 }
 
 .footer p {
@@ -1397,7 +1339,7 @@ select {
 }
 
 .footer-company {
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   font-size   : 18px;
   line-height : 22px;
 }
@@ -1416,12 +1358,12 @@ select {
   text-align  : right;
   font-size   : 16px;
   line-height : 19px;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .footer-schedule {
   font-size   : 16px;
-  font-family : Gilroy-Medium, sans-serif;
+  font-weight : 500;
 }
 
 .footer-tel a {
@@ -1429,7 +1371,7 @@ select {
   color       : #404353;
   font-size   : 22px;
   line-height : 27px;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .social ul {
@@ -1463,7 +1405,7 @@ select {
   color           : #fff;
   font-size       : 10px;
   text-transform  : uppercase;
-  font-family     : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .login-img,
@@ -1507,7 +1449,7 @@ select {
   font-size     : 25px;
   line-height   : 30px;
   color         : #a6a7ab;
-  font-family   : Gilroy-Bold, sans-serif;
+  font-weight   : 700;
   margin-top    : 12px;
   border-bottom : 1px solid #a6a7ab;
   text-align    : center;
@@ -1525,7 +1467,7 @@ select {
 .address-info h4 {
   font-size   : 24px;
   line-height : 29px;
-  font-family : Gilroy-Medium, sans-serif;
+  font-weight : 500;
 }
 
 #checkResult {
@@ -1566,7 +1508,7 @@ select {
   border      : 1px solid #e7eef1;
   width       : 100%;
   text-align  : center;
-  font-family : Gilroy-SemiBold, sans-serif;
+  font-weight: 700;
   font-size   : 18px;
   line-height : 23px;
   color       : #282624;
@@ -1577,7 +1519,7 @@ select {
 }
 
 .address-info input::placeholder {
-  font-family : Gilroy-SemiBold, sans-serif;
+  font-weight: 700;
   font-size   : 18px;
   color       : #282624;
   opacity     : 1;
@@ -1758,7 +1700,7 @@ span#checkFail {
   border      : 1px solid #e7eef1;
   width       : 100%;
   text-align  : center;
-  font-family : Gilroy-SemiBold, sans-serif;
+  font-weight: 700;
   font-size   : 14px;
   line-height : 21px;
   color       : #404353;
@@ -1786,7 +1728,7 @@ span#checkFail {
   color       : #404353;
   max-width   : 432px;
   margin      : 10px auto 0 auto;
-  font-family : Gilroy-Medium, sans-serif;
+  font-weight : 500;
 }
 
 .complete-desc p {
@@ -1799,7 +1741,7 @@ span#checkFail {
 
 .complete-desc a,
 .complete-desc span {
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   color       : #404353;
 }
 
@@ -1867,7 +1809,7 @@ html,
   ---------------------*/
 .history {
   padding     : 32px 0;
-  font-family : Gilroy-Medium, sans-serif;
+  font-weight : 500;
 }
 
 .history .title {
@@ -1892,7 +1834,7 @@ html,
   font-size      : 13px;
   text-transform : uppercase;
   color          : #2b2d37;
-  font-family    : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   position       : absolute;
   right          : 80px;
   top            : -3px;
@@ -1984,7 +1926,7 @@ html,
   margin-bottom : 18px;
   text-align    : center;
   font-size     : 16px;
-  font-family   : Gilroy-Bold, sans-serif;
+  font-weight   : 700;
 }
 
 .history-item > div > .col-appellation > p,
@@ -2024,7 +1966,7 @@ html,
   font-size     : 14px;
   line-height   : 17px;
   color         : rgba(255, 255, 255, 0.5);
-  font-family   : Gilroy-SemiBold, sans-serif;
+  font-weight: 700;
   display       : block;
   text-align    : center;
   padding       : 12px;
@@ -2059,7 +2001,7 @@ html,
   text-align      : center;
   color           : #fff;
   font-size       : 22px;
-  font-family     : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   display         : flex;
   flex-direction  : column;
   justify-content : center;
@@ -2176,7 +2118,7 @@ ul.slider-list {
   line-height : 20px;
   color       : #e41d2d;
   text-align  : center;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   margin-top  : 2px;
 }
 
@@ -2221,7 +2163,7 @@ ul.slider-list {
 .basket-product-name h4 {
   font-size      : 18px;
   text-transform : uppercase;
-  font-family    : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .basket-desc p {
@@ -2238,7 +2180,7 @@ ul.slider-list {
   justify-content : space-between;
   align-items     : center;
   font-size       : 20px;
-  font-family     : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .basket-price {
@@ -2247,7 +2189,7 @@ ul.slider-list {
   justify-content : space-between;
   width           : 160px;
   font-size       : 20px;
-  font-family     : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .basket-product-info {
@@ -2287,7 +2229,7 @@ ul.slider-list {
 .recomend-title h3 {
   font-size      : 25px;
   text-transform : uppercase;
-  font-family    : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .recomend-list {
@@ -2326,7 +2268,7 @@ ul.slider-list {
 .recomend-name h4 {
   font-size      : 14px;
   text-transform : uppercase;
-  font-family    : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   line-height    : normal;
   min-height     : 36px;
 }
@@ -2358,7 +2300,7 @@ ul.slider-list {
 
 .recomend-price {
   font-size   : 12px;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   margin-top  : 10px;
 }
 
@@ -2380,7 +2322,7 @@ ul.slider-list {
 }
 
 .cost-info p:nth-child(2) {
-  font-family : Gilroy-Medium, sans-serif;
+  font-weight : 500;
 }
 
 .cost-info span {
@@ -2400,7 +2342,7 @@ ul.slider-list {
 .cost-info .cost-price span {
   font-size   : 26px;
   color       : #16244a;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .empty {
@@ -2420,7 +2362,7 @@ ul.slider-list {
   font-size      : 22px;
   line-height    : 27px;
   text-transform : uppercase;
-  font-family    : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   margin         : 57px 0;
 }
 
@@ -2441,7 +2383,7 @@ ul.slider-list {
 
 .basket-bonus-info {
   font-size     : 16px;
-  font-family   : Gilroy-Bold, sans-serif;
+  font-weight   : 700;
   margin-bottom : 20px;
 }
 
@@ -2458,14 +2400,14 @@ ul.slider-list {
 
 .basket-bonus-value {
   color       : #323241;
-  font-family : Gilroy-Medium, sans-serif;
+  font-weight : 500;
 }
 
 .basket-bonus-value span {
   color       : #e41d2d;
   display     : inline-flex;
   align-items : center;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .basket-bonus-value span::after {
@@ -2487,7 +2429,7 @@ ul.slider-list {
   border        : 0;
   background    : none;
   color         : rgba(50, 50, 65, 0.5);
-  font-family   : Gilroy-Regular, sans-serif;
+
   font-size     : 16px;
   padding       : 15px 10px 15px 30px;
   width         : 100%;
@@ -2538,7 +2480,7 @@ ul.slider-list {
   padding        : 18px 10px 18px 24px;
   width          : 100%;
   border         : 0;
-  font-family    : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   height         : 50px;
   background     : #e41d2d;
 }
@@ -2568,7 +2510,7 @@ ul.slider-list {
   position    : absolute;
   top         : 15px;
   left        : 180px;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .back-basket a {
@@ -2587,7 +2529,7 @@ ul.slider-list {
 
 .modal-login-title,
 .modal-city-title {
-  font-family    : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   text-align     : center;
   font-size      : 24px;
   text-transform : uppercase;
@@ -2605,7 +2547,7 @@ ul.slider-list {
   border-radius : 10px;
   font-size     : 18px;
   color         : #404353;
-  font-family   : Gilroy-SemiBold, sans-serif;
+  font-weight: 700;
   padding       : 17px 30px;
   opacity       : 1;
   border        : 0;
@@ -2625,7 +2567,7 @@ ul.slider-list {
   text-align     : left;
   color          : #fff;
   text-transform : uppercase;
-  font-family    : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   margin         : 44px auto 0 auto;
   padding        : 17px 40px;
   border         : 0;
@@ -2657,7 +2599,7 @@ ul.slider-list {
 .complete-app {
   margin-top  : 38px;
   font-size   : 14px;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .complete-app-list {
@@ -2686,12 +2628,12 @@ ul.slider-list {
 .history-login-info {
   font-size   : 25px;
   line-height : 29px;
-  font-family : Gilroy-Medium, sans-serif;
+  font-weight : 500;
   margin-top  : 20px;
 }
 
 .history-login-info span {
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   color       : #e41d2d;
 }
 
@@ -2699,7 +2641,7 @@ ul.slider-list {
   margin      : 60px 0 50px 0;
   font-size   : 25px;
   line-height : 30px;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .history-login-btn span {
@@ -2711,7 +2653,7 @@ ul.slider-list {
   color          : #fff;
   font-size      : 16px;
   line-height    : 19px;
-  font-family    : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   display        : block;
   padding        : 19px 20px 19px 38px;
   position       : relative;
@@ -2738,7 +2680,7 @@ ul.slider-list {
   font-size     : 14px;
   line-height   : 17px;
   color         : #e41d2d;
-  font-family   : Gilroy-Bold, sans-serif;
+  font-weight   : 700;
   border-bottom : 1px solid;
 }
 
@@ -2750,7 +2692,7 @@ ul.slider-list {
 .catalog-item-other.catalog-item .addcart div {
   font-size   : 12px;
   line-height : 14px;
-  font-family : Gilroy-Medium, sans-serif;
+  font-weight : 500;
 }
 
 .basket-agree input[type='checkbox'] {
@@ -2802,7 +2744,6 @@ ul.slider-list {
 }
 
 
-
 .modal-city-info {
   margin-top : 35px;
 }
@@ -2819,7 +2760,7 @@ ul.slider-list {
   font-size     : 18px;
   line-height   : 21px;
   color         : #404353;
-  font-family   : Gilroy-SemiBold, sans-serif;
+  font-weight: 700;
   cursor        : pointer;
   position      : relative;
   z-index       : 1;
@@ -2871,7 +2812,7 @@ ul.slider-list {
   cursor         : pointer;
   font-size      : 14px;
   line-height    : 17px;
-  font-family    : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   border         : 0;
   margin         : 0 auto;
 }
@@ -2928,7 +2869,7 @@ ul.slider-list {
   line-height : 17px;
   padding     : 0 33px;
   text-align  : center;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   color       : #2b2a29;
 }
 
@@ -2943,7 +2884,7 @@ ul.slider-list {
   padding       : 17px 10px;
   font-size     : 14px;
   line-height   : 17px;
-  font-family   : Gilroy-Bold, sans-serif;
+  font-weight   : 700;
   color         : #fff;
   background    : #e41d2d;
   border-radius : 15px;
@@ -2986,7 +2927,7 @@ ul.slider-list {
 .promo-title {
   font-size   : 18px;
   line-height : 22px;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .promo-info {
@@ -3004,7 +2945,7 @@ ul.slider-list {
   display     : flex;
   align-items : center;
   color       : #2b2d37;
-  font-family : Gilroy-Medium, sans-serif;
+  font-weight : 500;
   font-size   : 16px;
   line-height : 19px;
   margin-top  : 20px;
@@ -3055,7 +2996,7 @@ ul.slider-list {
   color         : #2b2d37;
   font-size     : 18px;
   margin-bottom : 20px;
-  font-family   : Gilroy-Bold, sans-serif;
+  font-weight   : 700;
 }
 
 .order-fields .field > input,
@@ -3066,7 +3007,7 @@ ul.slider-list {
   border        : 1px solid #e7eef1;
   border-radius : 10px;
   color         : rgba(50, 50, 65, 0.5);
-  font-family   : Gilroy-Regular, sans-serif;
+
   opacity       : 1;
   width         : 100%;
   font-size     : 16px;
@@ -3078,7 +3019,7 @@ ul.slider-list {
   border        : 1px solid #e7eef1;
   border-radius : 10px;
   color         : rgba(50, 50, 65, 0.5);
-  font-family   : Gilroy-Regular, sans-serif;
+
   opacity       : 1;
   width         : 100%;
   font-size     : 16px;
@@ -3129,7 +3070,7 @@ ul.slider-list {
   color       : #404353;
   font-size   : 16px;
   line-height : 19px;
-  font-family : Gilroy-Medium, sans-serif;
+  font-weight : 500;
   position    : relative;
   display     : flex;
   align-items : center;
@@ -3192,7 +3133,7 @@ ul.slider-list {
 }
 
 .field-address p {
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .field-delivery .field-flex {
@@ -3265,13 +3206,13 @@ ul.slider-list {
   color       : #404353;
   padding     : 20px 10px;
   cursor      : pointer;
-  font-family : Gilroy-Medium, sans-serif;
+  font-weight : 500;
 }
 
 .field-radio input:checked ~ span {
   background  : #e41d2d;
   color       : #fff;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .field-flex.field-time {
@@ -3292,7 +3233,7 @@ ul.slider-list {
   font-size    : 14px;
   line-height  : 16px;
   padding-left : 20px;
-  font-family  : Gilroy-Medium, sans-serif;
+  font-weight: 500;
 }
 
 .field-arrea {
@@ -3307,7 +3248,7 @@ ul.slider-list {
   width         : 100%;
   max-width     : 100%;
   height        : 142px;
-  font-family   : Gilroy-Regular, sans-serif;
+
   color         : rgba(50, 50, 65, 0.5);
 }
 
@@ -3325,7 +3266,7 @@ ul.slider-list {
 
 .order-cutlery-title {
   font-size   : 18px;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .cutlery-box {
@@ -3353,7 +3294,7 @@ ul.slider-list {
 .cutlery-name {
   font-size     : 14px;
   color         : #323241;
-  font-family   : Gilroy-Bold, sans-serif;
+  font-weight   : 700;
   margin-bottom : 10px;
 }
 
@@ -3366,7 +3307,7 @@ ul.slider-list {
   margin-top  : 10px;
   align-items : center;
   font-size   : 12px;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .order-btn button,
@@ -3379,7 +3320,7 @@ ul.slider-list {
   border        : 0;
   padding       : 17px;
   font-size     : 14px;
-  font-family   : Gilroy-Bold, sans-serif;
+  font-weight   : 700;
 }
 
 .cost-btn a {
@@ -3395,7 +3336,7 @@ ul.slider-list {
 .order-price span {
   font-size   : 30px;
   color       : #16244a;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .mobile-back {
@@ -3419,14 +3360,14 @@ span.mobile-back-img {
 .mobile-back a {
   color       : #e41d2d;
   font-size   : 12px;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .call-radio {
   position    : relative;
   margin-top  : 20px;
   font-size   : 13px;
-  font-family : Gilroy-Medium, sans-serif;
+  font-weight : 500;
 }
 
 .call-radio label {
@@ -3442,7 +3383,7 @@ span.mobile-back-img {
   height       : 20px;
   margin-right : 9px;
   font-size    : 13px;
-  font-family  : Gilroy-Medium, sans-serif;
+  font-weight: 500;
 }
 
 .call-radio label .radiomark:after {
@@ -3462,7 +3403,7 @@ span.mobile-back-img {
 
 .call-title {
   font-size   : 18px;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .components-item label input:checked ~ .radiomark:after,
@@ -3518,7 +3459,7 @@ span.mobile-back-img {
 }
 
 .field-rest > p {
-  font-family   : Gilroy-Bold, sans-serif;
+  font-weight   : 700;
   margin-bottom : 20px;
 }
 
@@ -3565,7 +3506,7 @@ span.mobile-back-img {
   line-height : 16px;
   border-top  : 1px solid #e7eef1;
   cursor      : pointer;
-  font-family : Gilroy-Medium, sans-serif;
+  font-weight : 500;
 }
 
 .dropdown li.active,
@@ -3593,7 +3534,7 @@ span.mobile-back-img {
   font-size       : 14px;
   line-height     : 17px;
   padding         : 9px 9px 9px 9px;
-  font-family     : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .btn-more a span {
@@ -3656,7 +3597,7 @@ span.mobile-back-img {
 }
 
 .present-text span {
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .footer-app {
@@ -3689,7 +3630,7 @@ span.mobile-back-img {
   font-size      : 25px;
   line-height    : 30px;
   text-transform : uppercase;
-  font-family    : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   margin-bottom  : 25px;
   margin-top     : 40px;
 }
@@ -3724,7 +3665,7 @@ span.mobile-back-img {
 }
 
 .content-bottom-info b {
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .content-bottom-links {
@@ -3750,7 +3691,7 @@ span.mobile-back-img {
   font-size       : 16px;
   line-height     : 19px;
   color           : rgba(50, 50, 65, 0.8);
-  font-family     : Gilroy-Medium, sans-serif;
+  font-weight: 500;
   margin-top      : 30px;
 }
 
@@ -3785,13 +3726,13 @@ span.mobile-back-img {
 .franchising-title {
   font-size     : 25px;
   line-height   : 30px;
-  font-family   : Gilroy-Bold, sans-serif;
+  font-weight   : 700;
   margin-bottom : 10px;
 }
 
 .franchising-contacts {
   margin-top  : 30px;
-  font-family : Gilroy-Medium, sans-serif;
+  font-weight : 500;
 }
 
 .franchising-contacts p {
@@ -3799,7 +3740,7 @@ span.mobile-back-img {
 }
 
 .franchising-contacts p:first-child {
-  font-family   : Gilroy-Bold, sans-serif;
+  font-weight   : 700;
   margin-bottom : 20px;
 }
 
@@ -3815,7 +3756,7 @@ span.mobile-back-img {
 .about-heading-info {
   font-size   : 14px;
   line-height : 16px;
-  font-family : Gilroy-Medium, sans-serif;
+  font-weight : 500;
 }
 
 .about-heading-info::before {
@@ -3835,7 +3776,7 @@ span.mobile-back-img {
   font-size   : 22px;
   line-height : 27px;
   color       : #2b2d37;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .about-left.about-img {
@@ -3867,7 +3808,7 @@ span.mobile-back-img {
 }
 
 .about-info span {
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .about-3d {
@@ -3889,7 +3830,7 @@ span.mobile-back-img {
   font-size     : 16px;
   line-height   : 19px;
   color         : #5b5d69;
-  font-family   : Gilroy-Bold, sans-serif;
+  font-weight   : 700;
 }
 
 .about-map iframe {
@@ -3909,7 +3850,7 @@ span.mobile-back-img {
   font-size     : 16px;
   line-height   : 19px;
   color         : #fff;
-  font-family   : Gilroy-Bold, sans-serif;
+  font-weight   : 700;
   padding       : 18px;
   text-align    : center;
   margin        : 0 auto;
@@ -3926,7 +3867,7 @@ span.mobile-back-img {
   font-size      : 25px;
   line-height    : 30px;
   text-transform : uppercase;
-  font-family    : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   margin         : 25px 0;
 }
 
@@ -3935,7 +3876,7 @@ span.mobile-back-img {
 }
 
 .about-bottom p b {
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .delivery {
@@ -3973,7 +3914,7 @@ span.mobile-back-img {
 .delivery-time > p {
   font-size   : 22px;
   line-height : 27px;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .time-item {
@@ -3989,7 +3930,7 @@ span.mobile-back-img {
 .time-item p:first-child {
   font-size     : 25px;
   line-height   : 30px;
-  font-family   : Gilroy-Bold, sans-serif;
+  font-weight   : 700;
   margin-bottom : 5px;
 }
 
@@ -4006,7 +3947,7 @@ span.mobile-back-img {
 .delivery-price-item > p {
   font-size   : 22px;
   line-height : 27px;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .delivery-price-item table {
@@ -4082,7 +4023,7 @@ span.mobile-back-img {
 
 .delivery-bottom h4 {
   margin         : 20px 0;
-  font-family    : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   text-transform : uppercase;
   font-size      : 25px;
   line-height    : 30px;
@@ -4154,7 +4095,7 @@ span.mobile-back-img {
 .vacancy-btn {
   margin-top  : 50px;
   width       : 227px;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   font-size   : 16px;
   line-height : 19px;
 }
@@ -4262,7 +4203,7 @@ span.mobile-back-img {
   text-transform : uppercase;
   font-size      : 40px;
   line-height    : 48px;
-  font-family    : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   margin-bottom  : 44px;
 }
 
@@ -4288,7 +4229,7 @@ span.mobile-back-img {
   font-size          : 16px;
   line-height        : 19px;
   color              : #323241;
-  font-family        : Gilroy-Medium, sans-serif;
+  font-weight: 500;
   outline            : 0;
   border             : 1px solid #dbe5e9;
   border-radius      : 10px;
@@ -4340,7 +4281,7 @@ span.mobile-back-img {
   line-height   : 22px;
   color         : #fff;
   padding       : 20px;
-  font-family   : Gilroy-Bold, sans-serif;
+  font-weight   : 700;
   outline       : 0;
   border        : 0;
 }
@@ -4354,7 +4295,7 @@ span.mobile-back-img {
   display        : block;
   font-size      : 16px;
   margin-top     : 8px;
-  font-family    : Gilroy-Medium, sans-serif;
+  font-weight: 500;
   text-transform : none;
   line-height    : normal;
   padding        : 0 10px;
@@ -4369,7 +4310,7 @@ span.mobile-back-img {
 .modal-sms-arrea input {
   font-size   : 18px;
   line-height : 21px;
-  font-family : Gilroy-Regular, sans-serif;
+
   color       : #404353;
   background  : #fff;
   padding     : 23px 20px 23px 59px;
@@ -4379,7 +4320,7 @@ span.mobile-back-img {
 }
 
 .modal-sms-arrea input::placeholder {
-  font-family : Gilroy-Regular, sans-serif;
+
   color       : #404353;
   opacity     : 1;
 }
@@ -4387,7 +4328,7 @@ span.mobile-back-img {
 .modal-sms-arrea button {
   font-size       : 14px;
   line-height     : 17px;
-  font-family     : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   color           : #fff;
   text-transform  : uppercase;
   background      : #e41d2d;
@@ -4440,7 +4381,7 @@ span.mobile-back-img {
 
 .cart-bonus-text span {
   color        : #9ccabd;
-  font-family  : Gilroy-Bold, sans-serif;
+  font-weight: 700;
   margin-right : 2px;
 }
 
@@ -4531,7 +4472,7 @@ span.mobile-back-img {
   font-size           : 16px;
   line-height         : 19px;
   color               : #2b2d37;
-  font-family         : Gilroy-Regular, sans-serif;
+
   border              : 1px solid #d2dbdf;
   border-radius       : 10px;
   background-image    : url(../images/icons/select.svg);
@@ -4554,7 +4495,7 @@ span.mobile-back-img {
 .review-rating-item > p {
   font-size   : 40px;
   line-height : 48px;
-  font-family : Gilroy-Bold, sans-serif;
+  font-weight: 700;
 }
 
 .review-rating-list {
@@ -4597,7 +4538,7 @@ span.mobile-back-img {
 
 .review-form-recomend {
   margin      : 37px 0;
-  font-family : Gilroy-Medium, sans-serif;
+  font-weight : 500;
 }
 
 .review-form-recomend > p {
@@ -4620,7 +4561,7 @@ span.mobile-back-img {
   font-size   : 22px;
   line-height : 26px;
   color       : #2b2d37;
-  font-family : Gilroy-Medium, sans-serif;
+  font-weight : 500;
   cursor      : pointer;
 }
 
@@ -4658,7 +4599,7 @@ span.mobile-back-img {
   font-size     : 16px;
   line-height   : 19px;
   color         : #2b2d37;
-  font-family   : Gilroy-Regular, sans-serif;
+
   border        : 1px solid #d2dbdf;
   border-radius : 10px;
   background    : none;
@@ -4701,7 +4642,7 @@ span.mobile-back-img {
   border        : 0;
   display       : block;
   width         : 100%;
-  font-family   : Gilroy-Bold, sans-serif;
+  font-weight   : 700;
 }
 
 .catalog-item__stickers {
@@ -4867,9 +4808,6 @@ span.mobile-back-img {
     font-size : 20px;
   }
 
-  .header-menu {
-    width : auto;
-  }
 
   .header-social ul li:first-child {
     margin-right : 15px;
@@ -5038,7 +4976,6 @@ span.mobile-back-img {
   }
 
 
-
   .cart-text {
     padding     : 3px 0 0 0;
     margin-top  : 5px;
@@ -5101,7 +5038,6 @@ span.mobile-back-img {
   }
 
 
-
   .hamburger-block {
     position        : absolute;
     top             : 25px;
@@ -5160,7 +5096,7 @@ span.mobile-back-img {
     font-size   : 10px;
     line-height : 12px;
     color       : #2b2d37;
-    font-family : Gilroy-Bold, sans-serif;
+    font-weight: 700;
   }
 
   .header-box {
@@ -5193,22 +5129,6 @@ span.mobile-back-img {
     display : block;
   }
 
-  .header-menu {
-    padding    : 25px 35px 0 35px;
-    border-top : 1px solid #e7eef1;
-  }
-
-  .header-menu ul li {
-    margin : 0 0 25px 0;
-  }
-
-  .header-menu ul li:last-child {
-    margin : 0;
-  }
-
-  .header-menu ul {
-    display : block;
-  }
 
   .header.wrapper {
     position   : relative;
@@ -5285,7 +5205,7 @@ span.mobile-back-img {
   }
 
   .menu-app-company {
-    font-family : Gilroy-Bold, sans-serif;
+    font-weight: 700;
     font-size   : 18px;
     line-height : 22px;
     margin-top  : 41px;
@@ -5319,7 +5239,7 @@ span.mobile-back-img {
 
   .app-mob {
     margin-top  : 39px;
-    font-family : Gilroy-Bold, sans-serif;
+    font-weight: 700;
     font-size   : 16px;
     line-height : 19px;
   }
@@ -5384,7 +5304,7 @@ span.mobile-back-img {
   .header-menu .menu-more-list li {
     border      : 0;
     font-size   : 16px;
-    font-family : Gilroy-SemiBold, sans-serif;
+    font-weight: 700;
     padding     : 0;
   }
 
@@ -5466,7 +5386,7 @@ span.mobile-back-img {
     background      : #e73c32;
     border-radius   : 15px;
     color           : #fff;
-    font-family     : Gilroy-Bold, sans-serif;
+    font-weight: 700;
     font-size       : 16px;
     line-height     : 19px;
     text-align      : center;
@@ -5539,7 +5459,7 @@ span.mobile-back-img {
     min-height     : 100vh;
     background     : #e73c32;
     overflow       : scroll;
-    font-family    : Gilroy-Bold, sans-serif;
+    font-weight: 700;
     padding-top    : 77px;
     padding-bottom : 70px;
   }
@@ -5558,7 +5478,7 @@ span.mobile-back-img {
     font-size      : 15px;
     line-height    : 22px;
     display        : block;
-    font-family    : Gilroy-SemiBold, sans-serif;
+    font-weight: 700;
     text-transform : uppercase;
   }
 
@@ -5885,7 +5805,7 @@ span.mobile-back-img {
     margin-bottom : 33px;
     font-size     : 25px;
     line-height   : 30px;
-    font-family   : Gilroy-Bold, sans-serif;
+    font-weight   : 700;
     display       : block;
   }
 
@@ -7017,7 +6937,7 @@ span.mobile-back-img {
   #checkResult {
     font-size   : 12px;
     line-height : 14px;
-    font-family : Gilroy-Regular, sans-serif;
+
   }
 
   .ui.search.dropdown > .text,

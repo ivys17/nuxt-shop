@@ -37,7 +37,7 @@ export default {
   font-size      : 20px;
   line-height    : normal;
   text-align     : center;
-  font-family    : Gilroy-Bold, sans-serif;
+
   text-transform : uppercase;
 }
 
