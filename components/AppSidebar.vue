@@ -2,35 +2,47 @@
   <div
     :class="{'active': $store.state.isHamburgerMenuOpen}"
     class="sidebar"
-    @click="$store.commit('setVisibleHamburgerMenu', false)">
+    @click="$store.commit('setVisibleHamburgerMenu', false)"
+  >
     <div class="sidebar-box">
       <div class="sidebar-close">
-        <img alt="close"
-             src="@/assets/images/icons/close2.svg">
+        <img
+          alt="close"
+          src="@/assets/images/icons/close2.svg"
+        >
       </div>
       <div class="sidebar-menu">
         <ul>
           <li
             v-for="item in menuItems"
-            :key="item.id">
+            :key="item.id"
+          >
             <nuxt-link
               :to="`/#catalog-${item.slug}`"
-              active-class="active">{{ item.name }}
+              active-class="active"
+            >
+              {{ item.name }}
             </nuxt-link>
           </li>
-
         </ul>
       </div>
       <div class="sidebar-links">
         <ul>
           <li>
-            <nuxt-link to="/">Главная</nuxt-link>
+            <nuxt-link to="/">
+              Главная
+            </nuxt-link>
           </li>
           <li>
-            <a href
-               @click.prevent="showJivosite">Оставить отзыв</a></li>
+            <a
+              href
+              @click.prevent="showJivosite"
+            >Оставить отзыв</a>
+          </li>
           <li>
-            <nuxt-link to="/delivery">Условия доставки</nuxt-link>
+            <nuxt-link to="/delivery">
+              Условия доставки
+            </nuxt-link>
           </li>
         </ul>
       </div>
@@ -41,24 +53,29 @@
               width="17"
               height="22"
               alt="login"
-                 src="@/assets/images/icons/login.svg">
+              src="@/assets/images/icons/login.svg"
+            >
           </div>
 
           <client-only>
             <div
               v-if="$store.getters['user/isAuth']"
-              class="login-text">
+              class="login-text"
+            >
               <span @click="$router.push('/account')">{{ $store.getters['user/userName'] }}</span>
-              <span class="login-text__title"
-                    @click="$store.dispatch('user/logoutUser')">(выйти)</span>
+              <span
+                class="login-text__title"
+                @click="$store.dispatch('user/logoutUser')"
+              >(выйти)</span>
             </div>
             <div
               v-else
               class="login-text"
-              @click="$store.commit('setModalAuth', true)">Личный кабинет
+              @click="$store.commit('setModalAuth', true)"
+            >
+              Личный кабинет
             </div>
           </client-only>
-
         </div>
       </div>
       <div class="header-contacts">
@@ -66,27 +83,35 @@
           <a href="tel:+73433725199"><span>(343)</span> 372-51-99</a>
         </div>
         <div class="header-contacts-text">
-          <p @click="callback">заказать обратный звонок</p>
+          <p @click="callback">
+            заказать обратный звонок
+          </p>
         </div>
       </div>
       <div class="sidebar-messenger">
         <ul>
           <li>
             <a href="#">
-              <img alt="viber"
-                   src="@/assets/images/icons/viber.svg">
+              <img
+                alt="viber"
+                src="@/assets/images/icons/viber.svg"
+              >
             </a>
           </li>
           <li>
             <a href="#">
-              <img alt="whatsapp"
-                   src="@/assets/images/icons/whatsapp.svg">
+              <img
+                alt="whatsapp"
+                src="@/assets/images/icons/whatsapp.svg"
+              >
             </a>
           </li>
           <li>
             <a href="">
-              <img alt="telegram"
-                   src="@/assets/images/icons/telegram.svg">
+              <img
+                alt="telegram"
+                src="@/assets/images/icons/telegram.svg"
+              >
             </a>
           </li>
         </ul>
@@ -109,7 +134,7 @@ export default {
 
     callback() {
       this.$store.commit('modal/setIsCallbackModalActive', true);
-    }
+    },
 
   },
 };

@@ -2,12 +2,8 @@ import nodemailer from 'nodemailer';
 
 import { getStorage } from '../storage/storage.service.js';
 
-
-
 export const sendCallback = async (data) => {
-
   try {
-
     const { smtpUser, formMail, formMailCC } = await getStorage();
 
     const mailOptions = {
@@ -28,10 +24,16 @@ export const sendReview = async (data) => {
   try {
     const { smtpUser, formMail, formMailCC } = await getStorage();
 
-    const { restaurant, clear, service, quality, comment, recommended, fio, phone, email } = data;
+    const {
+      restaurant, clear, service, quality, comment, recommended, fio, phone, email,
+    } = data;
 
     const mailOptions = {
-      from: smtpUser, to: formMail, cc: formMailCC, subject: 'На сайте добавлен отзыв.', text: `
+      from: smtpUser,
+      to: formMail,
+      cc: formMailCC,
+      subject: 'На сайте добавлен отзыв.',
+      text: `
       Ресторан: ${restaurant}
       Чистота заведения: ${clear}
       Уровень обслуживания:${service}
@@ -52,9 +54,7 @@ export const sendReview = async (data) => {
 };
 
 export const sendVacancy = async (data) => {
-
   try {
-
     const { smtpUser, formMail, formMailCC } = await getStorage();
 
     const mailOptions = {
@@ -94,12 +94,15 @@ async function getTransporter() {
   const { smtpHost, smtpUser, smtpPassword } = await getStorage();
 
   return nodemailer.createTransport({
-    pool: true, host: smtpHost, port: 25, secure: false, // use TLS
+    pool: true,
+    host: smtpHost,
+    port: 25,
+    secure: false, // use TLS
     auth: {
       user: smtpUser, pass: smtpPassword,
-    }, tls: {
+    },
+    tls: {
       rejectUnauthorized: false,
     },
   });
-};
-
+}

@@ -59,7 +59,6 @@ router.route('/:id').delete(authMiddleware, async (req, res) => {
     await pageService.deletePage(id);
     res.status(204).send();
   } catch (e) {
-
     res.status(500).json({
       message: 'Internal Server Error',
     });

@@ -1,37 +1,42 @@
 <template>
-  <div v-if="modalComponentsData"
-       id="modal-components"
-       class="modal modal-components">
+  <div
+    v-if="modalComponentsData"
+    id="modal-components"
+    class="modal modal-components"
+  >
     <div class="modal-box">
-
-      <div class="modal-close"
-           @click="closeModal"></div>
-
+      <div
+        class="modal-close"
+        @click="closeModal"
+      />
 
       <div class="modal-components-title">
         <span>Выберите опции</span>
       </div>
 
-
       <div class="components">
-        <div v-for="(group, idx) in modalComponentsData.groupModifiers"
-             :key="group.modifierId + idx"
-             class="components-container">
+        <div
+          v-for="(group, idx) in modalComponentsData.groupModifiers"
+          :key="group.modifierId + idx"
+          class="components-container"
+        >
           <GroupModifiersOnlyOne
             v-if="group.minAmount === 1 && group.maxAmount === 1"
             v-model="modifier"
-            :group="group" />
+            :group="group"
+          />
           <GroupModifiersMany
             v-else
             v-model="modifier"
-            :group="group" />
+            :group="group"
+          />
         </div>
-
-
       </div>
       <div class="components-result">
         <span class="result-value">{{ totalPrice }} ₽</span>
-        <button @click.prevent="addToCart(modalComponentsData.id)">В корзину</button>
+        <button @click.prevent="addToCart(modalComponentsData.id)">
+          В корзину
+        </button>
       </div>
     </div>
   </div>
@@ -62,6 +67,11 @@ export default {
       return this.modalComponentsData.price + modsTotal;
     },
   },
+  watch: {
+    modalComponentsData() {
+      this.modifier = [];
+    },
+  },
   methods: {
     closeModal() {
       this.$store.commit('cart/setModalComponents', null);
@@ -69,11 +79,6 @@ export default {
     addToCart(productId, mods = []) {
       this.$store.dispatch('cart/addItem', { productId, mods: this.modifier });
       this.closeModal();
-    },
-  },
-  watch: {
-    modalComponentsData() {
-      this.modifier = [];
     },
   },
 };

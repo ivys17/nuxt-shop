@@ -16,7 +16,7 @@ const {
 export const getUserByPhone = async (phone) => {
   try {
     return await Customers.findOne({
-      where: { phone: phone },
+      where: { phone },
 
     });
   } catch (e) {
@@ -35,14 +35,12 @@ export const createUser = async (user) => {
 };
 
 export const updateUserByUserPhone = async (user) => {
-
   try {
     const userModel = await Customers.findOne({ where: { phone: user.phone } });
-    //await userModel.update(user)
+    // await userModel.update(user)
     Object.assign(userModel, user);
     await userModel.save();
     return userModel;
-
   } catch (e) {
     throw e;
   }
@@ -50,7 +48,6 @@ export const updateUserByUserPhone = async (user) => {
 
 export const getUsers = async () => {
   try {
-
     const users = await Customers.findAll({
       attributes: [
         'id',
@@ -72,8 +69,7 @@ export const getUsers = async () => {
       ],
     });
 
-    return users.map(u => u.get({ plain: true }));
-
+    return users.map((u) => u.get({ plain: true }));
   } catch (e) {
     throw e;
   }
@@ -83,10 +79,9 @@ export const updateUser = async (user) => {
   try {
     return await Customers.update(user, {
       where: {
-        phone: user.phone
-      }
+        phone: user.phone,
+      },
     });
-
   } catch (e) {
     throw e;
   }

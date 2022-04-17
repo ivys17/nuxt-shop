@@ -2,8 +2,12 @@ const SHOP_IMAGES_PATH = '/uploads/shop/';
 
 export const formatDateForSending = (date) => {
   const options = {
-    year: 'numeric', month: 'numeric', day: 'numeric',
-    hour: 'numeric', minute: 'numeric', second: 'numeric',
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
     hour12: false,
   };
   return new Date(date).toLocaleString('ru-RU', options);
@@ -34,13 +38,11 @@ export const getProductTags = (product) => {
   }
 };
 
-export const uniqModifiers = (mods) => {
-  return Object.values(mods.reduce((acc, current) => {
-    if (current.modifierId in acc) {
-      return acc;
-    }
-
-    acc[current.modifierId] = current;
+export const uniqModifiers = (mods) => Object.values(mods.reduce((acc, current) => {
+  if (current.modifierId in acc) {
     return acc;
-  }, {}));
-};
+  }
+
+  acc[current.modifierId] = current;
+  return acc;
+}, {}));

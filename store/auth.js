@@ -1,10 +1,8 @@
 import { STORE_VERSION } from '@/config/common.js';
 
-const getDefaultState = () => {
-  return {
-    token: null,
-  };
-};
+const getDefaultState = () => ({
+  token: null,
+});
 
 export const state = () => ({
   ...getDefaultState(),

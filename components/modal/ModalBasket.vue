@@ -1,34 +1,44 @@
 <template>
-  <div v-if="isOpen"
-       :class="{ 'is-loading': isLoading}"
-       class="basket-modal modal">
+  <div
+    v-if="isOpen"
+    :class="{ 'is-loading': isLoading}"
+    class="basket-modal modal"
+  >
     <div class="basket-box">
-      <div class="basket-close modal-close"
-           @click="close">
-        <img alt="close"
-             src="~/assets/images/icons/close.svg">
+      <div
+        class="basket-close modal-close"
+        @click="close"
+      >
+        <img
+          alt="close"
+          src="~/assets/images/icons/close.svg"
+        >
       </div>
 
       <div class="basket-content">
         <div class="baket-map">
-          <iframe height="100%"
-                  src="https://www.google.com/maps/d/embed?mid=1Cc0hJCYSOSVbfEEqnDP4jlEjwAVCp0lL"
-                  style="border: 0;"
-                  width="100%"></iframe>
+          <iframe
+            height="100%"
+            src="https://www.google.com/maps/d/embed?mid=1Cc0hJCYSOSVbfEEqnDP4jlEjwAVCp0lL"
+            style="border: 0;"
+            width="100%"
+          />
         </div>
         <div class="basket-info">
-          <div class="basket-title">Корзина</div>
+          <div class="basket-title">
+            Корзина
+          </div>
           <div class="basket-desc">
-            <p>Для заказов в зелёной зоне от 400 ₽ - бесплатно;
+            <p>
+              Для заказов в зелёной зоне от 400 ₽ - бесплатно;
               <br> Для заказов в желтой зоне от 1 000 ₽ - бесплатно;
-              <br> Для заказов от 400 ₽ до 999 ₽ в желтой зоне - 100 ₽.</p>
+              <br> Для заказов от 400 ₽ до 999 ₽ в желтой зоне - 100 ₽.
+            </p>
           </div>
           <div class="basket-field">
-
             <div class="field-box active">
               <div class="field-flex">
                 <div class="field-item field-city">
-
                   <multiselect
                     v-model="selectedStreet"
                     :allow-empty="false"
@@ -38,47 +48,58 @@
                     deselect-label=""
                     label="name"
                     placeholder="Введите улицу и выберите из списка"
-                    selectLabel=""
-                    selectedLabel=""
-                    track-by="iikoId">
+                    select-label=""
+                    selected-label=""
+                    track-by="iikoId"
+                  >
                     <template
-                      slot="option"
-                      slot-scope="{option}">
+                      #option="{option}"
+                    >
                       {{ option.name }}
                     </template>
                     <span slot="noResult">Улица не найдена.</span>
                     <span slot="noOptions">Начните вводить название улицы.</span>
                   </multiselect>
-
-
                 </div>
                 <div class="field-item field-house">
-                  <input v-model="address.home"
-                         placeholder="Дом"
-                         type="text">
+                  <input
+                    v-model="address.home"
+                    placeholder="Дом"
+                    type="text"
+                  >
                 </div>
                 <div class="field-item field-room">
-                  <input v-model="address.apartment"
-                         placeholder="Квартира"
-                         type="text">
+                  <input
+                    v-model="address.apartment"
+                    placeholder="Квартира"
+                    type="text"
+                  >
                 </div>
                 <div class="field-item field-entrance">
-                  <input v-model="address.entrance"
-                         placeholder="Подъезд"
-                         type="text">
+                  <input
+                    v-model="address.entrance"
+                    placeholder="Подъезд"
+                    type="text"
+                  >
                 </div>
                 <div class="field-item field-storey">
-                  <input v-model="address.floor"
-                         placeholder="Этаж"
-                         type="text">
+                  <input
+                    v-model="address.floor"
+                    placeholder="Этаж"
+                    type="text"
+                  >
                 </div>
               </div>
             </div>
             <div class="view-zones">
-              <nuxt-link to="/delivery">Посмотреть зоны доставки</nuxt-link>
+              <nuxt-link to="/delivery">
+                Посмотреть зоны доставки
+              </nuxt-link>
             </div>
             <div class="basket-btn">
-              <button @click.prevent="send">Готово</button>
+              <button @click.prevent="send">
+                Готово
+              </button>
             </div>
           </div>
         </div>
@@ -89,7 +110,7 @@
 <script>
 
 import Multiselect from 'vue-multiselect';
-import AccountAddress from '../../components/account/AccountAddress.vue';
+import AccountAddress from '../account/AccountAddress.vue';
 
 export default {
   name: 'ModalBasket',
@@ -118,6 +139,19 @@ export default {
       },
 
     };
+  },
+  watch: {
+    selectedStreet(v) {
+      this.address.street = v.name;
+    },
+  },
+  async created() {
+    try {
+      const res = await this.$axios.get('/api/cladr');
+      this.streets = res.data;
+    } catch (e) {
+      console.log(e);
+    }
   },
   methods: {
     close() {
@@ -157,21 +191,7 @@ export default {
       } catch (e) {
         console.log(e);
       }
-
     },
-  },
-  watch: {
-    selectedStreet(v) {
-      this.address.street = v.name;
-    },
-  },
-  async created() {
-    try {
-      const res = await this.$axios.get('/api/cladr');
-      this.streets = res.data;
-    } catch (e) {
-      console.log(e);
-    }
   },
 };
 </script>

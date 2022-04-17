@@ -2,13 +2,14 @@
   <div class="header-menu">
     <ul>
       <li v-for="item in menuItems">
-        <a href
-           @click.prevent.self="closeMenu(item.link)">{{ item.title }}
+        <a
+          href
+          @click.prevent.self="closeMenu(item.link)"
+        >{{ item.title }}
         </a>
       </li>
     </ul>
   </div>
-
 </template>
 <script>
 

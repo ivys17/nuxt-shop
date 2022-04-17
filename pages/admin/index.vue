@@ -3,27 +3,37 @@
     <div class="panel-login">
       <div class="panel-login-bg">
         <div class="panel-login-wrap">
-          <div class="panel-login-close"
-               @click="$router.push('/')">
-            <img alt="close"
-                 src="@/assets/admin/images/icons/close2.svg">
+          <div
+            class="panel-login-close"
+            @click="$router.push('/')"
+          >
+            <img
+              alt="close"
+              src="@/assets/admin/images/icons/close2.svg"
+            >
           </div>
           <div class="panel-login-title">
             <h1>Вход</h1>
           </div>
           <div class="panel-login-form">
-            <form action="" @submit.prevent="auth" autocomplete="on">
+            <form
+              action=""
+              autocomplete="on"
+              @submit.prevent="auth"
+            >
               <div class="panel-name">
                 <input
                   v-model="login"
                   placeholder="Введите ваш логин"
-                  type="text">
+                  type="text"
+                >
               </div>
               <div class="panel-pass">
                 <input
                   v-model="password"
                   placeholder="Введите ваш пароль"
-                  type="password">
+                  type="password"
+                >
               </div>
               <button>Войти</button>
             </form>
@@ -36,7 +46,7 @@
 
 <script>
 export default {
-  name: 'login',
+  name: 'Login',
   layout: 'admin-login',
   data() {
     return {
@@ -46,7 +56,6 @@ export default {
   },
   methods: {
     async auth() {
-
       try {
         const { data } = await this.$axios.post('/api/auth/login', { login: this.login, password: this.password });
         if (data.token) {
@@ -60,7 +69,6 @@ export default {
           text: 'Пара логин и пароль не подходят.',
         });
       }
-
     },
   },
 

@@ -16,7 +16,7 @@ export const createTelegramUser = async (user) => {
       firstName: user.firstName,
       lastName: user.lastName,
       username: user.username,
-    }
+    },
   });
 };
 
@@ -27,9 +27,10 @@ export const enableTelegramUser = async (telegramChatId) => {
     },
     {
       where: {
-        telegramChatId: telegramChatId,
+        telegramChatId,
       },
-    });
+    },
+  );
 };
 
 export const disableTelegramUser = async (telegramChatId) => {
@@ -39,7 +40,8 @@ export const disableTelegramUser = async (telegramChatId) => {
     },
     {
       where: {
-        telegramChatId: telegramChatId,
+        telegramChatId,
       },
-    });
+    },
+  );
 };

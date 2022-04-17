@@ -16,7 +16,7 @@ router.route('/').post(async (req, res) => {
     res.json(newBlock);
   } catch (e) {
     res.status(500).json({
-      message: 'Internal Server Error'
+      message: 'Internal Server Error',
     });
   }
 });
@@ -40,7 +40,6 @@ router.route('/:id').delete(async (req, res) => {
     await blockService.deleteBlock(id);
     res.status(204).send();
   } catch (e) {
-
     res.status(500).json({
       message: 'Internal Server Error',
     });

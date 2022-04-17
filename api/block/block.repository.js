@@ -28,7 +28,7 @@ export const updateBlock = async (id, block) => {
       ...block,
     }, {
       where: {
-        id: id,
+        id,
       },
     });
 
@@ -42,7 +42,7 @@ export const deleteBlock = async (id) => {
   try {
     await Blocks.destroy({
       where: {
-        id: id,
+        id,
       },
     });
   } catch (e) {

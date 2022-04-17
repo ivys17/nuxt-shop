@@ -2,31 +2,38 @@
   <div class="cart-bonus">
     <div class="cart-bonus-check">
       <label>
-        <input v-model="isApplied"
-               type="checkbox"
-               @change="applyBonus">
-        <span class="bonus-mark"></span>
-        <span class="cart-bonus-text"
-              @click.prevent="applyBonus">Применить к заказу
+        <input
+          v-model="isApplied"
+          type="checkbox"
+          @change="applyBonus"
+        >
+        <span class="bonus-mark" />
+        <span
+          class="cart-bonus-text"
+          @click.prevent="applyBonus"
+        >Применить к заказу
           <span>{{ bonus }}
-            <img alt="rubl"
-                 src="~/assets/images/icons/rubl.svg"></span>
+            <img
+              alt="rubl"
+              src="~/assets/images/icons/rubl.svg"
+            ></span>
         </span>
       </label>
     </div>
     <div class="cart-bonus-rule">
-      <nuxt-link to="/bonus">Правила бонусной программы</nuxt-link>
+      <nuxt-link to="/bonus">
+        Правила бонусной программы
+      </nuxt-link>
     </div>
   </div>
 </template>
 <script>
 
-
 export default {
   name: 'BasketBonus',
   data() {
     return {
-      isApplied: false
+      isApplied: false,
     };
   },
   computed: {
@@ -44,6 +51,9 @@ export default {
       return this.$store.getters['cart/spendBonus'];
     },
   },
+  created() {
+    this.isApplied = this.spendBonus > 0;
+  },
   methods: {
     applyBonus() {
       if (this.isApplied) {
@@ -51,12 +61,7 @@ export default {
       } else {
         this.$store.commit('cart/setSpendBonus', 0);
       }
-
     },
   },
-  created() {
-    this.isApplied = this.spendBonus > 0;
-
-  }
 };
 </script>

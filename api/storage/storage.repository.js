@@ -24,7 +24,6 @@ export const getOrganizationId = async () => {
     }
 
     return res.iiko_organization_id;
-
   } catch (e) {
     throw e;
   }
@@ -116,13 +115,3 @@ export const setIsNeedCladrUpdate = async (isNeedCladrUpdate) => {
     throw e;
   }
 };
-
-
-
-
-
-
-
-
-
-

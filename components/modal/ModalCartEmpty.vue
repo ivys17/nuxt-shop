@@ -1,20 +1,29 @@
 <template>
-  <div v-if="isOpen"
-       class="modal modal-empty">
+  <div
+    v-if="isOpen"
+    class="modal modal-empty"
+  >
     <div class="modal-box">
-      <div class="modal-close"
-           @click="close">
-        <img alt="close"
-             src="@/assets/images/icons/close.svg">
+      <div
+        class="modal-close"
+        @click="close"
+      >
+        <img
+          alt="close"
+          src="@/assets/images/icons/close.svg"
+        >
       </div>
-      <div class="modal-title">Корзина пустая</div>
-      <div class="modal-btn"
-           @click="close">
+      <div class="modal-title">
+        Корзина пустая
+      </div>
+      <div
+        class="modal-btn"
+        @click="close"
+      >
         <span>Ок</span>
       </div>
     </div>
   </div>
-
 </template>
 <script>
 export default {

@@ -11,7 +11,7 @@ const {
   ProductModifiers,
   ProductGroupModifiers,
   ProductGroupModifiersChildren,
-  StopList
+  StopList,
 } = models;
 
 const { Op } = Sequelize;
@@ -22,7 +22,6 @@ export async function addUploadedImagesPaths(paths) {
       updateOnDuplicate: [...Object.keys(paths[0])],
     });
     return res;
-
   } catch (e) {
     throw new Error(e);
   }
@@ -54,7 +53,6 @@ export const deleteOldGroups = async (revision) => {
 };
 
 export const createOrUpdateProducts = async (products) => {
-
   if (!products.length) {
     return;
   }
@@ -62,16 +60,14 @@ export const createOrUpdateProducts = async (products) => {
   try {
     const updatableFields = [...Object.keys(products[0])];
     return await Products.bulkCreate(products, {
-      updateOnDuplicate: updatableFields, returning: true, individualHooks: true
+      updateOnDuplicate: updatableFields, returning: true, individualHooks: true,
     });
-
   } catch (e) {
     throw new Error(e);
   }
 };
 
 export const deleteOldProducts = async (revision) => {
-
   try {
     return await Products.destroy({
       where: {
@@ -82,19 +78,17 @@ export const deleteOldProducts = async (revision) => {
         },
       },
     });
-
   } catch (e) {
     throw new Error(e);
   }
 };
 
 export const deleteOldImages = async (revision) => {
-
   try {
-
     const where = {
       [Op.or]: {
-        ownerId: null, revision: {
+        ownerId: null,
+        revision: {
           [Op.or]: [
             { [Op.not]: revision }, null],
         },
@@ -104,15 +98,14 @@ export const deleteOldImages = async (revision) => {
     };
 
     const deletedImages = await ShopImages.findAll({
-      where: where, raw: true,
+      where, raw: true,
     });
 
     await ShopImages.destroy({
-      where: where,
+      where,
     });
 
     return deletedImages;
-
   } catch (e) {
     throw new Error(e);
   }
@@ -128,7 +121,6 @@ export const updateImages = async (images) => {
     return await ShopImages.bulkCreate(images, {
       updateOnDuplicate: updatableFields,
     });
-
   } catch (e) {
     throw new Error(e);
   }
@@ -144,7 +136,6 @@ export const updateModifiers = async (modifiers) => {
     });
 
     return await ProductModifiers.bulkCreate(modifiers);
-
   } catch (e) {
     throw new Error(e);
   }
@@ -160,7 +151,6 @@ export const updateGroupModifiers = async (groupModifiers) => {
     });
 
     return await ProductGroupModifiers.bulkCreate(groupModifiers);
-
   } catch (e) {
     throw new Error(e);
   }
@@ -176,7 +166,6 @@ export const updateGroupModifiersChildren = async (groupModifiersChildren) => {
     });
 
     return await ProductGroupModifiersChildren.bulkCreate(groupModifiersChildren);
-
   } catch (e) {
     throw new Error(e);
   }
@@ -196,7 +185,6 @@ export const updateStopList = async (stopList) => {
 };
 
 export const deleteStopList = async (revision) => {
-
   try {
     return await StopList.destroy({
       where: {
@@ -207,9 +195,7 @@ export const deleteStopList = async (revision) => {
         },
       },
     });
-
   } catch (e) {
     throw new Error(e);
   }
 };
-

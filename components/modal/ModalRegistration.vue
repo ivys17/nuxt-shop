@@ -1,24 +1,36 @@
 <template>
-  <div v-if="isOpen"
-       id="modal-login"
-       :class="{ 'is-loading': isLoading}"
-       class="modal active">
+  <div
+    v-if="isOpen"
+    id="modal-login"
+    :class="{ 'is-loading': isLoading}"
+    class="modal active"
+  >
     <div class="modal-box">
-      <div class="modal-close"
-           @click="close"></div>
-      <div class="modal-login-title">Регистрация</div>
+      <div
+        class="modal-close"
+        @click="close"
+      />
+      <div class="modal-login-title">
+        Регистрация
+      </div>
       <div class="modal-login-desc">
         <p>Получайте бонусы после первого заказа! Укажите имя и дату рождения для регистрации.</p>
       </div>
       <div class="modal-login-info">
-        <input v-model="name"
-               placeholder="Имя"
-               type="text">
-        <input v-model="birthday"
-               v-mask="'##.##.####'"
-               placeholder="Дата рождения"
-               type="text">
-        <button @click.prevent="getUserByPhone">Зарегистрироваться</button>
+        <input
+          v-model="name"
+          placeholder="Имя"
+          type="text"
+        >
+        <input
+          v-model="birthday"
+          v-mask="'##.##.####'"
+          placeholder="Дата рождения"
+          type="text"
+        >
+        <button @click.prevent="getUserByPhone">
+          Зарегистрироваться
+        </button>
       </div>
     </div>
   </div>
@@ -36,6 +48,12 @@ export default {
       isLoading: false,
     };
   },
+  computed: {
+    isOpen() {
+      this.phone = this.data?.phone || '';
+      return Boolean(this.data);
+    },
+  },
   methods: {
     async getUserByPhone() {
       if (this.phone.length === 0) {
@@ -49,7 +67,8 @@ export default {
       }
 
       if (!(/^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/.test(
-        this.phone))) {
+        this.phone,
+      ))) {
         this.$notify({
           group: 'messages',
           type: 'error',
@@ -87,7 +106,8 @@ export default {
             name: this.name,
             phone: this.phone,
             birthday: this.birthday,
-          });
+          },
+        );
 
         if (!user) {
           this.$notify({
@@ -100,7 +120,7 @@ export default {
 
         await this.$store.dispatch('user/setUser', user);
 
-        //if modal open after add to cart
+        // if modal open after add to cart
         if (this.data && typeof this.data === 'object' && 'productId' in this.data) {
           await this.$store.dispatch('cart/addItem', this.data);
         }
@@ -112,12 +132,6 @@ export default {
     },
     close() {
       this.$store.commit('setModalRegistration', false);
-    },
-  },
-  computed: {
-    isOpen() {
-      this.phone = this.data?.phone || '';
-      return Boolean(this.data);
     },
   },
 };

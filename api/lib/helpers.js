@@ -2,11 +2,9 @@ import jwt from 'jsonwebtoken';
 
 import env from '../env.js';
 
-export const sleep = (ms) => {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-};
+export const sleep = (ms) => new Promise((resolve) => {
+  setTimeout(resolve, ms);
+});
 
 /**
  * rename name key in object
@@ -19,8 +17,6 @@ export const renameObjectKey = (obj, oldKey, newKey) => {
   delete obj[oldKey];
 };
 
-export const generateAccessToken = (payload) => {
-  return jwt.sign(payload, env.API_JWT_SECRET_KEY, { expiresIn: '24h' });
-};
+export const generateAccessToken = (payload) => jwt.sign(payload, env.API_JWT_SECRET_KEY, { expiresIn: '24h' });
 
 export const delay = async (ms) => new Promise((resolve) => setTimeout(resolve, ms));

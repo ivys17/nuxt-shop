@@ -34,8 +34,7 @@ export const mutations = {
   },
 
   setLikes(state, { id, likes }) {
-
-    const idx = state.products.findIndex(p => p.id === id);
+    const idx = state.products.findIndex((p) => p.id === id);
     if (idx === -1) {
       return;
     }
@@ -59,29 +58,25 @@ export const actions = {
     try {
       const { data: { groups, products, stopList } } = await this.$axios.get('/api/catalog');
 
-      const groupWithItems = groups.map(g => {
-        return {
-          ...g,
-          items: products.filter(p => p.parentGroup === g.id),
-        };
-      });
+      const groupWithItems = groups.map((g) => ({
+        ...g,
+        items: products.filter((p) => p.parentGroup === g.id),
+      }));
       const catalog = groupWithItems
-        .filter(g => g.isIncludedInMenu)
-        .filter(g => {
-          //if not business lunch
+        .filter((g) => g.isIncludedInMenu)
+        .filter((g) => {
+          // if not business lunch
           if (g.id !== 'c3142dda-d79f-4769-8a56-6d03f0524ba6') {
             return true;
           }
           return canBuyBusinessLunch;
         })
-        .map(g => {
-          return {
-            ...g,
-            groups: groupWithItems.filter(el => el.parentGroup === g.id),
-          };
-        });
+        .map((g) => ({
+          ...g,
+          groups: groupWithItems.filter((el) => el.parentGroup === g.id),
+        }));
 
-      const recommendedProducts = catalog.find(el => el.id === SECTION_ID_ADD_TO_ORDER);
+      const recommendedProducts = catalog.find((el) => el.id === SECTION_ID_ADD_TO_ORDER);
 
       commit('setCatalog', catalog);
       commit('setProducts', products);
@@ -98,7 +93,7 @@ export const getters = {
 
   products: ({ products }) => products,
 
-  catalogIsIncludedInMenu: ({ catalog }) => catalog.filter(group => {
+  catalogIsIncludedInMenu: ({ catalog }) => catalog.filter((group) => {
     const { additionalInfo } = group;
 
     if (additionalInfo?.deliveryMobile?.isSticker) {
@@ -112,22 +107,22 @@ export const getters = {
     return group.isIncludedInMenu;
   }),
 
-  currentSectionData: ({ catalog }) => slug => catalog.find(s => s.slug === slug),
+  currentSectionData: ({ catalog }) => (slug) => catalog.find((s) => s.slug === slug),
 
-  currentProductData: ({ products }) => slug => products.find(s => s.slug === slug),
+  currentProductData: ({ products }) => (slug) => products.find((s) => s.slug === slug),
 
-  productByCode: ({ products }) => code => products.find(p => p.code === code),
+  productByCode: ({ products }) => (code) => products.find((p) => p.code === code),
 
-  productById: ({ products }) => id => products.find(p => p.id === id),
+  productById: ({ products }) => (id) => products.find((p) => p.id === id),
 
   zoneStopList: ({ stopList }) => (zoneId) => stopList
-    .filter(s => s.deliveryTerminalId === zoneId),
+    .filter((s) => s.deliveryTerminalId === zoneId),
 
   recommendedProducts: ({ recommendedProducts }, { products }, rootState, rootGetters) => {
     const lostGift = rootGetters['cart/lostGift'];
     if (lostGift?.length) {
-      const gifts = products.filter(p => lostGift.includes(p.code));
-      gifts.forEach(product => product.isGift = true);
+      const gifts = products.filter((p) => lostGift.includes(p.code));
+      gifts.forEach((product) => product.isGift = true);
       return [...recommendedProducts, ...gifts];
     }
     return recommendedProducts;

@@ -1,9 +1,13 @@
 <template>
   <div class="hamburger-block">
-    <div class="hamburger"
-         @click.prevent="toggleHamburgerMenu">
-      <div class="hamburger-icons"></div>
-      <div class="hamburger-text">Меню</div>
+    <div
+      class="hamburger"
+      @click.prevent="toggleHamburgerMenu"
+    >
+      <div class="hamburger-icons" />
+      <div class="hamburger-text">
+        Меню
+      </div>
     </div>
   </div>
 </template>

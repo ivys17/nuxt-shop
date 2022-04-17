@@ -2,9 +2,11 @@
   <main>
     <div class="product">
       <div class="product-back">
-        <a href
-           @click.prevent="$router.go(-1)">
-          <span class="product-back-arrow"></span>
+        <a
+          href
+          @click.prevent="$router.go(-1)"
+        >
+          <span class="product-back-arrow" />
           <span class="product-back-text">Вернуться назад</span>
         </a>
       </div>
@@ -17,7 +19,8 @@
             loading="lazy"
             quality="100"
             sizes="xs:540"
-            width="540" />
+            width="540"
+          />
         </div>
         <div class="product-info">
           <div class="product-info-top">
@@ -30,44 +33,40 @@
           </div>
           <div class="product-info-bottom">
             <div class="product-price">
-
-
-              <div :class="{'active': isProductInCart}"
-                   class="addcart"
-                   @click.prevent="addToCart(currentProductData)">
+              <div
+                :class="{'active': isProductInCart}"
+                class="addcart"
+                @click.prevent="addToCart(currentProductData)"
+              >
                 <div>
                   <span class="addcart-text">{{ isProductInCart ? 'В корзине' : 'Корзина' }}</span>
-                  <span class="addcart-img"></span>
+                  <span class="addcart-img" />
                 </div>
               </div>
-
 
               <div class="price">
                 <span>{{ currentProductData.price }} ₽</span>
               </div>
             </div>
             <div class="characteristic">
-
               <table>
                 <tbody>
-                <tr>
-                  <td>белки</td>
-                  <td>жиры</td>
-                  <td>углеводы</td>
-                  <td>ккал</td>
-                  <td>Вес</td>
-                </tr>
-                <tr>
-                  <td>{{ fiberAmount }}</td>
-                  <td>{{ fatAmount }}</td>
-                  <td>{{ carbohydrateAmount }}</td>
-                  <td>{{ energyAmount }}</td>
-                  <td>{{ weight }}</td>
-                </tr>
+                  <tr>
+                    <td>белки</td>
+                    <td>жиры</td>
+                    <td>углеводы</td>
+                    <td>ккал</td>
+                    <td>Вес</td>
+                  </tr>
+                  <tr>
+                    <td>{{ fiberAmount }}</td>
+                    <td>{{ fatAmount }}</td>
+                    <td>{{ carbohydrateAmount }}</td>
+                    <td>{{ energyAmount }}</td>
+                    <td>{{ weight }}</td>
+                  </tr>
                 </tbody>
               </table>
-
-
             </div>
           </div>
         </div>
@@ -87,7 +86,7 @@ function getFiberFatCarbohydrateEnergyWeightFromMod(fieldName) {
   }
 
   if (this.currentProductData.groupModifiers?.length) {
-    this.currentProductData.groupModifiers.forEach(gm => {
+    this.currentProductData.groupModifiers.forEach((gm) => {
       if (gm.modifiers[0]) {
         result += gm.modifiers[0][fieldName];
       }
@@ -103,6 +102,9 @@ export default {
   components: {
     AppPageBack,
   },
+  validate({ store, params }) {
+    return typeof store.getters['catalog/currentProductData'](params.product_id) !== 'undefined';
+  },
   head() {
     return {
       title: `Заказать ${this.currentProductData.name}`,
@@ -115,14 +117,6 @@ export default {
 
       ],
     };
-  },
-  validate({ store, params }) {
-    return typeof store.getters['catalog/currentProductData'](params.product_id) !== 'undefined';
-  },
-  methods: {
-    addToCart({ id: productId }) {
-      this.$store.dispatch('cart/addItem', { productId });
-    },
   },
   computed: {
     imagePath() {
@@ -161,6 +155,11 @@ export default {
       return getFiberFatCarbohydrateEnergyWeightFromMod.call(this, 'weight') * 1000;
     },
 
+  },
+  methods: {
+    addToCart({ id: productId }) {
+      this.$store.dispatch('cart/addItem', { productId });
+    },
   },
 
 };

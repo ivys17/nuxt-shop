@@ -1,12 +1,16 @@
 <template>
   <client-only>
-    <div :class="{active: isCartPage}"
-         class="header-cart">
+    <div
+      :class="{active: isCartPage}"
+      class="header-cart"
+    >
       <a @click.prevent="clickHandler">
-      <span v-if="!isCalculateCheckinResultFetching"
-            class="cart-text">{{ cartTotalAfterDiscounts }} ₽ </span>
+        <span
+          v-if="!isCalculateCheckinResultFetching"
+          class="cart-text"
+        >{{ cartTotalAfterDiscounts }} ₽ </span>
         <AppSpinner v-else />
-        <span class="cart-bg"></span>
+        <span class="cart-bg" />
       </a>
     </div>
   </client-only>
@@ -72,7 +76,6 @@ export default {
   background      : #e41d2d;
 }
 
-
 .header-cart .cart-qnt {
 
   font-size       : 10px;
@@ -99,7 +102,6 @@ export default {
   background : url(~/assets/images/icons/basket-close.svg) right no-repeat;
 }
 
-
 .header-cart a {
   display   : flex;
   flex-wrap : wrap;
@@ -113,6 +115,5 @@ export default {
     padding         : 2px 7px 0 7px;
   }
 }
-
 
 </style>

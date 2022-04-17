@@ -8,33 +8,30 @@ export const getCladrAll = async () => {
     return [
       {
         id: -1,
-        name: `- не найдено`,
+        name: '- не найдено',
       },
     ];
   }
 
-  return search.map(streetData => {
-    return {
-      iikoId: streetData.iikoId,
-      name: streetData.name,
-    };
-  });
+  return search.map((streetData) => ({
+    iikoId: streetData.iikoId,
+    name: streetData.name,
+  }));
 };
 
 export const updateCladr = async (cladr = []) => {
-
   if (!cladr.length) {
     return false;
   }
 
   try {
-    const cities = cladr.flatMap(c => c.city);
-    const streets = cladr.flatMap(c => c.streets);
+    const cities = cladr.flatMap((c) => c.city);
+    const streets = cladr.flatMap((c) => c.streets);
 
     const cityModels = await updateCities(cities);
 
-    streets.forEach(street => {
-      const city = cityModels.find(cm => cm.iikoId === street.cityId);
+    streets.forEach((street) => {
+      const city = cityModels.find((cm) => cm.iikoId === street.cityId);
       street.cityId = city.id;
     });
 
@@ -45,7 +42,7 @@ export const updateCladr = async (cladr = []) => {
 };
 
 export const updateCities = (cities) => {
-  const data = cities.map(el => {
+  const data = cities.map((el) => {
     renameObjectKey(el, 'id', 'iikoId');
     return el;
   });
@@ -54,12 +51,9 @@ export const updateCities = (cities) => {
 };
 
 export const updateStreets = (streets) => {
-  const data = streets.map(el => {
+  const data = streets.map((el) => {
     renameObjectKey(el, 'id', 'iikoId');
     return el;
   });
   return cladrRepo.updateStreets(data);
 };
-
-
-

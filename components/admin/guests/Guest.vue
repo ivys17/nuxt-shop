@@ -2,12 +2,17 @@
   <tr>
     <td>{{ user.name ? user.name : 'не задано' }}</td>
     <td><a :href="`tel:${user.phone}`">{{ formatPhoneNumber(user.phone) }}</a></td>
-    <td v-if="!isEditing"
-        @click="clickBirthdayHandler">{{ formatBirthday(user.birthday) }}
+    <td
+      v-if="!isEditing"
+      @click="clickBirthdayHandler"
+    >
+      {{ formatBirthday(user.birthday) }}
     </td>
     <td v-else>
-      <input v-model="birthday"
-             type="date"> <span @click="saveBirthday">сохранить</span>
+      <input
+        v-model="birthday"
+        type="date"
+      > <span @click="saveBirthday">сохранить</span>
     </td>
     <td>{{ user.count }}</td>
     <td>{{ formatCurrency(user.sum) }}</td>
@@ -17,7 +22,7 @@
 import { formatCurrency, formatDate, formatPhoneNumber } from '@/lib/common.js';
 
 export default {
-  name: 'guest',
+  name: 'Guest',
   props: {
     user: {
       type: Object,
@@ -57,8 +62,7 @@ export default {
         console.log(e);
         alert('Данные покупателя не обновлены. Попробуйте еще раз или свяжитесь с администратором сайта.');
       }
-
-    }
+    },
   },
 };
 </script>

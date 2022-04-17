@@ -1,11 +1,15 @@
 <template>
-  <div v-if="isOpen"
-       id="modal-phone"
-       :class="{ 'is-loading': isLoading}"
-       class="modal modal-phone">
+  <div
+    v-if="isOpen"
+    id="modal-phone"
+    :class="{ 'is-loading': isLoading}"
+    class="modal modal-phone"
+  >
     <div class="modal-box">
-      <div class="modal-close"
-           @click="close"></div>
+      <div
+        class="modal-close"
+        @click="close"
+      />
       <div class="modal-info">
         <p>Для входа введите <br> номер телефона</p>
       </div>
@@ -14,8 +18,11 @@
           v-model.trim="phoneForm"
           v-phone-mask
           placeholder="+7 (___) ___-__-__"
-          type="text">
-        <button @click.prevent="sendSMS">Войти</button>
+          type="text"
+        >
+        <button @click.prevent="sendSMS">
+          Войти
+        </button>
       </div>
     </div>
   </div>
@@ -56,19 +63,16 @@ export default {
       try {
         const data = await this.$axios.$post('/api/user/sms', null, {
           params: {
-            'phone': this.phone,
+            phone: this.phone,
           },
         });
         this.$store.commit('user/setSMSCode', data.code);
         this.$store.commit('user/setValidationPhone', this.phone);
         this.$store.commit('setModalAuth', false);
         this.$store.commit('setModalAuthSMS', this.isOpen);
-
-        
       } catch (e) {
         throw e;
       }
-
     },
 
     close() {

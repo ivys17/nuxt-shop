@@ -15,16 +15,11 @@ export const getSlides = async () => {
     });
   }
   return result;
-
 };
 
-export const getSlide = async (id) => {
-  return await slideRepo.getSlide(id);
-};
+export const getSlide = async (id) => await slideRepo.getSlide(id);
 
-export const createSlide = async (slide) => {
-  return await slideRepo.createSlide(slide);
-};
+export const createSlide = async (slide) => await slideRepo.createSlide(slide);
 
 export const deleteSlide = async (id) => {
   const slide = await getSlide(id);

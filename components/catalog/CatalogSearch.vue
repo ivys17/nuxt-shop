@@ -2,18 +2,21 @@
   <div
     :class="{'active': isActive}"
     class="nav-search"
-    @click="close">
+    @click="close"
+  >
     <form>
       <input
         ref="searchInput"
         v-model="searchText"
         placeholder="Поиск продуктов"
         type="text"
-        @input="searchHandler">
+        @input="searchHandler"
+      >
       <button @click.prevent="$emit('close')">
         <img
           alt="search"
-          src="@/assets/images/icons/search.svg">
+          src="@/assets/images/icons/search.svg"
+        >
       </button>
     </form>
   </div>
@@ -35,6 +38,17 @@ export default {
       searchText: '',
     };
   },
+  watch: {
+    // clear search on open modal
+    isActive(value) {
+      if (value) {
+        this.searchText = '';
+        this.$emit('input', '');
+      }
+
+      this.$nextTick(() => { this.$refs.searchInput.focus(); });
+    },
+  },
   methods: {
     close(evt) {
       if (evt.target !== evt.currentTarget) {
@@ -44,18 +58,6 @@ export default {
     },
     searchHandler() {
       this.$emit('input', this.searchText);
-    },
-  },
-  watch: {
-    //clear search on open modal
-    isActive(value) {
-      if (value) {
-        this.searchText = '';
-        this.$emit('input', '');
-      }
-
-      this.$nextTick(() => {this.$refs.searchInput.focus();});
-
     },
   },
 };

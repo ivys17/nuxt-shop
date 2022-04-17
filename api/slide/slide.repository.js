@@ -19,7 +19,7 @@ export const getSlide = async (id) => {
   try {
     return await Slides.findOne({
       where: {
-        id: id,
+        id,
       },
       raw: true,
     });
@@ -40,7 +40,7 @@ export const deleteSlide = async (id) => {
   try {
     await Slides.destroy({
       where: {
-        id: id,
+        id,
       },
     });
   } catch (e) {

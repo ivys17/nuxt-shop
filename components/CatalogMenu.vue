@@ -1,32 +1,47 @@
 <template>
   <nav>
-    <div v-if="menuItems.length"
-         ref="navMenu"
-         class="nav">
-      <div v-for="item in menuItems"
-           :key="item.id"
-           class="nav-item">
-        <nuxt-link :to="`/menu/${item.slug}`"
-                   active-class="active">{{ item.name }}
+    <div
+      v-if="menuItems.length"
+      ref="navMenu"
+      class="nav"
+    >
+      <div
+        v-for="item in menuItems"
+        :key="item.id"
+        class="nav-item"
+      >
+        <nuxt-link
+          :to="`/menu/${item.slug}`"
+          active-class="active"
+        >
+          {{ item.name }}
         </nuxt-link>
       </div>
 
-      <div v-if="menuItemsMore.length"
-           v-click-outside="hideMenu"
-           :class="{'open': isOpen}"
-           class="nav-item nav-more"
-           @click="toggleMenu">
+      <div
+        v-if="menuItemsMore.length"
+        v-click-outside="hideMenu"
+        :class="{'open': isOpen}"
+        class="nav-item nav-more"
+        @click="toggleMenu"
+      >
         <span>Ещё</span>
       </div>
-      <div v-if="menuItemsMore.length"
-           :class="{'open': isOpen}"
-           class="hidden-menu">
-        <div v-for="item in menuItemsMore"
-             :key="item.id"
-             class="nav-item">
+      <div
+        v-if="menuItemsMore.length"
+        :class="{'open': isOpen}"
+        class="hidden-menu"
+      >
+        <div
+          v-for="item in menuItemsMore"
+          :key="item.id"
+          class="nav-item"
+        >
           <nuxt-link
             :to="`/menu/${item.slug}`"
-            active-class="active">{{ item.name }}
+            active-class="active"
+          >
+            {{ item.name }}
           </nuxt-link>
         </div>
       </div>
@@ -53,6 +68,15 @@ export default {
       return this.menuItemsRAW.slice(this.visibleMenuCount);
     },
   },
+  mounted() {
+    this.adaptiveMenu();
+  },
+  beforeMount() {
+    window.addEventListener('resize', this.adaptiveMenu);
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.adaptiveMenu);
+  },
   methods: {
     toggleMenu() {
       this.isOpen = !this.isOpen;
@@ -61,12 +85,11 @@ export default {
       this.isOpen = false;
     },
     adaptiveMenu() {
-
       if (!this.$refs?.navMenu) {
         return;
       }
 
-      const navMenu = this.$refs.navMenu;
+      const { navMenu } = this.$refs;
       const navMenuWidth = navMenu.offsetWidth;
       const navMenuChildren = [...navMenu.children];
       const navMenuChildrenWidth = navMenuChildren
@@ -87,15 +110,6 @@ export default {
         }
       }
     },
-  },
-  mounted() {
-    this.adaptiveMenu();
-  },
-  beforeMount() {
-    window.addEventListener('resize', this.adaptiveMenu);
-  },
-  beforeDestroy: function() {
-    window.removeEventListener('resize', this.adaptiveMenu);
   },
 
 };

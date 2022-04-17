@@ -1,6 +1,6 @@
-import { GOOGLE_MAPS_API_KEY } from './config/map/mapSettings.js';
 import axios from 'axios';
 import dotenv from 'dotenv';
+import { GOOGLE_MAPS_API_KEY } from './config/map/mapSettings.js';
 
 import { GLOBAL_SEO_META_TAG, YANDEX_COUNTER_ID, GOOGLE_COUNTER_ID } from './config/common.js';
 
@@ -84,8 +84,8 @@ export default {
     '@nuxtjs/svg',
     [
       '@nuxtjs/google-analytics', {
-      id: GOOGLE_COUNTER_ID,
-    }],
+        id: GOOGLE_COUNTER_ID,
+      }],
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -97,11 +97,11 @@ export default {
     '@nuxt/image',
     [
       'nuxt-vuex-localstorage', {
-      ...(isDev && {
-        mode: 'debug',
-      }),
-      localStorage: ['cart', 'user', 'address', 'auth'], //  If not entered, “localStorage” is the default value
-    }],
+        ...(isDev && {
+          mode: 'debug',
+        }),
+        localStorage: ['cart', 'user', 'address', 'auth'], //  If not entered, “localStorage” is the default value
+      }],
     '@nuxtjs/sitemap',
   ],
 
@@ -126,9 +126,9 @@ export default {
       const groups = g.data;
       const products = p.data;
 
-      result.push(...groups.map(g => `/menu/${g.slug}`));
-      result.push(...products.map(p => {
-        const g = groups.find(el => el.iikoId === p.parentGroup);
+      result.push(...groups.map((g) => `/menu/${g.slug}`));
+      result.push(...products.map((p) => {
+        const g = groups.find((el) => el.iikoId === p.parentGroup);
         if (!g) {
           return '';
         }
@@ -181,7 +181,6 @@ export default {
       ],
     },
     extend(config, ctx) {
-
       config.node = {
         fs: 'empty',
       };

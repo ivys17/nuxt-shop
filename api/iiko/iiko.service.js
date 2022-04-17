@@ -13,7 +13,6 @@ import * as catalogService from '../catalog/catalog.service.js';
 
 import download from '../lib/download.js';
 
-
 import * as iikoApi from './iiko.api.js';
 import * as iikoHelper from './iiko.helper.js';
 import * as iikoRepo from './iiko.repository.js';
@@ -22,51 +21,43 @@ const _filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(_filename);
 
 const PATH_DIR_IMAGES = path.resolve(__dirname, '../../static/uploads', 'shop', 'full');
-const PATH_DIR_OPTIMIZE_IMAGES =
-  path.resolve(__dirname, '../../static/uploads', 'shop', 'optimize');
+const PATH_DIR_OPTIMIZE_IMAGES = path.resolve(__dirname, '../../static/uploads', 'shop', 'optimize');
 
 export const updateGroups = async (groups = [], revision) => {
-
   if (!groups.length) {
     return false;
   }
 
-  groups.forEach(g => {
+  groups.forEach((g) => {
     g.revision = revision;
   });
 
   try {
-
     const images = groups.flatMap(({ images, id }) => {
       if (!images) {
         return [];
       }
-      return images.map(image => {
-        return {
-          ownerId: id,
-          ...image
-        };
-      });
+      return images.map((image) => ({
+        ownerId: id,
+        ...image,
+      }));
     });
 
     await iikoRepo.updateGroups(groups);
     await iikoRepo.updateImages(images);
-
   } catch (e) {
     throw new Error(e);
   }
 };
 
-export const deleteOldGroups = async (revision) => {
-  return await iikoRepo.deleteOldGroups(revision);
-};
+export const deleteOldGroups = async (revision) => await iikoRepo.deleteOldGroups(revision);
 
 export const updateProducts = async (products = [], revision) => {
   if (!products.length) {
     return false;
   }
 
-  products.forEach(p => {
+  products.forEach((p) => {
     p.revision = revision;
     return p;
   });
@@ -87,24 +78,19 @@ export const updateProducts = async (products = [], revision) => {
       if (!images) {
         return [];
       }
-      return images.map(image => {
-        return {
-          ownerId: id,
-          ...image
-        };
-      });
+      return images.map((image) => ({
+        ownerId: id,
+        ...image,
+      }));
     });
 
     await iikoRepo.updateImages(images);
-
   } catch (e) {
     throw new Error(e);
   }
 };
 
-export const deleteOldProducts = async (revision) => {
-  return await iikoRepo.deleteOldProducts(revision);
-};
+export const deleteOldProducts = async (revision) => await iikoRepo.deleteOldProducts(revision);
 
 export const addUploadedImagesPaths = async (paths) => {
   if (!paths.length) {
@@ -115,7 +101,6 @@ export const addUploadedImagesPaths = async (paths) => {
 };
 
 export const uploadImagesFromRemote = async (revision) => {
-
   const images = await catalogService.getImagesAll();
   const filePathsForDB = [];
 
@@ -132,23 +117,21 @@ export const uploadImagesFromRemote = async (revision) => {
     filePathsForDB.push({
       imageId: i.imageId,
       fileName: name,
-      revision: revision
+      revision,
     });
 
     imageData.push({
-      imageUrl: i.imageUrl, filePath: filePath
+      imageUrl: i.imageUrl, filePath,
     });
   }
 
   try {
-
-    //throttling
+    // throttling
     const imageDataChunked = lodash.chunk(imageData, 10);
     for (const imageData1 of imageDataChunked) {
       await Promise
-        .allSettled(imageData1.map(i => download(i.imageUrl, i.filePath)));
+        .allSettled(imageData1.map((i) => download(i.imageUrl, i.filePath)));
     }
-
   } catch (e) {
     console.log('Download failed');
     console.log(e.message);
@@ -156,12 +139,11 @@ export const uploadImagesFromRemote = async (revision) => {
 
   await addUploadedImagesPaths(filePathsForDB);
 
-  //await optimizeImage();
+  // await optimizeImage();
 };
 
 export const optimizeImage = async () => {
   try {
-
     await imagemin(
       [
         PATH_DIR_IMAGES,
@@ -170,31 +152,26 @@ export const optimizeImage = async () => {
         destination: PATH_DIR_OPTIMIZE_IMAGES,
         plugins: [
           imageminJpegtran({
-            progressive: true
+            progressive: true,
           }),
           imageminPngquant({
             quality: [0.6, 0.8],
           }),
         ],
-      });
+      },
+    );
   } catch (e) {
     console.log(e);
   }
 };
 
-export const calculateCheckinResult = async (orderData) => {
-  return await iikoApi.calculateCheckinResult(orderData);
-};
+export const calculateCheckinResult = async (orderData) => await iikoApi.calculateCheckinResult(orderData);
 
-export const getOrderInfo = async (orderId) => {
-  return await iikoApi.getOrderInfo(orderId);
-};
+export const getOrderInfo = async (orderId) => await iikoApi.getOrderInfo(orderId);
 
 export const checkCreateOrder = async (order) => {
   try {
-
     return await iikoApi.checkCreateOrder(order);
-
   } catch (e) {
     throw e;
   }
@@ -209,9 +186,8 @@ export const checkAddress = async (city, street, home) => {
 };
 
 export const deleteOldImages = async (revision) => {
-
   const deletedImages = await iikoRepo.deleteOldImages(revision);
-  await Promise.allSettled(deletedImages.map(image => {
+  await Promise.allSettled(deletedImages.map((image) => {
     const filePath = path.resolve(PATH_DIR_IMAGES, image.fileName);
 
     return new Promise(async (resolve, reject) => {
@@ -240,10 +216,9 @@ export const updateStopList = async (stopList = [], revision) => {
 
   try {
     const normalizedStopList = iikoHelper.normalizeStopList(stopList);
-    normalizedStopList.forEach(el => el.revision = revision);
+    normalizedStopList.forEach((el) => el.revision = revision);
 
     await iikoRepo.updateStopList(normalizedStopList);
-
   } catch (e) {
     throw new Error(e);
   }
@@ -256,6 +231,4 @@ export const deleteStopList = async (revision = null) => {
   return await iikoRepo.deleteStopList(revision);
 };
 
-export const getCustomer = async (phone) => {
-  return await iikoApi.getCustomer(phone);
-};
+export const getCustomer = async (phone) => await iikoApi.getCustomer(phone);

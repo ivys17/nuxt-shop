@@ -1,5 +1,5 @@
-import authMiddleware from '../middleware/auth.middleware.js';
 import express from 'express';
+import authMiddleware from '../middleware/auth.middleware.js';
 import * as slideService from './slide.service.js';
 
 const router = express.Router();
@@ -33,7 +33,6 @@ router.route('/:id').delete(authMiddleware, async (req, res) => {
     await slideService.deleteSlide(id);
     res.status(204).send();
   } catch (e) {
-
     res.status(500).json({
       message: 'Internal Server Error',
     });

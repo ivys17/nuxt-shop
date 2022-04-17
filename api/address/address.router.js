@@ -9,7 +9,7 @@ router.route('/').get(async (req, res) => {
     res.json(addresses);
   } catch (e) {
     res.status(500).json({
-      message: 'Internal Server Error'
+      message: 'Internal Server Error',
     });
   }
 });
@@ -33,7 +33,7 @@ router.route('/').post(async (req, res) => {
     res.json(newAddress);
   } catch (e) {
     res.status(500).json({
-      message: 'Internal Server Error'
+      message: 'Internal Server Error',
     });
   }
 });
@@ -57,7 +57,6 @@ router.route('/:id').delete(async (req, res) => {
     await addressService.deleteAddress(id);
     res.status(204).send();
   } catch (e) {
-
     res.status(500).json({
       message: 'Internal Server Error',
     });

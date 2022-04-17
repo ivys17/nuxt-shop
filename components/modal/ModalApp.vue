@@ -1,9 +1,13 @@
 <template>
-  <div v-if="isShown"
-       id="app-window">
-    <i id="closeAppWindow"
-       class="fa fa-times"
-       @click="isShown = false"></i>
+  <div
+    v-if="isShown"
+    id="app-window"
+  >
+    <i
+      id="closeAppWindow"
+      class="fa fa-times"
+      @click="isShown = false"
+    />
     <!--    <p>Сохраните наше приложение: нажмите <img src="@/assets/images/icons/home.png" /> и выберите пункт "Добавить на-->
     <!--      экран домой"</p>-->
   </div>

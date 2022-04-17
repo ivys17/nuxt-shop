@@ -7,15 +7,15 @@ import authMiddleware from '../middleware/auth.middleware.js';
 import * as fileService from './file.service.js';
 
 const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
+  destination(req, file, cb) {
     cb(null, 'static/uploads/storage/');
-  }, filename: function(req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)); //Appending extension
+  },
+  filename(req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname)); // Appending extension
   },
 });
 
 const fileFilter = (req, file, cb) => {
-
   if (!(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png')) {
     cb(null, false);
     return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
@@ -23,7 +23,7 @@ const fileFilter = (req, file, cb) => {
   cb(null, true);
 };
 
-const upload = multer({ storage: storage, fileFilter: fileFilter });
+const upload = multer({ storage, fileFilter });
 
 const router = express.Router();
 

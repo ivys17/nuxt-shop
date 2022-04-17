@@ -29,7 +29,7 @@
 
 <script>
 export default {
-  name: 'bonus',
+  name: 'Bonus',
 };
 </script>
 

@@ -1,12 +1,17 @@
 <template>
-  <div class="filter"
-       :class="{'active': isActive}">
+  <div
+    class="filter"
+    :class="{'active': isActive}"
+  >
     <div class="filter-box">
       <div
+        class="filter-close modal-close"
         @click.prevent="close"
-        class="filter-close modal-close">
-        <img src="~/assets/images/icons/close2.svg"
-             alt="close">
+      >
+        <img
+          src="~/assets/images/icons/close2.svg"
+          alt="close"
+        >
       </div>
       <div class="filter-title">
         <span>Фильтр аллергенов</span>
@@ -17,23 +22,29 @@
       <div class="filter-list">
         <form>
           <label v-for="allergen in allergenList">
-            <input type="checkbox"
-                   @change="filterHandler"
-                   :value="allergen.code"
-                   v-model="selectedAllergens">
-            <span class="filter-mark"></span>
+            <input
+              v-model="selectedAllergens"
+              type="checkbox"
+              :value="allergen.code"
+              @change="filterHandler"
+            >
+            <span class="filter-mark" />
             <span class="filter-name">{{ allergen.name }}</span>
           </label>
 
           <!-- на пк в дизайне эта кнопка скрыта. Не знаю как это на функционал повлияет -->
           <div class="filter-submit">
-            <button @click.prevent="close">Применить</button>
+            <button @click.prevent="close">
+              Применить
+            </button>
           </div>
           <!-- на пк в дизайне эта кнопка скрыта. Не знаю как это на функционал повлияет -->
           <div class="reset">
             <button
               class="reset-btn"
-              @click.prevent="resetFilter">Сбросить фильтр
+              @click.prevent="resetFilter"
+            >
+              Сбросить фильтр
             </button>
           </div>
         </form>

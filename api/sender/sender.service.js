@@ -1,8 +1,9 @@
 import axios from 'axios';
 import fs from 'fs/promises';
-import path from 'path';
+import path, { dirname } from 'path';
 import Handlebars from 'handlebars';
 
+import { fileURLToPath } from 'url';
 import CLogger from '../lib/CLogger.js';
 
 import { sendMessageAllTelegramUsers } from '../telegram/telegram.api.js';
@@ -17,9 +18,6 @@ import * as paymentService from '../payment/payment.service.js';
 
 import { formatDateForSending } from '../catalog/catalog.helper.js';
 
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-
 import { RESTAURANT_LIST } from '../../config/common.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -31,7 +29,6 @@ export const sendMessage = async (order) => {
     sendMessageTelegram(order),
     sendMessageIiko(order),
   ]);
-
 };
 
 export const buildOrderForSending = async (orderData) => {
@@ -41,18 +38,18 @@ export const buildOrderForSending = async (orderData) => {
 
   order.deliveryTypeHTML = order.isSelfService ? 'самовывоз' : 'доставка';
 
-  //TODO: get payments from DB
+  // TODO: get payments from DB
   order.paymentTypeHTML = {
-    'MCARD': 'Банковская карта (online)',
-    'CARD': 'картой курьеру',
-    'CASH': 'наличными при получении',
+    MCARD: 'Банковская карта (online)',
+    CARD: 'картой курьеру',
+    CASH: 'наличными при получении',
   }[order.paymentType];
 
-  const rest = RESTAURANT_LIST.find(r => r.value === order.zoneId);
+  const rest = RESTAURANT_LIST.find((r) => r.value === order.zoneId);
   order.restaurantName = (rest && rest.text) || 'не определен';
 
-  order.itemsHTML = order.orderProducts.map(i => {
-    const mods = i.orderProductModifiers.map(m => `[${m.name} - ${m.amount}шт.]`).join(', ');
+  order.itemsHTML = order.orderProducts.map((i) => {
+    const mods = i.orderProductModifiers.map((m) => `[${m.name} - ${m.amount}шт.]`).join(', ');
     return `${i.name} - ${i.amount}шт. ${mods}`;
   }).join('\n');
 
@@ -60,17 +57,15 @@ export const buildOrderForSending = async (orderData) => {
 };
 
 export const sendMessageTelegram = async (order) => {
-
   const orderForSending = await buildOrderForSending(order);
   fs.readFile(path.resolve(__dirname, '../views/telegram.views.hbs'), 'utf8').then(async (data) => {
-
     const template = Handlebars.compile(data);
     const message = template({ order: orderForSending });
 
     try {
       const telegramUsers = await senderRepo.getUsersToSend();
       await Promise.all(
-        telegramUsers.map(user => telegramApi.sendMessageTelegram(user.telegramChatId, message)),
+        telegramUsers.map((user) => telegramApi.sendMessageTelegram(user.telegramChatId, message)),
       );
     } catch (e) {
       console.log('Проблемы с телегой');
@@ -83,11 +78,11 @@ export const sendSMS = async (phone, message, sender = 'sender') => {
     const { smsUser, smsPassword } = await getStorage();
 
     const dataForSending = {
-      'login': smsUser,
-      'psw': smsPassword,
-      'phones': phone,
-      'mes': message,
-      'sender': sender,
+      login: smsUser,
+      psw: smsPassword,
+      phones: phone,
+      mes: message,
+      sender,
     };
 
     const { data } = await axios.get('https://smsc.ru/sys/send.php', {
@@ -108,7 +103,7 @@ const getPaymentItems = async (order) => {
   const paymentItem = {
     sum: order.total,
     paymentType: {
-      id: paymentType.id
+      id: paymentType.id,
     },
     isProcessedExternally: paymentType.isProcessedExternally ?? 0,
   };
@@ -118,11 +113,11 @@ const getPaymentItems = async (order) => {
     const paymentItemBonus = {
       sum: order.spendBonus,
       paymentType: {
-        id: paymentTypeBonus.id
+        id: paymentTypeBonus.id,
       },
       isProcessedExternally: paymentTypeBonus.isProcessedExternally ?? 0,
-      //!!!!!!!don't touch this. iiko required only format "{\"searchScope\": \"PHONE\", \"credential\": \"+7**********\"}"
-      additionalData: "{\"searchScope\": \"PHONE\", \"credential\": \"+7**********\"}"
+      //! !!!!!!don't touch this. iiko required only format "{\"searchScope\": \"PHONE\", \"credential\": \"+7**********\"}"
+      additionalData: '{"searchScope": "PHONE", "credential": "+7**********"}',
     };
     paymentItem.sum -= order.spendBonus;
     result.push(paymentItemBonus);
@@ -133,48 +128,44 @@ const getPaymentItems = async (order) => {
 };
 
 export const sendMessageIiko = async (order) => {
-
   const { user, address, orderProducts } = order;
 
   const paymentItems = await getPaymentItems(order);
 
   try {
     const data = {
-      'customer': {
-        'name': user.name,
-        'phone': user.phone,
+      customer: {
+        name: user.name,
+        phone: user.phone,
       },
       coupon: order.coupon,
-      'order': {
-        'date': order.createdAt,
-        'phone': user.phone,
-        'isSelfService': order.isSelfService,
-        'comment': order.comment,
+      order: {
+        date: order.createdAt,
+        phone: user.phone,
+        isSelfService: order.isSelfService,
+        comment: order.comment,
 
-        'items': orderProducts.map(p => {
-
+        items: orderProducts.map((p) => {
           const { orderProductModifiers: mods } = p;
 
           const item = {
-            'id': p.iikoId,
-            'name': p.name,
-            'amount': p.amount,
-            'code': p.code,
+            id: p.iikoId,
+            name: p.name,
+            amount: p.amount,
+            code: p.code,
           };
 
           if (mods?.length) {
-            item.modifiers = mods.map(m => {
-              return {
-                'id': m.iikoId,
-                'name': m.name,
-                'amount': m.amount,
-              };
-            });
+            item.modifiers = mods.map((m) => ({
+              id: m.iikoId,
+              name: m.name,
+              amount: m.amount,
+            }));
           }
           return item;
         }),
         address,
-        paymentItems: paymentItems
+        paymentItems,
       },
     };
 
@@ -182,7 +173,6 @@ export const sendMessageIiko = async (order) => {
     await catalogService.createOrderIikoAnswer(order.id, iikoAnswer);
     await orderService.setIsIikoSend(order.id, true);
   } catch (e) {
-
     console.log(e);
 
     let errorDetail = '';
@@ -199,5 +189,4 @@ export const sendMessageIiko = async (order) => {
     ${errorDetail}`;
     await sendMessageAllTelegramUsers(message);
   }
-
 };

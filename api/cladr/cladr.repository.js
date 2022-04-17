@@ -20,10 +20,9 @@ export const updateCities = async (cities) => {
 
     return Cities.findAll({
       where: {
-        iikoId: rows.map(r => r.iikoId),
+        iikoId: rows.map((r) => r.iikoId),
       },
     });
-
   } catch (e) {
     throw e;
   }
@@ -34,7 +33,6 @@ export const updateStreets = async (streets) => {
     return await Streets.bulkCreate(streets, {
       updateOnDuplicate: [...Object.keys(streets[0])],
     });
-
   } catch (e) {
     throw e;
   }

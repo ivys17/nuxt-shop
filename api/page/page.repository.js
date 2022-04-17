@@ -31,13 +31,12 @@ export const createPage = async (page) => {
 };
 
 export const updatePage = async (id, page) => {
-
   try {
     await Pages.update({
       ...page,
     }, {
       where: {
-        id: id,
+        id,
       },
     });
 
@@ -51,7 +50,7 @@ export const deletePage = async (id) => {
   try {
     await Pages.destroy({
       where: {
-        id: id,
+        id,
       },
     });
   } catch (e) {

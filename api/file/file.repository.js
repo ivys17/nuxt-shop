@@ -21,15 +21,13 @@ export const saveFileData = async (fileData) => {
   } catch (e) {
     console.log(e);
   }
-
 };
 
 export const deleteFileData = async (id) => {
-
   try {
     await Files.destroy({
       where: {
-        id: id,
+        id,
       },
     });
   } catch (e) {
@@ -41,9 +39,9 @@ export const getFile = async (id) => {
   try {
     return await Files.findOne({
       where: {
-        id: id,
+        id,
       },
-      raw: true
+      raw: true,
     });
   } catch (e) {
     console.log(e);

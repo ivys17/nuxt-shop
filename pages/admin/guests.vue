@@ -6,28 +6,33 @@
       </div>
       <div class="panel-nav">
         <NavSearch v-model="search" />
-        <NavFilter v-model="sort"
-                   :sort-list="sortList" />
+        <NavFilter
+          v-model="sort"
+          :sort-list="sortList"
+        />
         <div class="exel">
-          <a href="#"
-             @click.prevent="getExcel">Выгрузить в excel</a>
+          <a
+            href="#"
+            @click.prevent="getExcel"
+          >Выгрузить в excel</a>
         </div>
       </div>
     </div>
     <div class="panel-info">
       <table>
         <tbody>
-        <tr>
-          <th>ФИО</th>
-          <th>Номер телефона</th>
-          <th>Дата рождения</th>
-          <th>Количество заказов</th>
-          <th>Сумма, руб.</th>
-        </tr>
-        <guest v-for="user in filteredUsers"
-               :key="user.id"
-               :user="user" />
-
+          <tr>
+            <th>ФИО</th>
+            <th>Номер телефона</th>
+            <th>Дата рождения</th>
+            <th>Количество заказов</th>
+            <th>Сумма, руб.</th>
+          </tr>
+          <guest
+            v-for="user in filteredUsers"
+            :key="user.id"
+            :user="user"
+          />
         </tbody>
       </table>
     </div>
@@ -42,23 +47,10 @@ import NavFilter from '@/components/admin/NavFilter.vue';
 import NavSearch from '@/components/admin/NavSearch.vue';
 
 export default {
-  name: 'guests',
-  middleware: ['authenticated'],
+  name: 'Guests',
   components: { Guest, NavSearch, NavFilter },
   layout: 'admin',
-  async fetch() {
-    try {
-      const { data } = await this.$axios.get('/api/user', {
-        headers: {
-          'Authorization': `Barer ${this.$store.getters['auth/token']}`
-        }
-      });
-
-      this.users = data;
-    } catch (e) {
-      throw e;
-    }
-  },
+  middleware: ['authenticated'],
   data() {
     return {
       users: [],
@@ -72,19 +64,30 @@ export default {
         { title: 'По дате рождения', value: 'birthday' },
         { title: 'Мужчины', value: 'man' },
         { title: 'Женщины', value: 'woman' },
-      ]
+      ],
     };
+  },
+  async fetch() {
+    try {
+      const { data } = await this.$axios.get('/api/user', {
+        headers: {
+          Authorization: `Barer ${this.$store.getters['auth/token']}`,
+        },
+      });
+
+      this.users = data;
+    } catch (e) {
+      throw e;
+    }
   },
 
   computed: {
 
     filteredUsers() {
-
-      let users = this.users;
+      let { users } = this;
 
       if (this.sort) {
         switch (this.sort) {
-
           case 'new':
             users.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
             break;
@@ -120,7 +123,7 @@ export default {
         }
       }
       if (this.search.length) {
-        users = users.filter(user => user.phone.toLowerCase().includes(this.search.toLowerCase()));
+        users = users.filter((user) => user.phone.toLowerCase().includes(this.search.toLowerCase()));
       }
       return users;
     },
@@ -135,8 +138,7 @@ export default {
       } catch (e) {
         console.log(e);
       }
-    }
+    },
   },
 };
 </script>
-

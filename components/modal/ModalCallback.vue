@@ -1,36 +1,47 @@
 <template>
-  <div :class="{ 'is-loading': isLoading}"
-       class="modal">
+  <div
+    :class="{ 'is-loading': isLoading}"
+    class="modal"
+  >
     <div class="modal-box">
-      <div class="modal-close"
-           @click="close">
-        <img alt="close"
-             src="@/assets/images/icons/close2.svg">
+      <div
+        class="modal-close"
+        @click="close"
+      >
+        <img
+          alt="close"
+          src="@/assets/images/icons/close2.svg"
+        >
       </div>
       <div class="modal-info">
-        <div class="modal-title">Заказать обратный звонок</div>
+        <div class="modal-title">
+          Заказать обратный звонок
+        </div>
 
         <div class="authorization-form">
           <form>
-
             <p>Имя</p>
             <div class="authorization-tel">
               <input
                 v-model.trim="name"
-                type="text">
+                type="text"
+              >
             </div>
             <br>
             <p>Введите ваш телефон*</p>
             <div class="authorization-tel">
               <span>+7</span>
               <input
-                v-mask="'(###) ###-##-##'"
                 v-model.trim="phoneForm"
+                v-mask="'(###) ###-##-##'"
                 autofocus
                 placeholder="(9хх) ххх-ххх"
-                type="tel">
+                type="tel"
+              >
             </div>
-            <button @click.prevent="onSend">Заказать обратный звонок</button>
+            <button @click.prevent="onSend">
+              Заказать обратный звонок
+            </button>
           </form>
         </div>
       </div>
@@ -55,7 +66,7 @@ export default {
     phone() {
       const dirtyPhone = this.phoneForm;
       const phone = dirtyPhone.replace(/\D/g, '');
-      return '+7' + phone;
+      return `+7${phone}`;
     },
   },
   methods: {
@@ -85,7 +96,7 @@ export default {
       try {
         await this.$axios.post('/api/form/callback', {
           name: this.name,
-          phone: this.phone
+          phone: this.phone,
         });
 
         this.$notify({
@@ -95,11 +106,10 @@ export default {
         });
 
         this.close();
-
       } catch (e) {
         console.log(e);
       }
-    }
+    },
   },
 };
 </script>

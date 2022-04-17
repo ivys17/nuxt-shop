@@ -1,6 +1,4 @@
 <template>
-
-
   <header :class="{'active': $store.state.isHamburgerMenuOpen}">
     <div class="header wrapper">
       <AppHamburgerMenuBtn />
@@ -20,21 +18,26 @@
           </div>
           <div class="header-login">
             <client-only>
-              <a v-if="!isAuth"
-                 href
-                 @click.prevent="$store.commit('setModalAuth', true );">Войти
-                <img alt="login"
-                     src="@/assets/images/icons/login.svg"></a>
+              <a
+                v-if="!isAuth"
+                href
+                @click.prevent="$store.commit('setModalAuth', true );"
+              >Войти
+                <img
+                  alt="login"
+                  src="@/assets/images/icons/login.svg"
+                ></a>
 
-              <a v-else
-                 href="#"
-                 @click.prevent="modalLogout=true">{{ $store.getters['user/balance'] }}
-                <img alt="ruble"
-                     src="@/assets/images/icons/rub.svg"></a>
-
+              <a
+                v-else
+                href="#"
+                @click.prevent="modalLogout=true"
+              >{{ $store.getters['user/balance'] }}
+                <img
+                  alt="ruble"
+                  src="@/assets/images/icons/rub.svg"
+                ></a>
             </client-only>
-
-
           </div>
         </div>
         <AppHeaderMenu />
@@ -47,23 +50,36 @@
           <div class="menu-app-social social">
             <ul>
               <li>
-                <a href="#"
-                   target="_blank">
-                  <img alt="vk"
-                       src="@/assets/images/icons/vk.svg">
+                <a
+                  href="#"
+                  target="_blank"
+                >
+                  <img
+                    alt="vk"
+                    src="@/assets/images/icons/vk.svg"
+                  >
                 </a>
               </li>
-              <li><a href="#"
-                     target="_blank">
-                <img alt="instagram"
-                     src="@/assets/images/icons/insta.svg">
-              </a>
+              <li>
+                <a
+                  href="#"
+                  target="_blank"
+                >
+                  <img
+                    alt="instagram"
+                    src="@/assets/images/icons/insta.svg"
+                  >
+                </a>
               </li>
               <li>
-                <a href="#"
-                   target="_blank">
-                  <img alt="facebook"
-                       src="@/assets/images/icons/facebook.svg">
+                <a
+                  href="#"
+                  target="_blank"
+                >
+                  <img
+                    alt="facebook"
+                    src="@/assets/images/icons/facebook.svg"
+                  >
                 </a>
               </li>
             </ul>
@@ -73,8 +89,11 @@
           </div>
           <div class="menu-app-link">
             <p>
-              <NuxtLink target="_blank"
-                        to="/rule">Политика конфиденциальности
+              <NuxtLink
+                target="_blank"
+                to="/rule"
+              >
+                Политика конфиденциальности
               </NuxtLink>
             </p>
           </div>
@@ -82,12 +101,16 @@
             <p>Устанавливай:</p>
             <div class="app-mob-box">
               <a href="#">
-                <img alt="app store"
-                     src="@/assets/images/icons/appstore.png">
+                <img
+                  alt="app store"
+                  src="@/assets/images/icons/appstore.png"
+                >
               </a>
               <a href="#">
-                <img alt="foofle play"
-                     src="@/assets/images/icons/gplay.png">
+                <img
+                  alt="foofle play"
+                  src="@/assets/images/icons/gplay.png"
+                >
               </a>
             </div>
           </div>
@@ -97,9 +120,10 @@
     </div>
 
     <CatalogMenu />
-    <ModalLogout v-if="modalLogout"
-                 @close="modalLogout=false" />
-
+    <ModalLogout
+      v-if="modalLogout"
+      @close="modalLogout=false"
+    />
   </header>
 </template>
 <script>
@@ -111,7 +135,9 @@ import AppHeaderMenu from '~/components/AppHeaderMenu.vue';
 
 export default {
   name: 'AppHeader',
-  components: { ModalLogout, AppHamburgerMenuBtn, CartHeaderButton, CatalogMenu, AppHeaderMenu },
+  components: {
+    ModalLogout, AppHamburgerMenuBtn, CartHeaderButton, CatalogMenu, AppHeaderMenu,
+  },
   data() {
     return {
       modalLogout: false,

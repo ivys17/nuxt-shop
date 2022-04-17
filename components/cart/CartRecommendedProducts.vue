@@ -6,9 +6,10 @@
 
     <div class="recomend-list">
       <CartRecommendedProduct
-          v-for="recommendedProduct in recommendedProducts"
-          :key="recommendedProduct.id"
-          :item="recommendedProduct" />
+        v-for="recommendedProduct in recommendedProducts"
+        :key="recommendedProduct.id"
+        :item="recommendedProduct"
+      />
     </div>
   </div>
 </template>

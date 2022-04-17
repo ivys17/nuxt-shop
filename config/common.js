@@ -5,30 +5,30 @@ dotenv.config();
 export const HOST = process.env.FRONT_SERVER_URL;
 
 export const WORK_TIME = [
-  { 'open': '10:00', 'close': '23:00' }, //Sunday
-  { 'open': '10:00', 'close': '23:00' }, //Monday
-  { 'open': '10:00', 'close': '23:00' },
-  { 'open': '10:00', 'close': '23:00' }, //Wednesday
-  { 'open': '10:00', 'close': '23:00' },
-  { 'open': '10:00', 'close': '23:00' }, //Friday
-  { 'open': '10:00', 'close': '23:00' }, //Saturday
+  { open: '10:00', close: '23:00' }, // Sunday
+  { open: '10:00', close: '23:00' }, // Monday
+  { open: '10:00', close: '23:00' },
+  { open: '10:00', close: '23:00' }, // Wednesday
+  { open: '10:00', close: '23:00' },
+  { open: '10:00', close: '23:00' }, // Friday
+  { open: '10:00', close: '23:00' }, // Saturday
 ];
 
 export const TIME_CAN_SELL_BUSINESS_LUNCH = [
-  { 'open': '00:00', 'close': '00:00' }, //Sunday
-  { 'open': '10:00', 'close': '17:00' }, //Monday
-  { 'open': '10:00', 'close': '17:00' },
-  { 'open': '10:00', 'close': '17:00' }, //Wednesday
-  { 'open': '10:00', 'close': '17:00' },
-  { 'open': '10:00', 'close': '17:00' }, //Friday
-  { 'open': '00:00', 'close': '00:00' }, //Saturday
+  { open: '00:00', close: '00:00' }, // Sunday
+  { open: '10:00', close: '17:00' }, // Monday
+  { open: '10:00', close: '17:00' },
+  { open: '10:00', close: '17:00' }, // Wednesday
+  { open: '10:00', close: '17:00' },
+  { open: '10:00', close: '17:00' }, // Friday
+  { open: '00:00', close: '00:00' }, // Saturday
 ];
 
 export const GLOBAL_SEO_META_TAG = {
-  'titleTemplate': '%s',
-  'title': 'Доставка готовой еды на дом',
-  'description': 'Доставка еды на дом',
-  'keywords': '',
+  titleTemplate: '%s',
+  title: 'Доставка готовой еды на дом',
+  description: 'Доставка еды на дом',
+  keywords: '',
 };
 
 export const SECTION_ID_ADD_TO_ORDER = '32127627-48e6-4361-9726-96d64310230d';
@@ -79,14 +79,14 @@ export const RESTAURANT_LIST = [
 ];
 
 export const IIKO_CARD_PROGRAM_IDS = [
-  'c47abe5e-159f-11ea-80dd-d8d385655247', //bonus
+  'c47abe5e-159f-11ea-80dd-d8d385655247', // bonus
 ];
 
 export const ADMIN_ORDER_STATUSES = {
-  'NEW': 'новый',
-  'WAIT_PAYMENT': 'ожидает оплату',
-  'PAYED': 'оплачен',
-  'COMPLETED': 'завершен',
+  NEW: 'новый',
+  WAIT_PAYMENT: 'ожидает оплату',
+  PAYED: 'оплачен',
+  COMPLETED: 'завершен',
 };
 
 export const CITY_NAME = 'Нижний Тагил';
@@ -101,4 +101,3 @@ export const BLOCKS = {
   ABOUT_1: 4,
   ABOUT_2: 5,
 };
-

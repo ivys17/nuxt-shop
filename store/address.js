@@ -1,16 +1,14 @@
 import { STORE_VERSION } from '@/config/common.js';
 
-const getDefaultState = () => {
-  return {
-    addresses: [],
-    selectedAddress: null,
-  };
-};
+const getDefaultState = () => ({
+  addresses: [],
+  selectedAddress: null,
+});
 
 export const state = () => ({
   ...getDefaultState(),
 
-  version: STORE_VERSION
+  version: STORE_VERSION,
 });
 
 export const mutations = {
@@ -31,7 +29,7 @@ export const actions = {
   async fetchAddressesForUser({ commit, getters, dispatch }, userId) {
     const { data: addresses } = await this.$axios(`/api/address/by-user-id/${userId}`);
     commit('setAddresses', addresses);
-    const selectedAddress = getters['selectedAddress'];
+    const { selectedAddress } = getters;
 
     const firstAddress = addresses[0];
 
@@ -43,7 +41,7 @@ export const actions = {
   async deleteAddress({ commit, dispatch, getters }, id) {
     try {
       await this.$axios.delete(`/api/address/${id}`);
-      const addresses = getters['addresses'].filter(address => address.id !== id);
+      const addresses = getters.addresses.filter((address) => address.id !== id);
       commit('setAddresses', addresses);
 
       const firstAddress = addresses[0];
@@ -53,7 +51,6 @@ export const actions = {
       } else {
         dispatch('setSelectedAddress', null);
       }
-
     } catch (e) {
       console.log(e);
     }
@@ -64,8 +61,8 @@ export const actions = {
     try {
       const { id } = address;
       const { data: updatedAddress } = await this.$axios.patch(`/api/address/${id}`, address);
-      const addresses = [...getters['addresses']];
-      const idx = addresses.findIndex(address => address.id === id);
+      const addresses = [...getters.addresses];
+      const idx = addresses.findIndex((address) => address.id === id);
       addresses[idx] = updatedAddress;
       commit('setAddresses', addresses);
     } catch (e) {
@@ -73,11 +70,13 @@ export const actions = {
     }
   },
 
-  async createAddress({ commit, getters, rootGetters, dispatch }, address) {
+  async createAddress({
+    commit, getters, rootGetters, dispatch,
+  }, address) {
     address.userId = rootGetters['user/id'];
     try {
-      const { data: createdAddress } = await this.$axios.post(`/api/address/`, address);
-      const addresses = [...getters['addresses']];
+      const { data: createdAddress } = await this.$axios.post('/api/address/', address);
+      const addresses = [...getters.addresses];
 
       addresses.push(createdAddress);
 
@@ -91,7 +90,7 @@ export const actions = {
 
   async setSelectedAddress({ commit }, address) {
     commit('setSelectedAddress', address);
-  }
+  },
 
 };
 export const getters = {

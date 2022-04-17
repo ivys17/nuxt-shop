@@ -6,77 +6,68 @@
       </div>
       <div class="panel-nav">
         <NavSearch v-model="search" />
-        <NavFilter v-model="sort"
-                   :sort-list="sortList" />
+        <NavFilter
+          v-model="sort"
+          :sort-list="sortList"
+        />
         <div class="exel">
-          <a href="#"
-             @click.prevent="getExcel">Выгрузить в exel</a>
+          <a
+            href="#"
+            @click.prevent="getExcel"
+          >Выгрузить в exel</a>
         </div>
       </div>
     </div>
     <div class="panel-info">
       <table>
         <tbody>
-        <tr>
-          <th>Номер заказа</th>
-          <th>Дата</th>
-          <th>Сумма</th>
-          <th>Имя и телефон</th>
-          <th>Адрес</th>
-          <th>Статус</th>
-        </tr>
+          <tr>
+            <th>Номер заказа</th>
+            <th>Дата</th>
+            <th>Сумма</th>
+            <th>Имя и телефон</th>
+            <th>Адрес</th>
+            <th>Статус</th>
+          </tr>
 
-        <tr
-          v-for="order in filteredOrders"
-          :key="order.id">
-          <td>{{ order.id }}</td>
-          <td>{{ formatDate(order.createdAt) }}</td>
-          <td>{{ formatCurrency(order.total) }}</td>
-          <td>{{ order.user.name }} ❘ {{ formatPhoneNumber(order.user.phone) }}</td>
-          <td>{{ renderAddress(order.address) }}</td>
-          <td>
-            <span :class="`status-${order.status}`"
-                  class="status">{{
+          <tr
+            v-for="order in filteredOrders"
+            :key="order.id"
+          >
+            <td>{{ order.id }}</td>
+            <td>{{ formatDate(order.createdAt) }}</td>
+            <td>{{ formatCurrency(order.total) }}</td>
+            <td>{{ order.user.name }} ❘ {{ formatPhoneNumber(order.user.phone) }}</td>
+            <td>{{ renderAddress(order.address) }}</td>
+            <td>
+              <span
+                :class="`status-${order.status}`"
+                class="status"
+              >{{
                 ADMIN_ORDER_STATUSES[order.status]
               }}</span>
-          </td>
-        </tr>
-
-
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
   </div>
-
 </template>
 
 <script>
 
+import { ADMIN_ORDER_STATUSES } from '@/config/common.js';
+import {
+  downloadFile, formatCurrency, formatDate, formatPhoneNumber, renderAddress,
+} from '@/lib/common.js';
 import NavSearch from '../../components/admin/NavSearch.vue';
 import NavFilter from '../../components/admin/NavFilter.vue';
 
-import { ADMIN_ORDER_STATUSES } from '@/config/common.js';
-import { downloadFile, formatCurrency, formatDate, formatPhoneNumber, renderAddress } from '@/lib/common.js';
-
 export default {
-  name: 'history',
-  middleware: ['authenticated'],
+  name: 'History',
   components: { NavFilter, NavSearch },
   layout: 'admin',
-  async fetch() {
-    try {
-      const { data } = await this.$axios.get('/api/order', {
-        headers: {
-          'Authorization': `Barer ${this.$store.getters['auth/token']}`,
-        },
-      });
-
-      this.orders = data;
-
-    } catch (e) {
-      await this.$router.push('/admin');
-    }
-  },
+  middleware: ['authenticated'],
   data() {
     return {
       orders: [],
@@ -84,7 +75,7 @@ export default {
       sort: null,
 
       //
-      ADMIN_ORDER_STATUSES: ADMIN_ORDER_STATUSES,
+      ADMIN_ORDER_STATUSES,
 
       sortList: [
         { title: 'Новые клиенты', value: 'new' },
@@ -97,15 +88,26 @@ export default {
       ],
     };
   },
+  async fetch() {
+    try {
+      const { data } = await this.$axios.get('/api/order', {
+        headers: {
+          Authorization: `Barer ${this.$store.getters['auth/token']}`,
+        },
+      });
+
+      this.orders = data;
+    } catch (e) {
+      await this.$router.push('/admin');
+    }
+  },
   computed: {
 
     filteredOrders() {
-
-      let orders = this.orders;
+      let { orders } = this;
 
       if (this.sort) {
         switch (this.sort) {
-
           //  price-asc price-desc birthday man woman
 
           case 'new':
@@ -123,10 +125,10 @@ export default {
             break;
 
           case 'man':
-            orders.sort((a, _) => a.user.gender === 'male' ? 1 : -1);
+            orders.sort((a, _) => (a.user.gender === 'male' ? 1 : -1));
             break;
           case 'woman':
-            orders.sort((a, _) => a.user.gender === 'female' ? 1 : -1);
+            orders.sort((a, _) => (a.user.gender === 'female' ? 1 : -1));
             break;
 
           case 'birthday':
@@ -145,7 +147,7 @@ export default {
         orders = this.orders;
       }
       if (this.search.length) {
-        orders = orders.filter(order => order.user.phone.toLowerCase().includes(this.search.toLowerCase()));
+        orders = orders.filter((order) => order.user.phone.toLowerCase().includes(this.search.toLowerCase()));
       }
       return orders;
     },
@@ -154,7 +156,6 @@ export default {
   methods: {
     formatPhoneNumber(phone) {
       return formatPhoneNumber(phone);
-
     },
     formatDate(date) {
       return formatDate(date, { hasTime: true });
@@ -179,4 +180,3 @@ export default {
 
 };
 </script>
-

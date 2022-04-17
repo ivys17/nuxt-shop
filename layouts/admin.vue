@@ -3,7 +3,7 @@
     <div class="panel">
       <div class="panel-box">
         <Sidebar />
-          <nuxt></nuxt>
+        <nuxt />
       </div>
     </div>
   </client-only>
@@ -13,7 +13,7 @@
 import Sidebar from '@/components/admin/sidebar.vue';
 
 export default {
-  name: 'admin',
+  name: 'Admin',
   components: {
     Sidebar,
   },

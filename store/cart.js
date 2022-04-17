@@ -4,26 +4,24 @@ import * as axios from 'axios';
 import hash from 'object-hash';
 import { v4 as uuidv4 } from 'uuid';
 
-const getDefaultState = () => {
-  return {
-    items: [],
-    modalComponents: null,
-    spendBonus: 0,
+const getDefaultState = () => ({
+  items: [],
+  modalComponents: null,
+  spendBonus: 0,
 
-    discountTotal: 0,
+  discountTotal: 0,
 
-    deliveryTime: null,
-    isDeliveryTimeFetching: false,
-    isCalculateCheckinResultFetching: false,
-    appliedCoupon: '',
+  deliveryTime: null,
+  isDeliveryTimeFetching: false,
+  isCalculateCheckinResultFetching: false,
+  appliedCoupon: '',
 
-    workTimeShownToday: null,
+  workTimeShownToday: null,
 
-    lostGift: [],
-    freeProducts: [],
-    setLoyaltyProgramErrors: [],
-  };
-};
+  lostGift: [],
+  freeProducts: [],
+  setLoyaltyProgramErrors: [],
+});
 
 export const state = () => ({
   ...getDefaultState(),
@@ -92,11 +90,13 @@ export const mutations = {
 };
 
 export const actions = {
-  setItems({ commit, dispatch, state, rootGetters }, payload) {
+  setItems({
+    commit, dispatch, state, rootGetters,
+  }, payload) {
     let items = payload;
 
-    //clear cart if in cart only gifts
-    const notGifts = items.filter(i => !i.isGift);
+    // clear cart if in cart only gifts
+    const notGifts = items.filter((i) => !i.isGift);
     if (notGifts.length === 0) {
       items = [];
     }
@@ -121,21 +121,22 @@ export const actions = {
     commit('setDiscountTotal', isNaN(total) ? 0 : total);
   },
 
-  ///////////////
+  /// ////////////
   initCart({ commit, dispatch, rootGetters }) {
     const items = rootGetters['cart/cartItems'];
 
-    //validate cart items
+    // validate cart items
     const validateItems = items
-      .filter(({ product }) => rootGetters['catalog/products'].find(el => el.id === product.id));
+      .filter(({ product }) => rootGetters['catalog/products'].find((el) => el.id === product.id));
 
     dispatch('setItems', validateItems);
     commit('setIsDeliveryTimeFetching', false);
     dispatch('calculateCheckinResult');
-
   },
 
-  addItem({ commit, dispatch, state, rootGetters, getters }, { productId, mods = [], isGift }) {
+  addItem({
+    commit, dispatch, state, rootGetters, getters,
+  }, { productId, mods = [], isGift }) {
     const workTime = checkWorkTime();
 
     const workTimeShownToday = new Date(state.workTimeShownToday);
@@ -147,7 +148,7 @@ export const actions = {
       }
     }
 
-    let product = rootGetters['catalog/products'].find(el => el.id === productId);
+    let product = rootGetters['catalog/products'].find((el) => el.id === productId);
 
     if (!product) {
       return;
@@ -155,7 +156,6 @@ export const actions = {
     if (isGift) {
       product = { ...product };
       product.price = 0;
-
     }
 
     if (product.groupModifiers.length && !mods.length) {
@@ -164,11 +164,11 @@ export const actions = {
     }
 
     const items = [...state.items];
-    const idx = getters['indexProductInCart'](productId);
+    const idx = getters.indexProductInCart(productId);
 
     const productData = {
-      mods: mods,
-      product: product,
+      mods,
+      product,
       quantity: 1,
       timestamp: Date.now(),
       isGift: isGift || product.isGift || false,
@@ -177,21 +177,18 @@ export const actions = {
 
     if (idx === -1) {
       items.push(productData);
-
     } else {
       const needItem = { ...items[idx] };
       const quantity = needItem.quantity + 1;
-      if (product.additionalInfo?.deliveryMobile?.maxCountInOrder && quantity >
-        product.additionalInfo.deliveryMobile.maxCountInOrder) {
+      if (product.additionalInfo?.deliveryMobile?.maxCountInOrder && quantity
+        > product.additionalInfo.deliveryMobile.maxCountInOrder) {
         return;
       }
 
       needItem.quantity = quantity;
       items[idx] = needItem;
-
     }
     dispatch('setItems', items);
-
   },
 
   decreaseQtyByIndex({ commit, state, dispatch }, idx) {
@@ -215,7 +212,7 @@ export const actions = {
   decreaseQtyById({ commit, state, dispatch }, productId) {
     const items = [...state.items];
     const idx = items
-      .findIndex(el => el.product.id === productId);
+      .findIndex((el) => el.product.id === productId);
     const needItem = { ...items[idx] };
     if (needItem.quantity <= 1) {
       dispatch('removeItemById', productId);
@@ -227,10 +224,9 @@ export const actions = {
   },
 
   removeItemById({ commit, state, dispatch }, productId) {
-
     const items = [...state.items];
     const idx = items
-      .findIndex(el => el.product.id === productId);
+      .findIndex((el) => el.product.id === productId);
     items.splice(idx, 1);
     dispatch('setItems', items);
   },
@@ -254,12 +250,10 @@ export const actions = {
       order: {
         phone: rootGetters['user/userPhone'],
         date: null,
-        items: cartItems.map(item => {
-          return {
-            id: item.product.iikoId,
-            amount: item.quantity,
-          };
-        }),
+        items: cartItems.map((item) => ({
+          id: item.product.iikoId,
+          amount: item.quantity,
+        })),
         address: selectedAddress,
       },
     };
@@ -272,14 +266,14 @@ export const actions = {
           commit('setDeliveryTime', data.deliveryDurationInMinutes);
         }
       })
-      .catch(e => console.log(e))
+      .catch((e) => console.log(e))
       .finally(() => commit('setIsDeliveryTimeFetching', false));
-
   },
 
-  async calculateCheckinResult({ commit, rootGetters, getters, dispatch, state }) {
-
-    //cancel previous request
+  async calculateCheckinResult({
+    commit, rootGetters, getters, dispatch, state,
+  }) {
+    // cancel previous request
     if (state.abortController?.signal) {
       state.abortController.abort();
     }
@@ -292,7 +286,7 @@ export const actions = {
       return;
     }
 
-    const orderRequest = getters['orderIiko'];
+    const orderRequest = getters.orderIiko;
 
     if (!orderRequest) {
       return;
@@ -307,30 +301,28 @@ export const actions = {
           signal: abortController.signal,
         },
       ).then(({ data }) => {
-      const {
-        discountTotal,
-        discounts,
-        loyaltyProgramErrors,
-        freeProducts,
-        lostGift,
-      } = data;
-      commit('setAbortController', null);
-      dispatch('setDiscountTotal', discountTotal);
-      dispatch('setLostGift', lostGift);
-      dispatch('setFreeProducts', freeProducts);
-      dispatch('setLoyaltyProgramErrors', loyaltyProgramErrors);
-      if (freeProducts.length) {
-        const products = rootGetters['catalog/products']
-          .filter(p => freeProducts.includes(p.code));
-        products.forEach(p => {
-          dispatch('addItem', { productId: p.id, isGift: true });
-        });
-      }
+        const {
+          discountTotal,
+          discounts,
+          loyaltyProgramErrors,
+          freeProducts,
+          lostGift,
+        } = data;
+        commit('setAbortController', null);
+        dispatch('setDiscountTotal', discountTotal);
+        dispatch('setLostGift', lostGift);
+        dispatch('setFreeProducts', freeProducts);
+        dispatch('setLoyaltyProgramErrors', loyaltyProgramErrors);
+        if (freeProducts.length) {
+          const products = rootGetters['catalog/products']
+            .filter((p) => freeProducts.includes(p.code));
+          products.forEach((p) => {
+            dispatch('addItem', { productId: p.id, isGift: true });
+          });
+        }
 
-      commit('setIsCalculateCheckinResultFetching', false);
-
-    }).catch(e => console.log(e));
-
+        commit('setIsCalculateCheckinResultFetching', false);
+      }).catch((e) => console.log(e));
   },
 
   setLostGift({ commit }, payload) {
@@ -347,31 +339,27 @@ export const actions = {
 
 };
 export const getters = {
-  productsInCartIds: ({ items }) => items.map(i => i.product.id),
+  productsInCartIds: ({ items }) => items.map((i) => i.product.id),
 
   cartItems: ({ items }) => items,
 
   countItems: ({ items }) => items.reduce((acc, item) => acc + item.quantity, 0),
 
-  cartTotal: ({ items }) => {
-    return items.reduce((acc, el) => {
-      if (el.isGift) {
-        return acc;
-      }
-      const modsTotal = el.mods.reduce((acc, el) => acc + el.price * el.count, 0);
-      return acc + ((el.product.price + modsTotal) * el.quantity);
-    }, 0);
-  },
+  cartTotal: ({ items }) => items.reduce((acc, el) => {
+    if (el.isGift) {
+      return acc;
+    }
+    const modsTotal = el.mods.reduce((acc, el) => acc + el.price * el.count, 0);
+    return acc + ((el.product.price + modsTotal) * el.quantity);
+  }, 0),
 
   cartTotalMinusBonus: (state, getters) => getters.cartTotal - getters.spendBonus,
 
-  cartTotalAfterDiscounts: (state, getters) => {
-    return getters.cartTotal - getters.spendBonus - getters.discountTotal;
-  },
+  cartTotalAfterDiscounts: (state, getters) => getters.cartTotal - getters.spendBonus - getters.discountTotal,
 
   modalComponents: ({ modalComponents }) => modalComponents,
 
-  deliveryTime: ({ deliveryTime }) => deliveryTime ? `${deliveryTime} минут` : null,
+  deliveryTime: ({ deliveryTime }) => (deliveryTime ? `${deliveryTime} минут` : null),
 
   isDeliveryTimeFetching: ({ isDeliveryTimeFetching }) => isDeliveryTimeFetching,
 
@@ -379,17 +367,13 @@ export const getters = {
 
   appliedCoupon: ({ appliedCoupon }) => appliedCoupon,
 
-  isProductInCart: ({ items }) => (id, mods = []) => {
-    return items
-      .findIndex(el => el.product.id === id && hash(mods) === hash(el.mods)) !== -1;
-  },
+  isProductInCart: ({ items }) => (id, mods = []) => items
+    .findIndex((el) => el.product.id === id && hash(mods) === hash(el.mods)) !== -1,
 
-  indexProductInCart: ({ items }) => (id, mods = []) => {
-    return items
-      .findIndex(el => el.product.id === id && hash(mods) === hash(el.mods));
-  },
+  indexProductInCart: ({ items }) => (id, mods = []) => items
+    .findIndex((el) => el.product.id === id && hash(mods) === hash(el.mods)),
 
-  //bonus
+  // bonus
   spendBonus: ({ spendBonus }) => spendBonus,
 
   discountTotal: ({ discountTotal }) => discountTotal,
@@ -399,7 +383,7 @@ export const getters = {
   loyaltyProgramErrors: ({ loyaltyProgramErrors }) => loyaltyProgramErrors,
 
   orderIiko: (state, getters, rootState, rootGetters) => {
-    const cartItems = getters['cartItems'];
+    const { cartItems } = getters;
     if (!cartItems.length) {
       return false;
     }
@@ -407,7 +391,7 @@ export const getters = {
     const selectedAddress = rootGetters['address/selectedAddress'];
 
     return {
-      coupon: getters['appliedCoupon'],
+      coupon: getters.appliedCoupon,
       customer: {
         phone: rootGetters['user/userPhone'],
         name: rootGetters['user/userName'],
@@ -415,16 +399,14 @@ export const getters = {
       order: {
         phone: rootGetters['user/userPhone'],
         date: null,
-        items: cartItems.map(item => {
-          const modifiers = item.mods.map(mod => {
-            return {
-              id: mod.id,
-              name: mod.name,
-              amount: mod.count,
-              sum: mod.price * mod.count,
-              code: mod.code,
-            };
-          });
+        items: cartItems.map((item) => {
+          const modifiers = item.mods.map((mod) => ({
+            id: mod.id,
+            name: mod.name,
+            amount: mod.count,
+            sum: mod.price * mod.count,
+            code: mod.code,
+          }));
 
           return {
             id: item.product.id,
@@ -432,7 +414,7 @@ export const getters = {
             amount: item.quantity,
             sum: item.product.price * item.quantity,
             code: item.product.code,
-            modifiers: modifiers,
+            modifiers,
           };
         }),
         address: selectedAddress,
@@ -440,4 +422,3 @@ export const getters = {
     };
   },
 };
-

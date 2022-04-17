@@ -13,14 +13,18 @@
             </ul>
           </div>
           <div class="vacancy-btn">
-            <a href
-               @click.prevent="vacancyFormShow = true">Заполнить анкету</a>
+            <a
+              href
+              @click.prevent="vacancyFormShow = true"
+            >Заполнить анкету</a>
           </div>
         </div>
       </div>
     </div>
-    <VacancyForm v-if="vacancyFormShow"
-                 @close="vacancyFormShow = false" />
+    <VacancyForm
+      v-if="vacancyFormShow"
+      @close="vacancyFormShow = false"
+    />
   </main>
 </template>
 
@@ -29,8 +33,13 @@
 import VacancyForm from '@/components/modal/VacancyForm.vue';
 
 export default {
-  name: 'vacancy',
+  name: 'Vacancy',
   components: { VacancyForm },
+  data() {
+    return {
+      vacancyFormShow: false,
+    };
+  },
   head() {
     return {
       title: 'Вакансии',
@@ -41,11 +50,6 @@ export default {
           content: 'Вакансии',
         },
       ],
-    };
-  },
-  data() {
-    return {
-      vacancyFormShow: false
     };
   },
 };

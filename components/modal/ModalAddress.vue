@@ -1,19 +1,24 @@
 <template>
   <div
     id="modal-address"
-    class="modal active">
+    class="modal active"
+  >
     <div class="modal-box">
       <div class="address-info">
-        <div class="modal-close"
-             @click="$emit('close')"></div>
+        <div
+          class="modal-close"
+          @click="$emit('close')"
+        />
         <h4>Проверь свой адрес</h4>
         <div id="checkResult">
           <span
             v-if="warning.length"
-            id="checkFail">{{ warning }}</span> <br>
+            id="checkFail"
+          >{{ warning }}</span> <br>
           <span
             v-if="success.length"
-            id="checkOK">{{ success }}</span>
+            id="checkOK"
+          >{{ success }}</span>
         </div>
         <div class="input-address">
           <div class="street">
@@ -26,42 +31,46 @@
               deselect-label=""
               label="name"
               placeholder="Укажите улицу*"
-              selectLabel=""
-              selectedLabel=""
-              track-by="iikoId">
+              select-label=""
+              selected-label=""
+              track-by="iikoId"
+            >
               <template
-                slot="option"
-                slot-scope="{option}">
+                #option="{option}"
+              >
                 {{ option.name }}
               </template>
               <span slot="noResult">Улица не найдена.</span>
               <span slot="noOptions">Начните вводить название улицы.</span>
             </multiselect>
-
-
           </div>
-
 
           <div class="house">
-            <input v-model="house"
-                   placeholder="Дом"
-                   type="text">
+            <input
+              v-model="house"
+              placeholder="Дом"
+              type="text"
+            >
           </div>
           <div class="address-btn">
-            <input v-if="!isValidAddress"
-                   type="submit"
-                   value="Проверить"
-                   @click.prevent="checkAddress">
-            <input v-else
-                   type="submit"
-                   value="Ок"
-                   @click.prevent="$emit('close')">
+            <input
+              v-if="!isValidAddress"
+              type="submit"
+              value="Проверить"
+              @click.prevent="checkAddress"
+            >
+            <input
+              v-else
+              type="submit"
+              value="Ок"
+              @click.prevent="$emit('close')"
+            >
           </div>
         </div>
-        <div id="address-map"
-             class="address-map">
-
-        </div>
+        <div
+          id="address-map"
+          class="address-map"
+        />
       </div>
     </div>
   </div>
@@ -88,16 +97,27 @@ export default {
       isValidAddress: false,
     };
   },
+
+  async mounted() {
+    this.initMap('address-map');
+  },
+
+  async created() {
+    try {
+      const res = await this.$axios.get('/api/cladr');
+      this.streets = res.data;
+    } catch (e) {
+      console.log(e);
+    }
+  },
   methods: {
     setStreet(street) {
       if (!street.value) {
         return;
       }
       this.$store.dispatch('user/setStreet', street);
-
     },
     async initMap(id) {
-
       const map = new google.maps.Map(document.getElementById(id), {
         zoom: MAP_ZOOM,
         center: {
@@ -107,7 +127,7 @@ export default {
         mapTypeId: 'terrain',
       });
 
-      USING_MAP_ZONES.forEach(zone => {
+      USING_MAP_ZONES.forEach((zone) => {
         const polygon = new google.maps.Polygon({
           paths: zone.coords,
           strokeColor: zone.borderColor,
@@ -131,7 +151,7 @@ export default {
           group: 'messages',
           type: 'error',
           horizontal: 'center',
-          text: `Введите улицу`,
+          text: 'Введите улицу',
         });
         return;
       }
@@ -140,7 +160,7 @@ export default {
           group: 'messages',
           type: 'error',
           horizontal: 'center',
-          text: `Введите номер дома`,
+          text: 'Введите номер дома',
         });
         return;
       }
@@ -180,19 +200,6 @@ export default {
       }
     },
 
-  },
-
-  async mounted() {
-    this.initMap('address-map');
-  },
-
-  async created() {
-    try {
-      const res = await this.$axios.get('/api/cladr');
-      this.streets = res.data;
-    } catch (e) {
-      console.log(e);
-    }
   },
 };
 </script>

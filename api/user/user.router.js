@@ -19,7 +19,6 @@ router.route('/:phone').get(async (req, res) => {
 
   const user = await userService.getUser(phone);
   res.json(user);
-
 });
 
 router.route('/').post(async (req, res) => {
@@ -33,7 +32,6 @@ router.route('/').post(async (req, res) => {
 });
 
 router.route('/').patch(async (req, res) => {
-
   const { user } = req.body;
 
   if (!user) {
@@ -50,7 +48,6 @@ router.route('/').patch(async (req, res) => {
   await userService.updateUser(user);
   res.statusCode = 200;
   res.json(user);
-
 });
 
 router.route('/sms').post(async (req, res) => {
@@ -63,8 +60,6 @@ router.route('/sms').post(async (req, res) => {
       message: 'Internal Server Error',
     });
   }
-
 });
-
 
 export default router;

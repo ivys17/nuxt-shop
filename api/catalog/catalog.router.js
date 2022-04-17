@@ -34,7 +34,6 @@ router.route('/product/:id').get(async (req, res) => {
       message: 'Internal Server Error',
     });
   }
-
 });
 
 router.route('/modifiers').get(async (req, res) => {
@@ -45,7 +44,7 @@ router.route('/modifiers').get(async (req, res) => {
 router.route('/order').post(async (req, res) => {
   const paymentLink = await catalogService.createOrder(req.body);
   res.json({
-    paymentLink: paymentLink,
+    paymentLink,
   });
 });
 

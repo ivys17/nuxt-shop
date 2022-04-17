@@ -1,5 +1,4 @@
 <template>
-
   <footer>
     <div class="footer wrapper">
       <div class="footer-box">
@@ -7,8 +6,11 @@
           <p>{{ currentYear }} г.</p>
         </div>
         <div class="footer-link">
-          <NuxtLink target="_blank"
-                    to="/rule">Политика конфиденциальности
+          <NuxtLink
+            target="_blank"
+            to="/rule"
+          >
+            Политика конфиденциальности
           </NuxtLink>
         </div>
       </div>
@@ -21,23 +23,36 @@
         <div class="footer-social social">
           <ul>
             <li>
-              <a href="#"
-                 target="_blank">
-                <img alt="vk"
-                     src="@/assets/images/icons/vk.svg">
+              <a
+                href="#"
+                target="_blank"
+              >
+                <img
+                  alt="vk"
+                  src="@/assets/images/icons/vk.svg"
+                >
               </a>
             </li>
-            <li><a href="#"
-                   target="_blank">
-              <img alt="instagram"
-                   src="@/assets/images/icons/insta.svg">
-            </a>
+            <li>
+              <a
+                href="#"
+                target="_blank"
+              >
+                <img
+                  alt="instagram"
+                  src="@/assets/images/icons/insta.svg"
+                >
+              </a>
             </li>
             <li>
-              <a href="#"
-                 target="_blank">
-                <img alt="facebook"
-                     src="@/assets/images/icons/facebook.svg">
+              <a
+                href="#"
+                target="_blank"
+              >
+                <img
+                  alt="facebook"
+                  src="@/assets/images/icons/facebook.svg"
+                >
               </a>
             </li>
           </ul>
@@ -46,15 +61,23 @@
       <div class="footer-box footer-right">
         <p>Устанавливай:</p>
         <div class="footer-app">
-          <a href="#"
-             target="_blank">
-            <img alt="app store"
-                 src="@/assets/images/icons/appstore.png">
+          <a
+            href="#"
+            target="_blank"
+          >
+            <img
+              alt="app store"
+              src="@/assets/images/icons/appstore.png"
+            >
           </a>
-          <a href="#"
-             target="_blank">
-            <img alt="google play"
-                 src="@/assets/images/icons/gplay.png">
+          <a
+            href="#"
+            target="_blank"
+          >
+            <img
+              alt="google play"
+              src="@/assets/images/icons/gplay.png"
+            >
           </a>
         </div>
       </div>
@@ -62,7 +85,6 @@
   </footer>
 </template>
 <script>
-
 
 export default {
   name: 'AppFooter',

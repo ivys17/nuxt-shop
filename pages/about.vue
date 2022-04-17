@@ -1,9 +1,6 @@
 <template>
   <main>
-    <div class="about">
-
-    </div>
-
+    <div class="about" />
   </main>
 </template>
 
@@ -12,17 +9,13 @@
 import { BLOCKS } from '@/config/common.js';
 
 export default {
-  name: 'delivery',
-  head() {
+  name: 'Delivery',
+
+  data() {
     return {
-      title: 'Заказать столик в ресторане',
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: 'Заказ столика в ресторане. ',
-        },
-      ],
+      isShowReq: false,
+      about1: '',
+      about2: '',
     };
   },
 
@@ -39,17 +32,19 @@ export default {
     if (about2.data) {
       this.about2 = about2.data;
     }
-
   },
-
-  data() {
+  head() {
     return {
-      isShowReq: false,
-      about1: '',
-      about2: '',
+      title: 'Заказать столик в ресторане',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'Заказ столика в ресторане. ',
+        },
+      ],
     };
   },
 
 };
 </script>
-

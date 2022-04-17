@@ -5,14 +5,14 @@ const models = initModels(sequelize);
 const {
   Sberbank,
   OrderSberbank,
-  PaymentTypes
+  PaymentTypes,
 } = models;
 
 export const getSberbankAuth = async (zoneId = 0) => {
   try {
     return await Sberbank.findOne({
       where: {
-        zoneId: zoneId,
+        zoneId,
       },
     });
   } catch (e) {
@@ -44,7 +44,7 @@ export const getOrderId = async (sberbankOrderId) => {
   try {
     return await OrderSberbank.findOne({
       where: {
-        sberbankOrderId: sberbankOrderId,
+        sberbankOrderId,
       },
       attributes: [
         'orderId',
@@ -69,12 +69,11 @@ export const getPayments = async () => {
   try {
     return await PaymentTypes.findAll({
       raw: true,
-      nested: true
+      nested: true,
     });
   } catch (e) {
     throw e;
   }
-
 };
 
 export const createPayments = async (payments) => {
@@ -82,7 +81,6 @@ export const createPayments = async (payments) => {
     return await PaymentTypes.bulkCreate(payments, {
       updateOnDuplicate: [...Object.keys(payments[0])],
     });
-
   } catch (e) {
     throw e;
   }
@@ -92,14 +90,11 @@ export const getPaymentByCode = (code) => {
   try {
     return PaymentTypes.findOne({
       where: {
-        code: code
+        code,
       },
       raw: true,
     });
-
   } catch (e) {
     throw e;
   }
 };
-
-

@@ -8,7 +8,6 @@ import * as userRepo from './user.repository.js';
 const logger = new CLogger();
 
 export const getUser = async (phone) => {
-
   let user = await getUserByPhone(phone);
 
   if (!user) {
@@ -16,13 +15,12 @@ export const getUser = async (phone) => {
   }
 
   iikoApi.getCustomer(phone).then((userFromIiko) => {
-    //save old id
+    // save old id
     userFromIiko.id = user.id;
     updateUser(userFromIiko);
   });
 
   return user;
-
 };
 
 export const createUser = async (user) => {
@@ -47,7 +45,7 @@ export const createUser = async (user) => {
     dataForUpdate.customer.birthday = createdUser.birthday;
   }
 
-  iikoApi.createOrUpdate(dataForUpdate).catch(e => {
+  iikoApi.createOrUpdate(dataForUpdate).catch((e) => {
     console.log(e);
   });
 
@@ -61,7 +59,6 @@ export const updateUser = async (user) => {
   } catch (e) {
     logger.log(e);
   }
-
 };
 
 export const updateUserByUserPhone = async (user) => {
@@ -86,13 +83,10 @@ export const sendSMS = async (phone) => {
   const code = String(Math.floor(Math.random() * 9999)).padStart(4, '0');
   try {
     const result = await senderService.sendSMS(phone, code);
-    return { code: code };
+    return { code };
   } catch (e) {
     logger.log(e);
   }
 };
 
-export const getUsers = async () => {
-  return await userRepo.getUsers();
-};
-
+export const getUsers = async () => await userRepo.getUsers();

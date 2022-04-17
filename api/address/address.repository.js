@@ -22,7 +22,7 @@ export const getAddressesByUserId = async (userId) => {
   try {
     return await Addresses.findAll({
       where: {
-        userId: userId,
+        userId,
         isDeleted: false,
       },
     });
@@ -43,8 +43,8 @@ export const createAddress = async (address) => {
   try {
     const foundAddress = await Addresses.findOne({
       where: {
-        ...address
-      }
+        ...address,
+      },
     });
 
     if (foundAddress) {
@@ -63,7 +63,7 @@ export const updateAddress = async (id, address) => {
       ...address,
     }, {
       where: {
-        id: id,
+        id,
       },
     });
 
@@ -79,7 +79,7 @@ export const deleteAddress = async (id) => {
       isDeleted: true,
     }, {
       where: {
-        id: id,
+        id,
       },
     });
   } catch (e) {

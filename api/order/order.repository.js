@@ -41,9 +41,9 @@ export const createOrder = async (order) => {
 export const setStatus = async (id, status) => {
   try {
     await Orders.update({
-      status: status,
+      status,
     }, {
-      where: { id: id },
+      where: { id },
     });
   } catch (e) {
     throw e;
@@ -55,7 +55,7 @@ export const setIsTelegramSend = async (id, status) => {
     await Orders.update({
       isTelegramSend: status,
     }, {
-      where: { id: id },
+      where: { id },
     });
   } catch (e) {
     throw e;
@@ -67,7 +67,7 @@ export const setIsIikoSend = async (id, status) => {
     await Orders.update({
       isIikoSend: status,
     }, {
-      where: { id: id },
+      where: { id },
     });
   } catch (e) {
     throw e;

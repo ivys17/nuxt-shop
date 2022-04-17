@@ -1,8 +1,10 @@
 <template>
   <div class="lds-spinner">
-    <div v-for="item in 12"
-         :key="item"
-         :style="styles"></div>
+    <div
+      v-for="item in 12"
+      :key="item"
+      :style="styles"
+    />
   </div>
 </template>
 

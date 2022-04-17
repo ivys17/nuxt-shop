@@ -14,12 +14,11 @@ const {
   OrderIikoAnswer,
   ProductGroupModifiers,
   ProductGroupModifiersChildren,
-  StopList
+  StopList,
 } = models;
 
 export const getGroupsAll = async () => {
   try {
-
     const groups = await sequelize.query(
       `SELECT g.name,
               g.id,
@@ -35,10 +34,10 @@ export const getGroupsAll = async () => {
       {
         model: Groups,
         mapToModel: true,
-        raw: true
-      });
+        raw: true,
+      },
+    );
     return groups;
-
   } catch (e) {
     throw e;
   }
@@ -46,7 +45,6 @@ export const getGroupsAll = async () => {
 
 export const getProductsAll = async () => {
   try {
-
     const products = await sequelize.query(
       `SELECT p.id,
               p.description,
@@ -73,8 +71,9 @@ export const getProductsAll = async () => {
       {
         model: Products,
         mapToModel: true,
-        raw: true
-      });
+        raw: true,
+      },
+    );
 
     return products;
   } catch (e) {
@@ -82,11 +81,9 @@ export const getProductsAll = async () => {
   }
 };
 
-export const getProduct = async (id) => {
-  //TODO: implement
-  return false;
-};
-
+export const getProduct = async (id) =>
+  // TODO: implement
+  false;
 export const getModifiersAll = async () => {
   try {
     return await ProductModifiers.findAll({
@@ -100,7 +97,7 @@ export const getModifiersAll = async () => {
 export const getGroupModifiers = async () => {
   try {
     return await ProductGroupModifiers.findAll({
-      raw: true
+      raw: true,
     });
   } catch (e) {
     throw e;
@@ -110,7 +107,7 @@ export const getGroupModifiers = async () => {
 export const getGroupModifiersChildren = async () => {
   try {
     return await ProductGroupModifiersChildren.findAll({
-      raw: true, nest: true
+      raw: true, nest: true,
     });
   } catch (e) {
     throw e;
@@ -153,7 +150,7 @@ export const createOrderIikoAnswer = async (answerData) => {
 
 export const likeProduct = async (id) => {
   try {
-    await Products.increment('likes', { by: 1, where: { id: id } },);
+    await Products.increment('likes', { by: 1, where: { id } });
   } catch (e) {
     throw e;
   }

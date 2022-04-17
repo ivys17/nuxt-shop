@@ -12,14 +12,17 @@
 
           <div class="order-fields">
             <div class="order-item">
-              <div class="field-title">1. Контактная информация</div>
+              <div class="field-title">
+                1. Контактная информация
+              </div>
               <div class="field-flex field-top">
                 <div class="field">
                   <input
                     v-model.trim="user.name"
                     placeholder="Имя*"
                     required
-                    type="text">
+                    type="text"
+                  >
                 </div>
                 <div class="field">
                   <input
@@ -27,27 +30,33 @@
                     v-phone-mask
                     placeholder="Телефон*"
                     required
-                    type="text">
+                    type="text"
+                  >
                 </div>
                 <div class="field">
                   <input
                     v-model.trim="user.email"
                     placeholder="Email"
                     required
-                    type="text">
+                    type="text"
+                  >
                 </div>
               </div>
             </div>
             <div class="order-item field-delivery">
-              <div class="field-title">2. Доставка</div>
+              <div class="field-title">
+                2. Доставка
+              </div>
               <div class="field-flex">
                 <div class="field-radio">
                   <label>
-                    <input v-model="deliveryMethod"
-                           checked=""
-                           name="delivery-2"
-                           type="radio"
-                           value="delivery">
+                    <input
+                      v-model="deliveryMethod"
+                      checked=""
+                      name="delivery-2"
+                      type="radio"
+                      value="delivery"
+                    >
                     <span>Доставка</span>
                   </label>
                   <label>
@@ -55,34 +64,42 @@
                       v-model="deliveryMethod"
                       name="delivery-2"
                       type="radio"
-                      value="self">
+                      value="self"
+                    >
                     <span>Самовывоз</span>
                   </label>
                 </div>
               </div>
 
-              <div v-if="deliveryMethod==='self'"
-                   class="field-rest">
+              <div
+                v-if="deliveryMethod==='self'"
+                class="field-rest"
+              >
                 <p>Выберите ресторан</p>
                 <div class="field field-dropdown">
                   <span @click="restaurantShow = true">{{ restaurant.text || 'Выберите ресторан' }}</span>
-                  <div v-if="restaurantShow"
+                  <div
+                    v-if="restaurantShow"
 
-                       class="dropdown">
+                    class="dropdown"
+                  >
                     <ul>
                       <li
                         v-for="rest in restaurants"
                         :key="rest.value"
-                        @click="restaurant = rest; restaurantShow = false">{{ rest.text }}
+                        @click="restaurant = rest; restaurantShow = false"
+                      >
+                        {{ rest.text }}
                       </li>
-
                     </ul>
                   </div>
                 </div>
               </div>
 
-              <div v-if="deliveryMethod==='delivery'"
-                   class="field-address">
+              <div
+                v-if="deliveryMethod==='delivery'"
+                class="field-address"
+              >
                 <p>Адрес доставки</p>
                 <div class="field-address-box">
                   <div class="field">
@@ -95,12 +112,13 @@
                       deselect-label=""
                       label="name"
                       placeholder="Укажите улицу*"
-                      selectLabel=""
-                      selectedLabel=""
-                      track-by="iikoId">
+                      select-label=""
+                      selected-label=""
+                      track-by="iikoId"
+                    >
                       <template
-                        slot="option"
-                        slot-scope="{option}">
+                        #option="{option}"
+                      >
                         {{ option.name }}
                       </template>
                       <span slot="noResult">Улица не найдена.</span>
@@ -112,148 +130,178 @@
                       v-model.lazy="order.address.home"
                       maxlength="10"
                       placeholder="Номер дома*"
-                      type="text">
+                      type="text"
+                    >
                   </div>
                   <div class="field">
                     <input
                       v-model="order.address.apartment"
                       placeholder="№ квартиры/офиса"
-                      type="text">
+                      type="text"
+                    >
                   </div>
                   <div class="field">
                     <input
                       v-model="order.address.entrance"
                       placeholder="Подъезд"
-                      type="text">
+                      type="text"
+                    >
                   </div>
                   <div class="field">
                     <input
                       v-model="order.address.floor"
                       placeholder="Этаж"
-                      type="text">
+                      type="text"
+                    >
                   </div>
-
                 </div>
               </div>
               <div class="field field-comment">
                 <textarea
                   v-model="comment"
-                  placeholder="Комментарий"></textarea>
+                  placeholder="Комментарий"
+                />
               </div>
-
             </div>
             <div class="order-item order-payment">
-              <div class="field-title">3. Оплатить</div>
+              <div class="field-title">
+                3. Оплатить
+              </div>
               <div class="field-flex">
                 <div class="field-radio">
                   <label>
                     <input
                       v-model="payment"
                       type="radio"
-                      value="CASH">
+                      value="CASH"
+                    >
                     <span>Наличными</span>
                   </label>
                   <label>
                     <input
                       v-model="payment"
                       type="radio"
-                      value="CARD">
+                      value="CARD"
+                    >
                     <span>Картой</span>
                   </label>
-<!--                  <label>-->
-<!--                    <input-->
-<!--                      v-model="payment"-->
-<!--                      type="radio"-->
-<!--                      value="MCARD">-->
-<!--                    <span>Онлайн</span>-->
-<!--                  </label>-->
+                  <!--                  <label>-->
+                  <!--                    <input-->
+                  <!--                      v-model="payment"-->
+                  <!--                      type="radio"-->
+                  <!--                      value="MCARD">-->
+                  <!--                    <span>Онлайн</span>-->
+                  <!--                  </label>-->
                 </div>
               </div>
-              <div v-if="payment === 'CASH'"
-                   class="field change">
+              <div
+                v-if="payment === 'CASH'"
+                class="field change"
+              >
                 <input placeholder="Сдача с">
               </div>
             </div>
             <div class="order-item">
-              <div class="field-title">4. Получить</div>
+              <div class="field-title">
+                4. Получить
+              </div>
               <div class="payment-time">
                 <div class="field-radio">
                   <label>
-                    <input v-model="inTime"
-                           :value="false"
-                           type="radio">
+                    <input
+                      v-model="inTime"
+                      :value="false"
+                      type="radio"
+                    >
                     <span>В ближайшее время</span>
                   </label>
                   <label>
-                    <input v-model="inTime"
-                           :value="true"
-                           type="radio">
+                    <input
+                      v-model="inTime"
+                      :value="true"
+                      type="radio"
+                    >
                     <span>Ко времени</span>
                   </label>
                 </div>
 
-
-                <div v-if="inTime"
-                     class="payment-time-info field-dropdown">
-                  <input v-model="toTime"
-                         placeholder="Укажите время"
-                         readonly
-                         @click="isCheckoutTimeDropdownBoxShown = true">
+                <div
+                  v-if="inTime"
+                  class="payment-time-info field-dropdown"
+                >
+                  <input
+                    v-model="toTime"
+                    placeholder="Укажите время"
+                    readonly
+                    @click="isCheckoutTimeDropdownBoxShown = true"
+                  >
                   <CheckoutTimeDropdownBox
                     v-if="isCheckoutTimeDropdownBoxShown"
                     v-model="toTime"
-                    @close="isCheckoutTimeDropdownBoxShown = false" />
+                    @close="isCheckoutTimeDropdownBoxShown = false"
+                  />
                 </div>
-
               </div>
-
 
               <div class="order-quantity">
                 <p>Кол-во персон</p>
                 <div class="basket-count">
-                  <div class="count-minus"
-                       @click="order.personsCount > 1 ? order.personsCount -= 1 : null"></div>
+                  <div
+                    class="count-minus"
+                    @click="order.personsCount > 1 ? order.personsCount -= 1 : null"
+                  />
                   <span>{{ order.personsCount }}</span>
-                  <div class="count-plus"
-                       @click="order.personsCount += 1"></div>
+                  <div
+                    class="count-plus"
+                    @click="order.personsCount += 1"
+                  />
                 </div>
               </div>
 
-
               <div class="call">
-                <div class="call-title">Хотите мы позвоним?</div>
+                <div class="call-title">
+                  Хотите мы позвоним?
+                </div>
                 <div class="call-radio">
                   <label>
-                    <input v-model="needCall"
-                           :value="true"
+                    <input
+                      v-model="needCall"
+                      :value="true"
 
-                           type="radio">
-                    <span class="radiomark"></span>
+                      type="radio"
+                    >
+                    <span class="radiomark" />
                     <span class="call-radio-name">Потребуется звонок оператора</span>
                   </label>
                 </div>
                 <div class="call-radio">
                   <label>
-                    <input v-model="needCall"
-                           :value="false"
+                    <input
+                      v-model="needCall"
+                      :value="false"
 
-                           type="radio">
-                    <span class="radiomark"></span>
+                      type="radio"
+                    >
+                    <span class="radiomark" />
                     <span class="call-radio-name">Не перезванивать</span>
                   </label>
                 </div>
               </div>
-
             </div>
             <div class="order-bottom">
               <Agree v-model="agree" />
-              <div v-if="agree"
-                   class="order-button">
+              <div
+                v-if="agree"
+                class="order-button"
+              >
                 <div class="order-btn">
                   <button
                     :class="{disabledBtn: isFetching}"
-                    @click.prevent="sendOrder">
-                    <template v-if="!isFetching">Оформить заказ</template>
+                    @click.prevent="sendOrder"
+                  >
+                    <template v-if="!isFetching">
+                      Оформить заказ
+                    </template>
                     <AppSpinner v-else />
                   </button>
                 </div>
@@ -294,9 +342,6 @@ export default {
     CheckoutTimeDropdownBox,
     Multiselect,
   },
-  head() {
-    return {};
-  },
   data() {
     return {
 
@@ -332,7 +377,7 @@ export default {
 
       isCheckoutTimeDropdownBoxShown: false,
 
-      //===
+      //= ==
 
       comment: '',
       payment: 'CASH',
@@ -353,6 +398,80 @@ export default {
       isFetching: false,
 
     };
+  },
+  head() {
+    return {};
+  },
+
+  computed: {
+    spendBonus() {
+      return this.$store.getters['cart/spendBonus'];
+    },
+    selectedAddress: {
+      set(address) {
+        this.$store.dispatch('address/setSelectedAddress', address);
+      },
+      get() {
+        return this.$store.getters['address/selectedAddress'];
+      },
+    },
+    cartItems() {
+      return this.$store.getters['cart/cartItems'];
+    },
+    cartTotal() {
+      return this.$store.getters['cart/cartTotal'];
+    },
+
+    cartTotalAfterDiscounts() {
+      return this.$store.getters['cart/cartTotalAfterDiscounts'];
+    },
+
+    zoneId() {
+      if (this.deliveryMethod === 'self') {
+        return this.restaurant?.value || null;
+      }
+
+      if (!this.zone) {
+        return null;
+      }
+
+      return this.zone.zoneId;
+    },
+  },
+
+  watch: {
+    selectedStreet(v) {
+      this.order.address.street = v.name;
+      this.order.address.streetId = v.iikoId;
+    },
+  },
+
+  mounted() {
+    this.$watch('order.address.home', this.checkCreateOrder);
+    this.$watch('order.address.street', this.checkCreateOrder);
+  },
+
+  async created() {
+    if (!this.cartItems.length) {
+      await this.$router.push('/cart');
+    }
+    this.user = { ...this.$store.getters['user/user'] };
+
+    const selectedAddress = this.$store.getters['address/selectedAddress'];
+    if (selectedAddress) {
+      this.selectedStreet = { iikoId: selectedAddress.streetId, name: selectedAddress.street };
+      this.order.address.home = selectedAddress.home;
+    }
+
+    try {
+      this.isFetching = true;
+      const res = await this.$axios.get('/api/cladr');
+      this.streets = res.data;
+    } catch (e) {
+      console.log(e);
+    } finally {
+      this.isFetching = false;
+    }
   },
   methods: {
     checkOrderMinSum() {
@@ -412,7 +531,7 @@ export default {
         order: {
           payment: this.payment,
           delivery: this.deliveryMethod,
-          comment: comment,
+          comment,
           personsCount: this.order.personsCount,
           basket: this.cartItems,
           total: this.cartTotalAfterDiscounts,
@@ -423,13 +542,11 @@ export default {
       };
 
       try {
-
         this.isFetching = true;
         const { data } = await this.$axios.post('/api/catalog/order', orderData);
         this.isFetching = false;
 
-
-        //update user if order was create
+        // update user if order was create
         await this.$store.dispatch('user/setUser', this.user);
 
         yaSendOrderData && yaSendOrderData(orderData);
@@ -439,13 +556,11 @@ export default {
         await this.$store.dispatch('cart/setAppliedCoupon', '');
         await this.$store.dispatch('cart/setDiscountTotal', 0);
 
-
         if (data.paymentLink) {
           window.location.href = data.paymentLink;
         } else {
           await this.$router.push('/complete');
         }
-
       } catch (e) {
         this.isFetching = false;
         this.$notify({
@@ -455,11 +570,9 @@ export default {
         });
         console.log(e);
       }
-
     },
 
     async checkCreateOrder() {
-
       try {
         if (!this.checkOrderRequiredUserFields()) {
           this.$notify({
@@ -484,7 +597,7 @@ export default {
           return false;
         }
 
-        //TODO: fix this shit
+        // TODO: fix this shit
         const cloneOrderIiko = _.cloneDeep(orderIiko);
         cloneOrderIiko.order.address = {};
         cloneOrderIiko.order.phone = this.user.phone;
@@ -522,7 +635,6 @@ export default {
             case 5:
               errorMessage = data.problem;
               break;
-
           }
           this.$notify({
             group: 'messages',
@@ -533,11 +645,9 @@ export default {
         }
 
         if (data.deliveryRestriction) {
-          const currentZoneInfo = zoneInfo.find(z => {
-            return z.deliveryTerminalId === data.deliveryRestriction.deliveryTerminalId
+          const currentZoneInfo = zoneInfo.find((z) => z.deliveryTerminalId === data.deliveryRestriction.deliveryTerminalId
               && z.zone === data.deliveryRestriction.zone
-              && z.organizationId === data.deliveryRestriction.organizationId;
-          });
+              && z.organizationId === data.deliveryRestriction.organizationId);
 
           if (!currentZoneInfo) {
             this.$notify({
@@ -552,10 +662,9 @@ export default {
         } else {
           this.zone = null;
         }
-        //this.zone = await this.getZone();
+        // this.zone = await this.getZone();
 
         this.checkOrderMinSum();
-
       } catch (e) {
         this.$notify({
           group: 'messages',
@@ -599,83 +708,11 @@ export default {
         comment.push(`Клиент ввел промокод: ${this.$store.getters['cart/appliedCoupon']}`);
       }
       return comment.join('\n');
-
     },
 
     async setZone() {
 
     },
-  },
-
-  mounted() {
-    this.$watch('order.address.home', this.checkCreateOrder);
-    this.$watch('order.address.street', this.checkCreateOrder);
-  },
-
-  watch: {
-    selectedStreet(v) {
-      this.order.address.street = v.name;
-      this.order.address.streetId = v.iikoId;
-    },
-  },
-
-  computed: {
-    spendBonus() {
-      return this.$store.getters['cart/spendBonus'];
-    },
-    selectedAddress: {
-      set(address) {
-        this.$store.dispatch('address/setSelectedAddress', address);
-      },
-      get() {
-        return this.$store.getters['address/selectedAddress'];
-      },
-    },
-    cartItems() {
-      return this.$store.getters['cart/cartItems'];
-    },
-    cartTotal() {
-      return this.$store.getters['cart/cartTotal'];
-    },
-
-    cartTotalAfterDiscounts() {
-      return this.$store.getters['cart/cartTotalAfterDiscounts'];
-    },
-
-    zoneId() {
-      if (this.deliveryMethod === 'self') {
-        return this.restaurant?.value || null;
-      }
-
-      if (!this.zone) {
-        return null;
-      }
-
-      return this.zone.zoneId;
-    },
-  },
-
-  async created() {
-    if (!this.cartItems.length) {
-      await this.$router.push('/cart');
-    }
-    this.user = { ...this.$store.getters['user/user'] };
-
-    const selectedAddress = this.$store.getters['address/selectedAddress'];
-    if (selectedAddress) {
-      this.selectedStreet = { iikoId: selectedAddress.streetId, name: selectedAddress.street };
-      this.order.address.home = selectedAddress.home;
-    }
-
-    try {
-      this.isFetching = true;
-      const res = await this.$axios.get('/api/cladr');
-      this.streets = res.data;
-    } catch (e) {
-      console.log(e);
-    } finally {
-      this.isFetching = false;
-    }
   },
 
 };

@@ -5,7 +5,7 @@ export const state = () => ({
   isBasketModalActive: false,
   isCallbackModalActive: false,
 
-  version: STORE_VERSION
+  version: STORE_VERSION,
 });
 
 export const mutations = {

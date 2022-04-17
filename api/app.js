@@ -22,7 +22,7 @@ import blockRouter from './block/block.router.js';
 import reviewRouter from './review/review.router.js';
 import slideRouter from './slide/slide.router.js';
 
-const logger = new CLogger;
+const logger = new CLogger();
 
 process.on('unhandledRejection', (reason, promise) => {
   logger.log(`Unhandled Rejection at: ${promise}. Reason: ${reason}`);
@@ -34,7 +34,7 @@ process.on('uncaughtException', (err, origin) => {
 
 const app = express();
 
-//app.use(morgan('combined', { stream: logger.logger.stream }));
+// app.use(morgan('combined', { stream: logger.logger.stream }));
 
 try {
   app.use(express.json());
@@ -56,10 +56,9 @@ try {
   app.use('/api/review', reviewRouter);
   app.use('/api/slide', slideRouter);
 
-  app.listen(process.env.API_SERVER_PORT, function() {
+  app.listen(process.env.API_SERVER_PORT, () => {
     console.log(`App is listening on ${env.API_SERVER_PORT}`);
   });
-
 } catch (e) {
   logger.log(e.message);
 }

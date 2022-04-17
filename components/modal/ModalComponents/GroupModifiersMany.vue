@@ -4,25 +4,26 @@
       <p>{{ group.name }}</p>
     </div>
     <div
-      class="components-list">
+      class="components-list"
+    >
       <GroupModifiersManyItem
         v-for="mod in group.modifiers"
         :key="mod.modifierId"
         v-model="selectedMods"
         :mod="mod"
-        :totalModCount="totalModCount"
+        :total-mod-count="totalModCount"
         @decrease="decrease"
-        @increase="increase" />
+        @increase="increase"
+      />
     </div>
   </div>
 </template>
-
 
 <script>
 import GroupModifiersManyItem from '@/components/modal/ModalComponents/GroupModifiersManyItem.vue';
 
 export default {
-  name: 'groupModifiersOnlyOne',
+  name: 'GroupModifiersOnlyOne',
   components: {
     GroupModifiersManyItem,
   },
@@ -44,6 +45,42 @@ export default {
     };
   },
 
+  watch: {
+    selectedMods() {
+      const mods = [...this.value];
+      const notEmptySelectedMods = Object.entries(this.selectedMods).filter((mod) => mod[1]);
+      const emptySelectedModKeys = Object.entries(this.selectedMods).filter((mod) => !mod[1]).map(([key]) => key);
+
+      notEmptySelectedMods.forEach(([id, count]) => {
+        const mod = this.group.modifiers.find((el) => el.modifierId === id);
+        const idx = mods.findIndex((el) => el.id === id);
+        const addedMod = {
+          id,
+          count,
+          groupId: mod.groupId,
+          groupName: mod.groupName,
+          price: mod.price,
+          name: mod.name,
+          code: mod.code,
+        };
+
+        if (idx === -1) {
+          mods.push(addedMod);
+        } else {
+          mods[idx] = addedMod;
+        }
+      });
+
+      // delete mod zero quantity
+      const modsWithoutZeroQuantity = mods.filter((el) => !emptySelectedModKeys.includes(el.id));
+
+      this.$emit('input', modsWithoutZeroQuantity);
+    },
+  },
+  mounted() {
+
+  },
+
   methods: {
     decrease() {
       const count = this.totalModCount - 1;
@@ -62,43 +99,6 @@ export default {
       }
       this.totalModCount = count;
     },
-
-  },
-
-  watch: {
-    selectedMods() {
-      const mods = [...this.value];
-      const notEmptySelectedMods = Object.entries(this.selectedMods).filter(mod => mod[1]);
-      const emptySelectedModKeys = Object.entries(this.selectedMods).filter(mod => !mod[1]).map(([key]) => key);
-
-      notEmptySelectedMods.forEach(([id, count]) => {
-        const mod = this.group.modifiers.find(el => el.modifierId === id);
-        const idx = mods.findIndex(el => el.id === id);
-        const addedMod = {
-          id,
-          count,
-          groupId: mod.groupId,
-          groupName: mod.groupName,
-          price: mod.price,
-          name: mod.name,
-          code: mod.code,
-        };
-
-        if (idx === -1) {
-          mods.push(addedMod);
-        } else {
-          mods[idx] = addedMod;
-        }
-      });
-
-      //delete mod zero quantity
-      const modsWithoutZeroQuantity = mods.filter(el => !emptySelectedModKeys.includes(el.id));
-
-      this.$emit('input', modsWithoutZeroQuantity);
-
-    },
-  },
-  mounted() {
 
   },
 };

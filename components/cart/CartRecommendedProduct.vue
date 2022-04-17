@@ -7,17 +7,20 @@
         format="webp"
         loading="lazy"
         quality="100"
-        width="199" />
+        width="199"
+      />
     </div>
     <div class="recomend-info">
       <div class="recomend-name">
         <h4>{{ item.name }}</h4>
       </div>
       <div class="recomend-bottom">
-        <div class="recomend-addcart"
-             @click="addToCart(item.id)">
+        <div
+          class="recomend-addcart"
+          @click="addToCart(item.id)"
+        >
           <p>Добавить</p>
-          <span></span>
+          <span />
         </div>
         <div class="recomend-price">
           <span>{{ item.price }} ₽</span>

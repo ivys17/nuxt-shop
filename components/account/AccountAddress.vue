@@ -10,12 +10,13 @@
         deselect-label=""
         label="name"
         placeholder="Введите улицу и выберите из списка"
-        selectLabel=""
-        selectedLabel=""
-        track-by="iikoId">
+        select-label=""
+        selected-label=""
+        track-by="iikoId"
+      >
         <template
-          slot="option"
-          slot-scope="{option}">
+          #option="{option}"
+        >
           {{ option.name }}
         </template>
         <span slot="noResult">Улица не найдена.</span>
@@ -27,30 +28,38 @@
       <input
         v-model="addressModel.home"
         placeholder="Дом"
-        type="text">
+        type="text"
+      >
     </div>
 
     <div class="account-field checkout-arrea">
       <input
         v-model="addressModel.apartment"
         placeholder="Квартира"
-        type="text">
+        type="text"
+      >
     </div>
 
     <div class="account-field checkout-arrea">
       <input
         v-model="addressModel.entrance"
         placeholder="Подъезд"
-        type="text">
+        type="text"
+      >
     </div>
     <div class="account-field checkout-arrea">
       <input
         v-model="addressModel.floor"
         placeholder="Этаж"
-        type="text">
+        type="text"
+      >
     </div>
-    <div class="add-address-save"
-         @click="save"><span>Сохранить адрес</span></div>
+    <div
+      class="add-address-save"
+      @click="save"
+    >
+      <span>Сохранить адрес</span>
+    </div>
   </div>
 </template>
 <script>
@@ -84,11 +93,27 @@ export default {
       streets: [],
     };
   },
+  watch: {
+    selectedStreet(street) {
+      this.addressModel.street = street.name;
+      this.addressModel.streetId = street.iikoId;
+    },
+  },
+
+  async created() {
+    try {
+      const res = await this.$axios.get('/api/cladr');
+      console.log(res);
+      this.streets = res.data;
+    } catch (e) {
+      console.log(e);
+    }
+  },
 
   methods: {
 
     async save() {
-      //TODO: validate address
+      // TODO: validate address
       if (!this.addressModel.street || !this.addressModel.home) {
         this.$notify({
           group: 'messages',
@@ -107,27 +132,10 @@ export default {
           await this.$store.dispatch('address/createAddress', this.addressModel);
         }
         this.$emit('complete');
-
       } catch (e) {
         throw e;
       }
     },
-  },
-  watch: {
-    selectedStreet(street) {
-      this.addressModel.street = street.name;
-      this.addressModel.streetId = street.iikoId;
-    },
-  },
-
-  async created() {
-    try {
-      const res = await this.$axios.get('/api/cladr');
-      console.log(res);
-      this.streets = res.data;
-    } catch (e) {
-      console.log(e);
-    }
   },
 };
 </script>

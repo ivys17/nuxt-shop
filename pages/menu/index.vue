@@ -5,7 +5,6 @@
         <h1>Меню</h1>
       </div>
       <ProductionList :menu-items="menuItems" />
-
     </div>
   </div>
 </template>
@@ -16,20 +15,20 @@ import ProductionList from '@/components/catalog/ProductionList.vue';
 
 export default {
   components: { ProductionList },
+  data() {
+    return {};
+  },
   head() {
     return {
-      title: `Меню ресторана`,
+      title: 'Меню ресторана',
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: `Меню ресторана.`,
+          content: 'Меню ресторана.',
         },
       ],
     };
-  },
-  data() {
-    return {};
   },
   computed: {
     menuItems() {
@@ -44,10 +43,8 @@ export default {
       //   }
       //   return acc;
       // }, []);
-
     },
   },
 
 };
 </script>
-

@@ -1,32 +1,46 @@
 <template>
   <div
-    class="info-block" v-if="blockData">
+    v-if="blockData"
+    class="info-block"
+  >
     <div class="info-block__inner">
-      <h3 class="info-block__title">{{ blockData.title }}</h3>
+      <h3 class="info-block__title">
+        {{ blockData.title }}
+      </h3>
       <div class="info-block__wrapper">
         <div class="info-block__content info-field">
-<!--          <AppEditor v-model="blockData.content" />-->
+          <!--          <AppEditor v-model="blockData.content" />-->
           <textarea v-model="blockData.content" />
         </div>
 
-
         <div class="info-block__buttons">
-          <div class="info-block__btn"
-               @click="save">
-            <img alt="edit"
-                 src="@/assets/admin/images/icons/edit.svg">
+          <div
+            class="info-block__btn"
+            @click="save"
+          >
+            <img
+              alt="edit"
+              src="@/assets/admin/images/icons/edit.svg"
+            >
           </div>
-          <div v-if="false" class="info-block__btn"
-               @click="remove()">
-            <img alt="delete"
-                 src="@/assets/admin/images/icons/del.svg">
+          <div
+            v-if="false"
+            class="info-block__btn"
+            @click="remove()"
+          >
+            <img
+              alt="delete"
+              src="@/assets/admin/images/icons/del.svg"
+            >
           </div>
         </div>
-
       </div>
     </div>
-    <div v-if="blockData.isMultiple"
-         class="info-block__add">+ Добавить раздел
+    <div
+      v-if="blockData.isMultiple"
+      class="info-block__add"
+    >
+      + Добавить раздел
     </div>
   </div>
 </template>
@@ -34,33 +48,30 @@
 <script>
 import AppEditor from '@/components/admin/AppEditor.vue';
 
-
 export default {
   name: 'InfoBlock',
   components: { AppEditor },
   props: {
     blockId: {
       type: Number,
-      required: true
-    }
-  },
-  async fetch() {
-    try {
-
-      const { data } = await this.$axios.get(`/api/block/${this.blockId}`);
-
-      if (data) {
-        this.blockData = data;
-      }
-
-    } catch (e) {
-      throw e;
-    }
+      required: true,
+    },
   },
   data() {
     return {
       blockData: null,
     };
+  },
+  async fetch() {
+    try {
+      const { data } = await this.$axios.get(`/api/block/${this.blockId}`);
+
+      if (data) {
+        this.blockData = data;
+      }
+    } catch (e) {
+      throw e;
+    }
   },
   methods: {
     async save() {
@@ -70,16 +81,15 @@ export default {
       };
       await this.$axios.patch(`api/block/${this.blockId}`, this.blockData, {
         headers: {
-          'Authorization': `Barer ${this.$store.getters['auth/token']}`
-        }
+          Authorization: `Barer ${this.$store.getters['auth/token']}`,
+        },
       });
-
     },
 
     remove() {
-      alert('не реализованно')
-    }
-  }
+      alert('не реализованно');
+    },
+  },
 };
 </script>
 
@@ -135,4 +145,3 @@ export default {
   display     : inline-block;
 }
 </style>
-

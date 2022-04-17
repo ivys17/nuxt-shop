@@ -7,10 +7,15 @@
         checked=""
         class="checkbox"
         type="checkbox"
-        @change="$emit('input', agree)">
-      <label for="agree"></label>
-      <p>Я согласен на обработку моих перс. данных в соответствии с
-        <a href="/policy.pdf" target="_blank">Условиями</a>
+        @change="$emit('input', agree)"
+      >
+      <label for="agree" />
+      <p>
+        Я согласен на обработку моих перс. данных в соответствии с
+        <a
+          href="/policy.pdf"
+          target="_blank"
+        >Условиями</a>
       </p>
     </div>
   </div>

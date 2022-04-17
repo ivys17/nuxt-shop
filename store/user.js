@@ -1,13 +1,11 @@
 import { STORE_VERSION } from '@/config/common.js';
 
-const getDefaultState = () => {
-  return {
-    user: {},
-    favorites: [],
-    smsCode: null,
-    validationPhone: null,
-  };
-};
+const getDefaultState = () => ({
+  user: {},
+  favorites: [],
+  smsCode: null,
+  validationPhone: null,
+});
 
 export const state = () => ({
   ...getDefaultState(),
@@ -68,7 +66,6 @@ export const actions = {
     if (user.id) {
       dispatch('address/fetchAddressesForUser', user.id, { root: true });
     }
-
   },
 
   async logoutUser({ commit }) {
@@ -96,7 +93,7 @@ export const actions = {
       return;
     }
 
-    const favorites = [...getters['favorites']];
+    const favorites = [...getters.favorites];
     if (favorites.includes(productId)) {
       return;
     }
@@ -105,8 +102,8 @@ export const actions = {
   },
 
   removeFavorites({ commit, getters }, productId) {
-    const favorites = [...getters['favorites']];
-    const idx = favorites.findIndex(el => el === productId);
+    const favorites = [...getters.favorites];
+    const idx = favorites.findIndex((el) => el === productId);
 
     if (idx === -1) {
       return;
@@ -116,7 +113,6 @@ export const actions = {
   },
 
   async auth({ commit, dispatch, rootCommit }, phone) {
-
     if (phone.length === 0) {
       $nuxt.$notify({
         group: 'messages',
@@ -151,18 +147,16 @@ export const actions = {
       await dispatch('setUser', user);
       commit('setModalAuthSMS', false, { root: true });
 
-      //TODO: fix think about how to update the user from iiko after authorization
+      // TODO: fix think about how to update the user from iiko after authorization
       setTimeout(async () => {
         const user = await this.$axios.$get(`/api/user/${phone}`);
         await dispatch('user/setUser', user, { root: true });
       }, 3000);
 
       dispatch('cart/calculateCheckinResult', null, { root: true });
-
     } catch (e) {
       console.log(e);
     }
-
   },
 
 };
@@ -178,4 +172,3 @@ export const getters = {
   smsCode: ({ smsCode }) => smsCode,
   validationPhone: ({ validationPhone }) => validationPhone,
 };
-

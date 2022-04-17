@@ -1,7 +1,9 @@
 <template>
   <div class="back-basket">
-    <a href
-       @click.prevent="$router.go(-1)">в корзину</a>
+    <a
+      href
+      @click.prevent="$router.go(-1)"
+    >в корзину</a>
   </div>
 </template>
 <script>

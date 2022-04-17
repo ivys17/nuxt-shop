@@ -1,4 +1,4 @@
-//https://iiko.biz:9900/api/0/deliverySettings/getDeliveryRestrictions
+// https://iiko.biz:9900/api/0/deliverySettings/getDeliveryRestrictions
 
 export default [
   {

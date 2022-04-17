@@ -4,16 +4,19 @@
       <p>{{ group.name }}</p>
     </div>
     <div
-      class="components-list">
+      class="components-list"
+    >
       <div
         v-for="mod in group.modifiers"
-        class="components-item">
+        class="components-item"
+      >
         <label>
           <input
             v-model="selectedMod"
             :value="mod.modifierId"
-            type="radio">
-          <span class="radiomark"></span>
+            type="radio"
+          >
+          <span class="radiomark" />
           <span class="components-item-name"><b>{{ mod.name }}</b><br>{{ mod.description }}</span>
           <span class="components-price">{{ mod.price }} ₽</span>
         </label>
@@ -24,7 +27,7 @@
 
 <script>
 export default {
-  name: 'groupModifiersOnlyOne',
+  name: 'GroupModifiersOnlyOne',
   props: {
     group: {
       type: Object,
@@ -43,8 +46,8 @@ export default {
   watch: {
     selectedMod() {
       const mods = [...this.value];
-      const mod = this.group.modifiers.find(el => el.modifierId === this.selectedMod);
-      const idx = mods.findIndex(el => el.groupId === this.group.modifierId);
+      const mod = this.group.modifiers.find((el) => el.modifierId === this.selectedMod);
+      const idx = mods.findIndex((el) => el.groupId === this.group.modifierId);
 
       const addedMod = {
         id: this.selectedMod,

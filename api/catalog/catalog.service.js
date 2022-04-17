@@ -15,20 +15,18 @@ import {
 } from './catalog.helper.js';
 import * as catalogRepo from './catalog.repository.js';
 
-const customSlugify = (str) => slugify(
-  str.replaceAll('-', '_'), { replacement: '_', lower: true, trim: true },
-);
+const customSlugify = (str) => slugify(str.replaceAll('-', '_'), { replacement: '_', lower: true, trim: true });
 
 export const getCatalog = async () => {
   const productsAll = await getProductsAll();
   const groups = await getGroupsAll();
-  //const modifiers = await getModifiersAll();
+  // const modifiers = await getModifiersAll();
   const groupModifiers = await getGroupModifiers();
   const groupModifiersChildren = await getGroupModifiersChildren();
   const stopList = await getStopList();
 
-  const products = productsAll.filter(product => {
-    const productInStopList = stopList.filter(el => el.productId === product.id);
+  const products = productsAll.filter((product) => {
+    const productInStopList = stopList.filter((el) => el.productId === product.id);
     // if (productInStopList.length) {
     //   for (const productInStopListElement of productInStopList) {
     //     if (productInStopListElement.balance < 1) {
@@ -48,16 +46,14 @@ export const getCatalog = async () => {
   //   }
   // });
 
-  groupModifiers.forEach(groupModifier => {
-    const referringGroup = groups.find(g => g.id === groupModifier.modifierId);
+  groupModifiers.forEach((groupModifier) => {
+    const referringGroup = groups.find((g) => g.id === groupModifier.modifierId);
     groupModifier.name = referringGroup.name;
     const children = groupModifiersChildren
-      .filter(groupModifiersChild => {
-        return groupModifiersChild.parentId === groupModifier.modifierId;
-      });
+      .filter((groupModifiersChild) => groupModifiersChild.parentId === groupModifier.modifierId);
 
-    children.forEach(child => {
-      const product = products.find(p => p.id === child.modifierId);
+    children.forEach((child) => {
+      const product = products.find((p) => p.id === child.modifierId);
       if (product) {
         child.name = product.name;
         child.code = product.code;
@@ -70,7 +66,6 @@ export const getCatalog = async () => {
         child.carbohydrateAmount = product.carbohydrateAmount;
         child.energyAmount = product.energyAmount;
 
-
         child.groupId = child.parentId;
         child.groupName = groupModifier.name;
         child.maxAmount = groupModifier.maxAmount;
@@ -81,16 +76,16 @@ export const getCatalog = async () => {
     groupModifier.modifiers = uniqModifiers(children);
   });
 
-  products.forEach(p => {
+  products.forEach((p) => {
     p.groupModifiers = [];
 
     const groupModifiersForProduct = groupModifiers
-      .filter(groupModifier => groupModifier.parentId === p.id);
+      .filter((groupModifier) => groupModifier.parentId === p.id);
 
-    p.requiredGroupModifier = groupModifiersForProduct.find(el => el.required);
+    p.requiredGroupModifier = groupModifiersForProduct.find((el) => el.required);
     p.minGroupMod = 0;
     if (p.requiredGroupModifier) {
-      p.minGroupMod = Math.min(...p.requiredGroupModifier.modifiers.map(el => el.price));
+      p.minGroupMod = Math.min(...p.requiredGroupModifier.modifiers.map((el) => el.price));
     }
 
     p.groupModifiers.push(...groupModifiersForProduct);
@@ -108,7 +103,6 @@ export const getCatalog = async () => {
     //     required: false,
     //   });
     // }
-
   });
   return { products, groups, stopList };
 };
@@ -117,7 +111,7 @@ export const getGroupsAll = async () => {
   const groupsAll = await catalogRepo.getGroupsAll();
   const groupsAllLength = groupsAll.length;
   const slugs = [];
-  const groups = groupsAll.map(g => {
+  const groups = groupsAll.map((g) => {
     let additionalInfo = {};
     try {
       additionalInfo = JSON.parse(g.additionalInfo);
@@ -133,14 +127,13 @@ export const getGroupsAll = async () => {
       } else {
         slug += '_';
       }
-
     }
 
     return {
       ...g,
-      slug: slug,
+      slug,
       id: g.id,
-      additionalInfo: additionalInfo,
+      additionalInfo,
       image: getCatalogImage(g),
     };
   });
@@ -150,38 +143,34 @@ export const getGroupsAll = async () => {
 };
 
 export const getProductsAll = async () => {
-
   const productsAll = await catalogRepo.getProductsAll();
-  const products = productsAll.map(p => {
-
-    return {
-      id: p.id,
-      name: p.name,
-      code: p.code,
-      parentGroup: p.parentGroup,
-      price: p.price,
-      weight: p.weight,
-      order: p.order,
-      energyAmount: p.energyAmount,
-      fiberAmount: p.fiberAmount,
-      fatAmount: p.fatAmount,
-      carbohydrateAmount: p.carbohydrateAmount,
-      additionalInfo: getProductAdditionalInfo(p),
-      groupModifiers: [],
-      slug: customSlugify(p.name),
-      description: p.description,
-      image: getCatalogImage(p),
-      likes: p.likes,
-      tags: getProductTags(p),
-      createdAt: p.createdAt,
-      seo: {
-        title: p.seoTitle, description: p.seoDescription, keywords: p.seoKeywords,
-      },
-    };
-  });
+  const products = productsAll.map((p) => ({
+    id: p.id,
+    name: p.name,
+    code: p.code,
+    parentGroup: p.parentGroup,
+    price: p.price,
+    weight: p.weight,
+    order: p.order,
+    energyAmount: p.energyAmount,
+    fiberAmount: p.fiberAmount,
+    fatAmount: p.fatAmount,
+    carbohydrateAmount: p.carbohydrateAmount,
+    additionalInfo: getProductAdditionalInfo(p),
+    groupModifiers: [],
+    slug: customSlugify(p.name),
+    description: p.description,
+    image: getCatalogImage(p),
+    likes: p.likes,
+    tags: getProductTags(p),
+    createdAt: p.createdAt,
+    seo: {
+      title: p.seoTitle, description: p.seoDescription, keywords: p.seoKeywords,
+    },
+  }));
 
   products.sort((a, b) => a.order - b.order);
-  return products.filter(p => {
+  return products.filter((p) => {
     const { additionalInfo } = p;
 
     if (additionalInfo?.deliveryMobile?.isSticker) {
@@ -196,11 +185,9 @@ export const getProductsAll = async () => {
   });
 };
 
-export const getProduct = async (id) => {
-  //TODO: implement
-  return false;
-};
-
+export const getProduct = async (id) =>
+  // TODO: implement
+  false;
 export const getModifiersAll = async () => await catalogRepo.getModifiersAll();
 
 export const getGroupModifiers = async () => await catalogRepo.getGroupModifiers();
@@ -208,7 +195,9 @@ export const getGroupModifiers = async () => await catalogRepo.getGroupModifiers
 export const getGroupModifiersChildren = async () => await catalogRepo.getGroupModifiersChildren();
 
 export const createOrder = async (data) => {
-  const { user, order: orderData, coupon, spendBonus } = data;
+  const {
+    user, order: orderData, coupon, spendBonus,
+  } = data;
 
   let userId = null;
 
@@ -224,41 +213,40 @@ export const createOrder = async (data) => {
   }
 
   const order = {
-    userId: userId,
+    userId,
     personsCount: orderData.personsCount,
     total: orderData.total,
     comment: orderData.comment,
-    coupon: coupon,
+    coupon,
     paymentType: orderData.payment,
     zoneId: orderData.zoneId,
     isSelfService: orderData.isSelfService,
     addressId: orderData.addressId,
     status: 'NEW',
-    spendBonus: spendBonus,
+    spendBonus,
   };
 
   const { id: orderId } = await orderRepo.createOrder(order);
 
-  const basket = orderData.basket;
+  const { basket } = orderData;
 
   await Promise.all(basket.map(saveBasketItems));
 
-  //TODO: fix
+  // TODO: fix
   if (orderData.payment === 'MCARD') {
     return await paymentService.payOrder(orderId);
-  } else {
-    try {
-      await processOrder(orderId);
-    } catch (e) {
-      console.log(e);
-    }
-    return null;
   }
+  try {
+    await processOrder(orderId);
+  } catch (e) {
+    console.log(e);
+  }
+  return null;
 
   async function saveBasketItems(basketItem) {
     const { product } = basketItem;
     const basketItemData = {
-      orderId: orderId,
+      orderId,
       iikoId: product.id,
       name: product.name,
       code: product.code,
@@ -269,7 +257,7 @@ export const createOrder = async (data) => {
     if (basketItem.mods.length) {
       for (const mod of basketItem.mods) {
         const basketItemData = {
-          orderProductId: orderProductId,
+          orderProductId,
           amount: mod.count,
           iikoId: mod.id,
           name: mod.name,
@@ -285,7 +273,6 @@ export const createOrder = async (data) => {
 export const processOrder = async (orderId) => {
   const order = await buildOrder(orderId);
   await senderService.sendMessage(order);
-
 };
 
 export const buildOrder = async (orderId) => {
@@ -294,13 +281,11 @@ export const buildOrder = async (orderId) => {
   return orderData;
 };
 
-export const getImagesAll = async () => {
-  return await catalogRepo.getImagesAll();
-};
+export const getImagesAll = async () => await catalogRepo.getImagesAll();
 
 export const createOrderIikoAnswer = async (orderId, answer) => {
   const answerData = {
-    orderId: orderId, answer: answer,
+    orderId, answer,
   };
   return await catalogRepo.createOrderIikoAnswer(answerData);
 };
@@ -309,6 +294,4 @@ export const likeProduct = async (id) => {
   await catalogRepo.likeProduct(id);
 };
 
-export const getStopList = async () => {
-  return await catalogRepo.getStopList();
-};
+export const getStopList = async () => await catalogRepo.getStopList();

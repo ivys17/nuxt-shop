@@ -1,37 +1,43 @@
 <template>
   <main class="index">
-
-    <AppSlider v-if="slides.desktop.length  || slides.mobile.length"
-               :classes="['main-slider']">
-      <swiper-slide v-for="(slide, idx) in slides.desktop"
-                    :key="slide.id"
-                    class="swiper-slide">
+    <AppSlider
+      v-if="slides.desktop.length || slides.mobile.length"
+      :classes="['main-slider']"
+    >
+      <swiper-slide
+        v-for="(slide, idx) in slides.desktop"
+        :key="slide.id"
+        class="swiper-slide"
+      >
         <img
           :src="slide.path"
           alt=""
-          class="slide-desk">
-        <img v-if="slides.mobile[idx]"
-             :src="slides.mobile[idx].path"
-             alt=""
-             class="slide-mob">
+          class="slide-desk"
+        >
+        <img
+          v-if="slides.mobile[idx]"
+          :src="slides.mobile[idx].path"
+          alt=""
+          class="slide-mob"
+        >
       </swiper-slide>
-
-
     </AppSlider>
 
     <section
       v-for="currentSectionData in catalog"
       :id="`catalog-${currentSectionData.slug}`"
       :key="currentSectionData.id"
-      class="catalog wrapper">
+      class="catalog wrapper"
+    >
       <div class="title">
         <h3>
           <a href="#">{{ currentSectionData.name }}</a>
         </h3>
       </div>
       <AppCatalogGroup
-        :currentSectionData="currentSectionData"
-        :has-more="true" />
+        :current-section-data="currentSectionData"
+        :has-more="true"
+      />
     </section>
 
     <div class="content-bottom">
@@ -112,16 +118,6 @@ import AppCatalogGroup from '@/components/catalog/CatalogGroup.vue';
 
 export default {
   components: { AppCatalogGroup },
-  async fetch() {
-    const { data: slides } = await this.$axios.get('api/slide/');
-    slides.forEach(s => {
-      if (!s.isMobile) {
-        this.slides.desktop.push(s);
-      } else {
-        this.slides.mobile.push(s);
-      }
-    });
-  },
 
   data() {
     return {
@@ -131,16 +127,25 @@ export default {
       },
     };
   },
+  async fetch() {
+    const { data: slides } = await this.$axios.get('api/slide/');
+    slides.forEach((s) => {
+      if (!s.isMobile) {
+        this.slides.desktop.push(s);
+      } else {
+        this.slides.mobile.push(s);
+      }
+    });
+  },
 
   computed: {
     catalog() {
-      return this.catalogIsIncludedInMenu.filter(el => el.items.length);
+      return this.catalogIsIncludedInMenu.filter((el) => el.items.length);
     },
 
     catalogIsIncludedInMenu() {
       const cat = this.$store.getters['catalog/catalogIsIncludedInMenu'];
       const categories = cat.reduce((acc, el) => {
-
         if (el.groups.length) {
           acc = acc.concat(el.groups);
         } else {

@@ -2,18 +2,24 @@
   <section class="catalog wrapper">
     <div class="title">
       <h1>
-        <NuxtLink :to="`/menu/${currentSectionData.alias}`">{{ currentSectionData.name }}</NuxtLink>
+        <NuxtLink :to="`/menu/${currentSectionData.alias}`">
+          {{ currentSectionData.name }}
+        </NuxtLink>
       </h1>
     </div>
-    <div v-if="currentSectionData.groups && currentSectionData.groups.length"
-         class="wrapper">
+    <div
+      v-if="currentSectionData.groups && currentSectionData.groups.length"
+      class="wrapper"
+    >
       <ProductionList
-        :menu-items="currentSectionData.groups" />
+        :menu-items="currentSectionData.groups"
+      />
     </div>
 
     <CatalogGroup
       v-else
-      :currentSectionData="currentSectionData" />
+      :current-section-data="currentSectionData"
+    />
   </section>
 </template>
 
@@ -27,6 +33,9 @@ export default {
   validate({ store, params }) {
     return typeof store.getters['catalog/currentSectionData'](params.section) !== 'undefined';
   },
+  data() {
+    return {};
+  },
   head() {
     return {
       title: `Заказать ${this.currentSectionData.name}`,
@@ -38,9 +47,6 @@ export default {
         },
       ],
     };
-  },
-  data() {
-    return {};
   },
 
   computed: {

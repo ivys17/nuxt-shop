@@ -1,5 +1,5 @@
 <template>
-    <textarea v-model="content"></textarea>
+  <textarea v-model="content" />
 </template>
 
 <script>
@@ -9,7 +9,7 @@ export default {
   props: {
     value: {
       type: String,
-      default: ''
+      default: '',
     },
   },
   data() {
@@ -23,8 +23,8 @@ export default {
   methods: {
     onEditorInput() {
       this.$emit('input', this.content);
-    }
-  }
+    },
+  },
 };
 </script>
 

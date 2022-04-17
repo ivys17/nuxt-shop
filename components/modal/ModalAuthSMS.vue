@@ -1,21 +1,28 @@
 <template>
-
-  <div v-if="isOpen"
-       id="modal-sms"
-       :class="{ 'is-loading': isLoading}"
-       class="modal modal-sms">
+  <div
+    v-if="isOpen"
+    id="modal-sms"
+    :class="{ 'is-loading': isLoading}"
+    class="modal modal-sms"
+  >
     <div class="modal-box">
-      <div class="modal-close"
-           @click="close"></div>
+      <div
+        class="modal-close"
+        @click="close"
+      />
       <div class="modal-info">
         <p>Дождитесь смс-сообщение</p>
         <span>Введите код подтверждения или свяжитесь <br> с оператором +7 (383) 123-23-34</span>
       </div>
       <div class="modal-sms-arrea">
-        <input v-model="sms"
-               autofocus
-               placeholder="Код подтверждения">
-        <button @click.prevent="checkSMS">Отправить</button>
+        <input
+          v-model="sms"
+          autofocus
+          placeholder="Код подтверждения"
+        >
+        <button @click.prevent="checkSMS">
+          Отправить
+        </button>
       </div>
     </div>
   </div>
@@ -57,15 +64,12 @@ export default {
       }
 
       await this.getUserByPhone();
-
     },
 
     async getUserByPhone() {
-
       this.isLoading = true;
       try {
-        await this.$store.dispatch('user/auth', this.phone)
-
+        await this.$store.dispatch('user/auth', this.phone);
       } catch (e) {
         console.log(e);
       }

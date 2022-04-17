@@ -2,7 +2,6 @@ import * as telegramRepo from './telegram.repository.js';
 
 export const telegramCallback = (data) => {
   try {
-
     const { message } = data;
 
     if (!message) {
@@ -32,7 +31,6 @@ export const telegramCallback = (data) => {
   } catch (e) {
     console.log(e);
   }
-
 };
 
 export const createTelegramUser = (telegramChatId) => {
@@ -46,5 +44,3 @@ export const enableTelegramUser = (telegramChatId) => {
 export const disableTelegramUser = (telegramChatId) => {
   telegramRepo.disableTelegramUser(telegramChatId);
 };
-
-

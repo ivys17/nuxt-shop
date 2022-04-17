@@ -9,7 +9,7 @@ export const state = () => ({
   isModalAuthSMSActive: false,
   isModalCartEmptyActive: false,
 
-  version: STORE_VERSION
+  version: STORE_VERSION,
 });
 
 export const mutations = {

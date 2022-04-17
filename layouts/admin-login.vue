@@ -2,14 +2,15 @@
   <div class="">
     <notifications
       group="messages"
-      position="top center" />
+      position="top center"
+    />
     <nuxt />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'admin-login',
+  name: 'AdminLogin',
 };
 </script>
 

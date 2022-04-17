@@ -9,7 +9,7 @@ router.route('/').get(async (req, res) => {
     res.json(reviews);
   } catch (e) {
     res.status(500).json({
-      message: 'Internal Server Error'
+      message: 'Internal Server Error',
     });
   }
 });
@@ -21,7 +21,7 @@ router.route('/').post(async (req, res) => {
     res.json(newReview);
   } catch (e) {
     res.status(500).json({
-      message: e
+      message: e,
     });
   }
 });

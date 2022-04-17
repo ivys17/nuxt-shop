@@ -1,28 +1,35 @@
 <template>
-  <div :class="classes"
-       class="slider">
+  <div
+    :class="classes"
+    class="slider"
+  >
     <swiper :options="swiperOptions">
-      <slot></slot>
+      <slot />
 
-      <div slot="pagination"
-           class="swiper-pagination"></div>
-      <div slot="button-prev"
-           class="swiper-button-prev"></div>
-      <div slot="button-next"
-           class="swiper-button-next"></div>
+      <div
+        slot="pagination"
+        class="swiper-pagination"
+      />
+      <div
+        slot="button-prev"
+        class="swiper-button-prev"
+      />
+      <div
+        slot="button-next"
+        class="swiper-button-next"
+      />
     </swiper>
   </div>
-
 </template>
 <script>
 export default {
+
+  name: 'AppSlider',
   props: {
     classes: {
       type: Array,
     },
   },
-
-  name: 'AppSlider',
   data() {
     return {
       swiperOptions: {

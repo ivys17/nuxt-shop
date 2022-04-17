@@ -9,7 +9,7 @@ router.route('/registration').post(async (req, res) => {
     res.json();
   } catch (e) {
     res.status(500).json({
-      message: 'Internal Server Error'
+      message: 'Internal Server Error',
     });
   }
 });
@@ -25,7 +25,7 @@ router.route('/login').post(async (req, res) => {
     res.json(result);
   } catch (e) {
     res.status(500).json({
-      message: 'Internal Server Error'
+      message: 'Internal Server Error',
     });
   }
 });

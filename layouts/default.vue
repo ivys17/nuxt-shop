@@ -2,47 +2,41 @@
   <div :class="globalClasses">
     <notifications
       group="messages"
-      position="top center" />
+      position="top center"
+    />
     <AppHeader />
-
 
     <div class="box">
       <nuxt />
     </div>
     <AppFooter />
 
-
     <client-only>
       <!-- Модальное окно. Блюда нет в наличии -->
-      <ModalWorkTime :isOpen="isModalWorkTimeShown" />
+      <ModalWorkTime :is-open="isModalWorkTimeShown" />
       <!-- Модальное окно. Блюда нет в наличии -->
 
       <!-- Модальное окно. Номер телефона -->
-      <ModalAuth :isOpen="isModalAuthShown" />
+      <ModalAuth :is-open="isModalAuthShown" />
       <!-- Модальное окно. Номер телефона -->
 
       <!-- Модальное окно. Дождитесь смс -->
-      <ModalAuthSMS :isOpen="isModalAuthSMSActive" />
+      <ModalAuthSMS :is-open="isModalAuthSMSActive" />
       <!-- Модальное окно. Дождитесь смс -->
 
-
       <ModalRegistration :data="isModalRegistrationShown" />
-
 
       <!-- Модальное окно. Выберите компоненты -->
       <ModalComponents />
       <!-- Модальное окно. Выберите компоненты -->
-
 
       <!-- Корзина в модальном окне -->
       <ModalBasket :is-open="isBasketModalActive" />
       <!-- Корзина в модальном окне -->
 
       <ModalApp />
-
     </client-only>
   </div>
-
 </template>
 <script>
 import AppFooter from '~/components/AppFooter.vue';
@@ -71,14 +65,14 @@ export default {
     ModalRegistration,
     ModalApp,
   },
+  data() {
+    return {};
+  },
   head() {
     const canonical = `${HOST}${this.$route.path.toLowerCase().replace(/\/$/, '')}`;
     return {
       link: [{ rel: 'canonical', href: canonical }],
     };
-  },
-  data() {
-    return {};
   },
   computed: {
     globalClasses() {
@@ -90,19 +84,19 @@ export default {
     },
 
     isModalWorkTimeShown() {
-      return this.$store.state['isModalWorkTimeShown'];
+      return this.$store.state.isModalWorkTimeShown;
     },
 
     isModalAuthShown() {
-      return this.$store.state['isModalAuthShown'];
+      return this.$store.state.isModalAuthShown;
     },
 
     isModalAuthSMSActive() {
-      return this.$store.state['isModalAuthSMSActive'];
+      return this.$store.state.isModalAuthSMSActive;
     },
 
     isModalRegistrationShown() {
-      return this.$store.state['isModalRegistrationShown'];
+      return this.$store.state.isModalRegistrationShown;
     },
 
     isBasketModalActive() {
@@ -111,7 +105,7 @@ export default {
 
   },
   watch: {
-    $route: function(route) {
+    $route(route) {
       if (route.query.message === 'not-working') {
         const workTime = checkWorkTime();
         this.$notify({
@@ -129,4 +123,3 @@ export default {
 <style>
 @import "~/assets/css/style.css";
 </style>
-

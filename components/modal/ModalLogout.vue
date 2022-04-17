@@ -1,19 +1,23 @@
 <template>
   <div class="modal">
     <div class="modal-box">
-      <div class="modal-close"
-           @click="close"></div>
+      <div
+        class="modal-close"
+        @click="close"
+      />
       <div class="modal-info">
         <p>Выйти из аккаунта?</p>
       </div>
-      <div class="modal-btn"
-           @click="logout">Да
+      <div
+        class="modal-btn"
+        @click="logout"
+      >
+        Да
       </div>
     </div>
   </div>
 </template>
 <script>
-
 
 export default {
   name: 'ModalLogout',

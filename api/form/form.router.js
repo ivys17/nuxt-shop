@@ -10,7 +10,7 @@ router.route('/callback').post(async (req, res) => {
     res.json();
   } catch (e) {
     res.status(500).json({
-      message: 'Internal Server Error'
+      message: 'Internal Server Error',
     });
   }
 });
@@ -22,7 +22,7 @@ router.route('/review').post(async (req, res) => {
     res.json();
   } catch (e) {
     res.status(500).json({
-      message: 'Internal Server Error'
+      message: 'Internal Server Error',
     });
   }
 });
@@ -34,7 +34,7 @@ router.route('/vacancy').post(async (req, res) => {
     res.json();
   } catch (e) {
     res.status(500).json({
-      message: 'Internal Server Error'
+      message: 'Internal Server Error',
     });
   }
 });

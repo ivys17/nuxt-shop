@@ -1,5 +1,5 @@
-import { isCompanyEmployee } from './iiko.helper.js';
 import axios from 'axios';
+import { isCompanyEmployee } from './iiko.helper.js';
 
 import { IIKO_CARD_PROGRAM_IDS, IIKO_SERVER_URL } from '../../config/common.js';
 
@@ -9,15 +9,13 @@ import { getOrganizationId, getToken } from '../storage/storage.service.js';
 const logger = new CLogger();
 
 export const getNomenclature = async () => {
-
   try {
     const [token, organizationId] = await Promise.all([getToken(), getOrganizationId()]);
-    const res = await axios.get(
-      `${IIKO_SERVER_URL}/api/0/nomenclature/${organizationId}`, {
-        params: {
-          access_token: token,
-        },
-      });
+    const res = await axios.get(`${IIKO_SERVER_URL}/api/0/nomenclature/${organizationId}`, {
+      params: {
+        access_token: token,
+      },
+    });
     return res.data;
   } catch (e) {
     logger.log(e);
@@ -28,23 +26,22 @@ export const getCustomer = async (phone) => {
   try {
     const [token, organizationId] = await Promise.all([getToken(), getOrganizationId()]);
 
-    const { data } = await axios.get(
-      `${IIKO_SERVER_URL}/api/0/customers/get_customer_by_phone`, {
-        params: {
-          access_token: token,
-          organization: organizationId,
-          phone: phone,
-        },
-      });
+    const { data } = await axios.get(`${IIKO_SERVER_URL}/api/0/customers/get_customer_by_phone`, {
+      params: {
+        access_token: token,
+        organization: organizationId,
+        phone,
+      },
+    });
 
-    let updatedData = data;
+    const updatedData = data;
 
     let balance = 0;
 
-    if (data['walletBalances'] && data['walletBalances'].length > 0) {
-      data['walletBalances'].forEach(walletBalances => {
-        if (IIKO_CARD_PROGRAM_IDS.includes(walletBalances['wallet']['id'])) {
-          balance += Number(walletBalances['balance']);
+    if (data.walletBalances && data.walletBalances.length > 0) {
+      data.walletBalances.forEach((walletBalances) => {
+        if (IIKO_CARD_PROGRAM_IDS.includes(walletBalances.wallet.id)) {
+          balance += Number(walletBalances.balance);
         }
       });
     }
@@ -55,11 +52,9 @@ export const getCustomer = async (phone) => {
   } catch (e) {
     logger.log(e);
   }
-
 };
 
 export const getCladr = async () => {
-
   const [token, organizationId] = await Promise.all([getToken(), getOrganizationId()]);
 
   if (!token || !organizationId) {
@@ -68,14 +63,13 @@ export const getCladr = async () => {
   }
 
   try {
-    const res = await axios.get(
-      `${IIKO_SERVER_URL}/api/0/cities/cities`, {
-        params: {
-          access_token: token,
-          organization: organizationId,
+    const res = await axios.get(`${IIKO_SERVER_URL}/api/0/cities/cities`, {
+      params: {
+        access_token: token,
+        organization: organizationId,
 
-        },
-      });
+      },
+    });
     return res.data;
   } catch (e) {
     console.log(e);
@@ -91,24 +85,21 @@ export const createOrUpdate = async (customer) => {
   }
 
   try {
-    const { data } = await axios.post(
-      `${IIKO_SERVER_URL}/api/0/customers/create_or_update`, customer, {
-        params: {
-          access_token: token,
-          organization: organizationId,
+    const { data } = await axios.post(`${IIKO_SERVER_URL}/api/0/customers/create_or_update`, customer, {
+      params: {
+        access_token: token,
+        organization: organizationId,
 
-        },
-      });
+      },
+    });
 
     return data;
-
   } catch (e) {
     console.log(e);
   }
 };
 
 export const sendMessageIiko = async (data) => {
-
   const [token, organizationId] = await Promise.all([getToken(), getOrganizationId()]);
 
   if (!token || !organizationId) {
@@ -117,7 +108,6 @@ export const sendMessageIiko = async (data) => {
   }
   data.organization = organizationId;
   try {
-
     const res = await axios.post(
       `${IIKO_SERVER_URL}/api/0/orders/add`,
       data,
@@ -127,9 +117,9 @@ export const sendMessageIiko = async (data) => {
           organization: organizationId,
           requestTimeout: 10000,
         },
-      });
+      },
+    );
     return res.data;
-
   } catch (e) {
     console.log(e);
   }
@@ -162,7 +152,8 @@ export const calculateCheckinResult = async (order) => {
             access_token: token,
             organization: organizationId,
           },
-        });
+        },
+      );
 
     const { loyatyResult, validationWarnings } = data;
 
@@ -173,9 +164,8 @@ export const calculateCheckinResult = async (order) => {
     if (loyatyResult) {
       const { programResults } = loyatyResult;
 
-      programResults.forEach(program => {
-
-        //discounts
+      programResults.forEach((program) => {
+        // discounts
         if (program.discounts?.length) {
           result.discounts = result.discounts.concat(program.discounts);
           result.discountTotal += program.discounts.reduce((acc, current) => {
@@ -187,18 +177,16 @@ export const calculateCheckinResult = async (order) => {
         if (program.freeProducts?.length) {
           result.freeProducts = result
             .freeProducts.concat(
-              program.freeProducts.flatMap(item => item.productCodes),
+              program.freeProducts.flatMap((item) => item.productCodes),
             );
         }
       });
 
-      //TODO: exclude this
+      // TODO: exclude this
       const LOST_GIFT_CODE = '457091542748';
-      result.lostGift = result.freeProducts.filter(pCode => pCode === LOST_GIFT_CODE);
-      result.freeProducts = result.freeProducts.filter(pCode => pCode !== LOST_GIFT_CODE);
-
+      result.lostGift = result.freeProducts.filter((pCode) => pCode === LOST_GIFT_CODE);
+      result.freeProducts = result.freeProducts.filter((pCode) => pCode !== LOST_GIFT_CODE);
     }
-
   } catch (e) {
     console.log(e);
   }
@@ -206,7 +194,6 @@ export const calculateCheckinResult = async (order) => {
 };
 
 export const getOrderInfo = async (orderId) => {
-
   const [token, organizationId] = await Promise.all([getToken(), getOrganizationId()]);
 
   if (!token || !organizationId) {
@@ -215,14 +202,13 @@ export const getOrderInfo = async (orderId) => {
   }
 
   try {
-    const res = await axios.get(
-      `${IIKO_SERVER_URL}/api/0/orders/info`, {
-        params: {
-          access_token: token,
-          organization: organizationId,
-          order: orderId,
-        },
-      });
+    const res = await axios.get(`${IIKO_SERVER_URL}/api/0/orders/info`, {
+      params: {
+        access_token: token,
+        organization: organizationId,
+        order: orderId,
+      },
+    });
     return res.data;
   } catch (e) {
     console.log(e);
@@ -230,7 +216,6 @@ export const getOrderInfo = async (orderId) => {
 };
 
 export const checkCreateOrder = async (order) => {
-
   const [token, organizationId] = await Promise.all([getToken(), getOrganizationId()]);
 
   if (!token || !organizationId) {
@@ -239,31 +224,29 @@ export const checkCreateOrder = async (order) => {
   }
 
   const OrderRequest = {
-    order: order,
+    order,
   };
 
   OrderRequest.organization = organizationId;
 
   try {
-
     const res = await axios.post(
       `${IIKO_SERVER_URL}/api/0/orders/checkCreate`,
       OrderRequest,
       {
         params: {
           access_token: token,
-          //request_timeout: 30,
+          // request_timeout: 30,
         },
-      });
+      },
+    );
     return res.data;
-
   } catch (e) {
     console.log(e);
   }
 };
 
 export const checkAddress = async (city, street, home) => {
-
   const [token, organizationId] = await Promise.all([getToken(), getOrganizationId()]);
 
   if (!token || !organizationId) {
@@ -273,7 +256,7 @@ export const checkAddress = async (city, street, home) => {
 
   const params = {
     access_token: token,
-    organizationId: organizationId,
+    organizationId,
   };
 
   console.log(city, street, home);
@@ -283,17 +266,16 @@ export const checkAddress = async (city, street, home) => {
       `${IIKO_SERVER_URL}/api/0/orders/checkAddress`,
       { city, street, home },
       {
-        params: params,
-      });
+        params,
+      },
+    );
     return res.data;
-
   } catch (e) {
     console.log(e);
   }
 };
 
 export const getPayments = async () => {
-
   const [token, organizationId] = await Promise.all([getToken(), getOrganizationId()]);
 
   if (!token || !organizationId) {
@@ -302,13 +284,12 @@ export const getPayments = async () => {
   }
 
   try {
-    const res = await axios.get(
-      `${IIKO_SERVER_URL}/api/0/rmsSettings/getPaymentTypes`, {
-        params: {
-          access_token: token,
-          organization: organizationId,
-        },
-      });
+    const res = await axios.get(`${IIKO_SERVER_URL}/api/0/rmsSettings/getPaymentTypes`, {
+      params: {
+        access_token: token,
+        organization: organizationId,
+      },
+    });
 
     return res.data;
   } catch (e) {
@@ -317,7 +298,6 @@ export const getPayments = async () => {
 };
 
 export const getStopList = async () => {
-
   const [token, organizationId] = await Promise.all([getToken(), getOrganizationId()]);
 
   if (!token || !organizationId) {
@@ -326,13 +306,12 @@ export const getStopList = async () => {
   }
 
   try {
-    const res = await axios.get(
-      `${IIKO_SERVER_URL}/api/0/stopLists/getDeliveryStopList`, {
-        params: {
-          access_token: token,
-          organization: organizationId,
-        },
-      });
+    const res = await axios.get(`${IIKO_SERVER_URL}/api/0/stopLists/getDeliveryStopList`, {
+      params: {
+        access_token: token,
+        organization: organizationId,
+      },
+    });
     return res.data?.stopList || [];
   } catch (e) {
     console.log(e);

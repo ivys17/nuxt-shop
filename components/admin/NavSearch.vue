@@ -1,13 +1,17 @@
 <template>
   <div class="nav-search">
     <form>
-      <input v-model="s"
-             @input.prevent="input"
-             type="text"
-             placeholder="Поиск">
+      <input
+        v-model="s"
+        type="text"
+        placeholder="Поиск"
+        @input.prevent="input"
+      >
       <button>
-        <img src="@/assets/admin/images/icons/search.svg"
-             alt="search">
+        <img
+          src="@/assets/admin/images/icons/search.svg"
+          alt="search"
+        >
       </button>
     </form>
   </div>

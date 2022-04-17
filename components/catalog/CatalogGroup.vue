@@ -1,25 +1,24 @@
 <template>
-
   <div
     v-if="currentSectionData.items.length"
-    class="catalog-list">
+    class="catalog-list"
+  >
     <AppCatalogItem
       v-for="item in startProducts"
       :key="item.id"
-      :currentSectionDataAlias="currentSectionData.slug"
+      :current-section-data-alias="currentSectionData.slug"
       :item="item"
       :product-title-tag="productTitleTag"
     />
-    <div v-if="isShown && endProducts.length"
-         class="btn-more-wrapper">
+    <div
+      v-if="isShown && endProducts.length"
+      class="btn-more-wrapper"
+    >
       <div class="btn-more">
         <a @click.prevent="showMore">Показать ещё {{ endProducts.length }}</a>
       </div>
     </div>
   </div>
-
-
-
 </template>
 
 <script>
@@ -67,7 +66,7 @@ export default {
       }
       return true;
 
-      //return this.$vssWidth < 768;
+      // return this.$vssWidth < 768;
     },
 
   },
@@ -80,6 +79,3 @@ export default {
 };
 
 </script>
-
-
-
