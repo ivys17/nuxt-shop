@@ -61,9 +61,6 @@ export default {
 
   css: [
     '~/node_modules/vue-multiselect/dist/vue-multiselect.min.css',
-    'quill/dist/quill.core.css',
-    'quill/dist/quill.snow.css',
-    'quill/dist/quill.bubble.css',
   ],
 
   plugins: [
@@ -71,7 +68,6 @@ export default {
     '~/plugins/directives.js',
     { src: '~/plugins/vue-notification-ssr.js', mode: 'server' },
     { src: '~/plugins/vue-notification-client.js', mode: 'client' },
-    { src: '~plugins/nuxt-quill-plugin', mode: 'client' },
     '~/plugins/nuxt-ssr-screen-size.js',
     '~/plugins/vue-mask.js',
     '~/plugins/axios.js',
